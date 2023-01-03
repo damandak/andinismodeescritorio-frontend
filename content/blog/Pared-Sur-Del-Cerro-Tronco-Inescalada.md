@@ -8,6 +8,7 @@ date-spanish: 4 de Septiembre del 2021
 main-image-id: 1
 draft: true
 ---
+#### Desafíos pendientes
 # Pared Sur del Cerro Tronco - Inescalada
 
 ![A Cool Image](https://picsum.photos/1200/600)
