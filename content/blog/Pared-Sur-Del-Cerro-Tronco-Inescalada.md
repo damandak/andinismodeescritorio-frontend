@@ -5,20 +5,21 @@ author-id: 1241
 description: 1500 metros de soberbia impronta en la Cordillera Ferrosa. Una pared que tal vez es mejor observarla y disfrutarla desde las tranquilas vegas del Río Olivares. Una incógnita debatible ¿ha sido ascendida?
 date: 2021-09-04
 date-spanish: 4 de Septiembre del 2021
-main-image-id: 1
+main-image-id: 2
 draft: true
 ---
-#### Desafíos pendientes
-# Pared Sur del Cerro Tronco - Inescalada
-
-![A Cool Image](https://picsum.photos/1200/600)
-
-**1500 metros de soberbia impronta en la Cordillera Ferrosa. Una pared que tal vez es mejor observarla y disfrutarla desde las tranquilas vegas del Río Olivares. Una incógnita debatible ¿ha sido ascendida?**
-
-**Por Damir Mandakovic**
-
-Fecha: 4 de Septiembre del 2021
-
+::blog-header
+---
+subtitle: Desafíos pendientes
+title: Pared Sur del Cerro Tronco - Inescalada
+authorID: 1241
+abstract: 1500 metros de soberbia impronta en la Cordillera Ferrosa. Una pared que tal vez es mejor observarla y disfrutarla desde las tranquilas vegas del Río Olivares. Una incógnita debatible ¿ha sido ascendida?
+date-spanish: 4 de Septiembre del 2021
+image_id: 2
+alt: A Cool Image
+---
+::
+---
 No existe una montaña en todo el sector que concentre tantas miradas extasiadas como lo hace el Cerro Tronco. Recién el año 1960 recibió su primer ascenso por Walter Stehr y Wilfred Siegel por una ruta que demuestra lo infranqueable que fue el Tronco para quienes lo intentaron en años anteriores. Para lograrlo, tuvieron que subir al portezuelo del Risopatrón, a 5.300 metros, para luego bajar al plateau glaciar al norte del Tronco (4.800 metros) y enfrentarlo por el norte.
 
 Para cualquiera que revise un mapa de la ubicación del Tronco, este rodeo es llamativo. En cuanto a distancia, es la ruta más extensa posible, y hay numerosos valles que llegan hasta alguna de sus caras. Pero Stehr y Siegel se plantearon toda opción desde Chile, incluyendo los Esteros Ferrosa y Tabolangos, llegando a la misma conclusión a la que llegaría cualquier otro explorador: esa es la ruta más factible. Hasta el día de hoy, es la única ruta que se le ha realizado.
@@ -41,6 +42,13 @@ La pared sur -suroeste si somos estrictos- del Cerro Tronco tiene 1500 metros de
 
 **Aproximación:** La aproximación hasta la cascada del Estero Ferrosa toma entre uno o dos días, siempre con hartos kilómetros de recorrido a pie. Lo más complejo es subir al valle superior del Estero Ferrosa,un desafío en sí mismo, y quien acceda estará en terreno casi virgen (Vásquez, Siqués y Wood podrían haberlo alcanzado).
 
-**Imágenes**
+### Imágenes
+::blog-image
+---
+image_id: 2
+alt: A Cool Image
+image_detail: Dos montañistas observando la inmensidad del Glaciar Olivares Beta, con la Cordillera Morada de fondo. Al medio, con un glaciar que llega a su cumbre, se observa el Cerro Negro.
+---
+::
 
 ### Bibliografía
