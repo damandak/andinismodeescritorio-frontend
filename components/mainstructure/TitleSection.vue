@@ -53,6 +53,7 @@ const props = defineProps({
       font-weight: 900;
       color: $color-dark;
       margin: 0;
+      text-align: center;
     }
     p {
       font-size: 1.1rem;

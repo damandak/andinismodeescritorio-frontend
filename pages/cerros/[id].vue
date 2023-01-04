@@ -2,7 +2,10 @@
   <div class="content-wrapper mountain-wrapper">
     <MainstructureTitleSection :prefix="mtnPrefix" :name="mtnName" :subtitle="mtnAltitude" :mts="true" />
     <div class="main-image-section">
-      <img src="https://media.istockphoto.com/id/1288385045/photo/snowcapped-k2-peak.jpg?s=612x612&w=0&k=20&c=sfA4jU8kXKZZqQiy0pHlQ4CeDR0DxCxXhtuTDEW81oo=" alt="">
+      <img v-if="img_url" :src="img_url" alt="">
+      <div v-else class="no-image">
+        Sin imagen
+      </div>
     </div>
     <div class="body-section">
       <BodyTabWrapper :tabs="tabs" @switchTab="switchTab" :selected-tab="selectedTab" />
@@ -94,6 +97,19 @@ const firstAbsoluteDate = ref(mtn.first_absolute_date)
 const firstAbsoluteTeam = ref(mtn.first_absolute_team)
 const unregisteredNonSportAscent = ref(mtn.unregistered_non_sport_ascent)
 
+const main_image = ref(mtn.main_image)
+const img_url = ref(null)
+const image = ref(null)
+const author = ref(null)
+
+if (main_image.value != null) {
+  const apiURLImage = config.public.apiBase + "image/" + main_image.value + "/"
+  const { data: dataImage } = await useFetch(apiURLImage)
+  image.value = dataImage.value
+  img_url.value = image.value.image
+  author.value = image.author
+}
+
 var selectedTab = ref(0)
 function switchTab(tabNumber: number) {
   if (selectedTab.value === tabNumber) {
@@ -129,6 +145,15 @@ function switchTab(tabNumber: number) {
       height: 400px;
       object-fit: contain;
       width: 100%;
+    }
+    .no-image {
+      height: 200px;
+      width: 100%;
+      text-align: center;
+      font-size: 20px;
+      opacity: 0.4;
+      padding: 80px 0;
+      box-sizing: border-box;
     }
   }
   .body-section {
