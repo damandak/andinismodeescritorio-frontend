@@ -7,13 +7,13 @@
       <NuxtLink to="/" @click="$emit('closeExtendedNav')"> inicio </NuxtLink>
     </div>
     <div class="extended-nav-link">
-      <NuxtLink to="/about" @click="$emit('closeExtendedNav')"> quiénes somos </NuxtLink>
+      <NuxtLink to="/" @click="$emit('closeExtendedNav')"> quiénes somos </NuxtLink>
     </div>
     <div class="extended-nav-link">
       <NuxtLink to="/cerros" @click="$emit('closeExtendedNav')"> cerros </NuxtLink>
     </div>
     <div class="extended-nav-link">
-      <NuxtLink to="/sectores" @click="$emit('closeExtendedNav')"> sectores </NuxtLink>
+      <NuxtLink to="/" @click="$emit('closeExtendedNav')"> sectores </NuxtLink>
     </div>
     <div class="extended-nav-link">
       <NuxtLink to="/andinistas" @click="$emit('closeExtendedNav')"> andinistas </NuxtLink>
@@ -25,7 +25,7 @@
       <NuxtLink to="/ascensos" @click="$emit('closeExtendedNav')"> ascensos </NuxtLink>
     </div>
     <div class="extended-nav-link">
-      <NuxtLink to="/blog" @click="$emit('closeExtendedNav')"> blog </NuxtLink>
+      <NuxtLink to="/" @click="$emit('closeExtendedNav')"> blog </NuxtLink>
     </div>
   </div>
 </template>
@@ -39,7 +39,7 @@ const emit = defineEmits<{
 }>();
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .extended-nav-wrapper {
   position: fixed;
   top: 0;
@@ -86,7 +86,7 @@ const emit = defineEmits<{
     }
   }
 }
-.active {
+.extended-nav-wrapper.active {
   right: 0;
 }
 @media screen and (max-width: 768px) {

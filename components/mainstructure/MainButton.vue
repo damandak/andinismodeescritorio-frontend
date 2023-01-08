@@ -10,7 +10,7 @@ const props = defineProps<{
   text: string;
 }>();
 </script>
-<style scoped lang="scss">
+<style lang="scss">
 .main-button {
   //background-color: white;
   padding: 0 15px;
