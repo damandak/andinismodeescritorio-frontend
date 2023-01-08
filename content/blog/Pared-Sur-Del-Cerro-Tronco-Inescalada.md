@@ -45,9 +45,17 @@ La pared sur -suroeste si somos estrictos- del Cerro Tronco tiene 1500 metros de
 ### Imágenes
 ::blog-image
 ---
-image_id: 2
+image_id: 1
 alt: A Cool Image
 image_detail: Dos montañistas observando la inmensidad del Glaciar Olivares Beta, con la Cordillera Morada de fondo. Al medio, con un glaciar que llega a su cumbre, se observa el Cerro Negro.
+---
+::
+
+::blog-image
+---
+image_id: 3
+alt: A Cool Image
+image_detail: Caminando por el borde del Glaciar Juncal Sur rumbo al Nevado Juncal.
 ---
 ::
 

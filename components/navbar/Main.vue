@@ -2,7 +2,7 @@
   <nav class="navbar">
     <NuxtLink to="/">
       <div class="navbar_logo">
-        <img src="@/assets/img/nav_logo.png" alt="logo" />
+        <img src="/img/nav_logo.png" alt="logo" />
       </div>
     </NuxtLink>
     <NavbarRight @openExtendedNav="openExtendedNav" @openSearch="openSearch" />

@@ -7,7 +7,7 @@
     </div>
     <MainstructureMainButton
       :buttonclass="'nav-right__item navbutton'"
-      :to="'/login'"
+      :to="'/'"
       :text="'INGRESAR'"
     />
     <div class="nav-right__item">
@@ -17,13 +17,15 @@
     </div>
   </div>
 </template>
+
 <script setup lang="ts">
 const emit = defineEmits<{
   openExtendedNav: () => void;
   openSearch: () => void;
 }>();
 </script>
-<style scoped lang="scss">
+
+<style lang="scss">
 .nav-right {
   display: flex;
   align-items: center;

@@ -27,6 +27,7 @@ main {
     text-align: center;
     font-family: 'Lora', serif;
     margin: 70px auto 40px auto;
+    line-height: 2.2rem;
   }
   &:deep(p) {
     font-size: 1.3rem;
@@ -55,4 +56,17 @@ main {
     border: 0px solid transparent;
   }
 }
+@media screen and (max-width: 680px) {
+  main {
+    &:deep(p) {
+      width: 90%;
+      margin: 40px auto;
+      font-size: 1.2rem;
+      strong {
+        font-size: 1.3rem;
+      }
+    }
+  }
+}
+
 </style>

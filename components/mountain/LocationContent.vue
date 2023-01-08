@@ -57,10 +57,10 @@ onMounted(async () => {
   const apiURL = config.public.apiBase + "map/";
   const { data } = await useFetch(apiURL)
   const image = {
-    url: "../_nuxt/assets/img/marker3.png",
+    url: "/img/marker3.png",
   };
   const image_alt = {
-    url: "../_nuxt/assets/img/marker-alt-3.png",
+    url: "/img/marker-alt-3.png",
   }
   for (const mtn of data.value) {
     const infowindow = new google.maps.InfoWindow({
@@ -117,7 +117,7 @@ onMounted(async () => {
   }
   &:hover {
     p {
-      color: #1bc2cc;
+      color: $color-main-first;
     }
   }
 }

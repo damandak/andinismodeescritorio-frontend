@@ -16,7 +16,7 @@ const emit = defineEmits<{
   closeSearch: () => void;
 }>();
 </script>
-<style scoped lang="scss">
+<style lang="scss">
 .search-wrapper {
   position: fixed;
   top: 0;
@@ -64,7 +64,7 @@ const emit = defineEmits<{
     }
   }
 }
-.active {
+.search-wrapper.active {
   left: 0;
 }
 </style>

@@ -48,7 +48,8 @@ h1 {
   font-size: 4rem;
   text-align: center;
   margin: 10px auto 20px auto;
-  width: 1000px;
+  max-width: 1000px;
+  width: 90%;
   font-style: italic;
 }
 h4 {
@@ -77,8 +78,11 @@ h4 {
   font-weight: 100;
   font-size: 0.8rem;
   letter-spacing: 0.2rem;
-  a:hover {
-    text-decoration: underline;
+  a {
+    font-family: 'Lora', serif;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 .date {
@@ -98,6 +102,37 @@ h4 {
     margin: auto;
   }
 }
+
+@media screen and (max-width: 1000px) {
+  h1 {
+    font-size: 3rem;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  h1 {
+    font-size: 2rem;
+  }
+  h4 {
+    width: 90%;
+    font-size: 1rem;
+  }
+  .abstract {
+    width: 90%;
+    font-size: 1.2rem;
+    line-height: 1.8rem;
+    margin-bottom: 30px;
+  }
+  .author {
+    width: 90%;
+    text-align: center;
+  }
+  .date {
+    width: 90%;
+    text-align: center;
+  }
+}
+
 </style>
 
 

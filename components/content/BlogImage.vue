@@ -13,7 +13,7 @@
   </div>
 </template>
 <script setup lang="ts">
-const config = useRuntimeConfig();
+const runtimeConfig = useRuntimeConfig();
 
 const props = defineProps<{
   image_id: string;
@@ -21,7 +21,7 @@ const props = defineProps<{
   alt: string;
 }>();
 
-const apiURLImage = config.public.apiBase + "image/" + props.image_id + "/" 
+const apiURLImage = runtimeConfig.public.apiBase + "image/" + props.image_id + "/" 
 const { data } = await useFetch(apiURLImage)
 const image = data.value
 </script>
@@ -29,6 +29,7 @@ const image = data.value
 .blog-image {
   margin: auto;
   width: 100%;
+  padding-bottom: 60px;
   img {
     width: 100%;
     margin: auto;
@@ -47,6 +48,23 @@ const image = data.value
       letter-spacing: 0.2rem;
       a {
         font-family: 'Lora', serif;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 680px) {
+  .blog-image {
+    padding-bottom: 20px;
+    .caption {
+      width: 90%;
+      font-size: 0.7rem;
+      line-height: 1.1rem;
+      .author-p {
+        font-size: 0.6rem;
+        letter-spacing: 0.1rem;
       }
     }
   }
