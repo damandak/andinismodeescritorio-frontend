@@ -1,5 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-const apiAddress = process.env.NODE_ENV === 'development' ? 'http://localhost:8000/api/' : 'https://andinismodeescritorio.cc/api/'
+const apiAddress = process.env.NODE_ENV === 'development' ? 'http://localhost:8000/api/' : 'http://24.199.116.133/api/'
 
 export default defineNuxtConfig({
   runtimeConfig: {
