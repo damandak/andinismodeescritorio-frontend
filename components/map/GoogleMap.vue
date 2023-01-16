@@ -4,9 +4,13 @@
 <script setup lang="ts">
 /* eslint-disable no-undef */
 import { Loader } from "@googlemaps/js-api-loader";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, toRaw } from "vue";
 
 const config = useRuntimeConfig();
+
+const props = defineProps<{
+  currentParams: String
+}>();
 
 const loader = new Loader({
   apiKey: config.public.googleMapsApiKey,
@@ -15,9 +19,29 @@ const loader = new Loader({
 });
 
 const mapDiv = ref(null);
+
+var mountains : {
+  id: number,
+  prefix: string,
+  name: string,
+  altitude: string,
+  regions: string,
+  countries: string,
+  mountaingroups: string,
+  ascended: boolean,
+  marker: google.maps.Marker,
+  visible: boolean,
+  infowindow: google.maps.InfoWindow,
+}[] = [];
+
+const mainmap = ref(null);
+const image = {
+    url: "/img/marker3.png",
+  };
+
 onMounted(async () => {
   await loader.load();
-  const map = new google.maps.Map(
+  mainmap.value = new google.maps.Map(
     mapDiv.value,
     {
       center: { lat: -34, lng: -70.47 },
@@ -28,11 +52,9 @@ onMounted(async () => {
     },
   );
 
-  const apiURL = config.public.apiBase + "map/";
+  const apiURL = config.public.apiBase + "map" + props.currentParams;
   const { data } = await useFetch(apiURL)
-  const image = {
-    url: "/img/marker3.png",
-  };
+
   for (const mtn of data.value) {
     const infowindow = new google.maps.InfoWindow({
       content: '<a href="/cerros/' + mtn.id + '" class="mtn-popup-link">' +
@@ -43,21 +65,145 @@ onMounted(async () => {
     });
     const marker = new google.maps.Marker({
       position: { lat: parseFloat(mtn.latitude), lng: parseFloat(mtn.longitude) },
-      map: map,
+      map: mainmap.value,
       title: mtn.title,
       icon: image,
     });
     marker.addListener("click", () => {
-      infowindow.open(map, marker);
+      infowindow.open(mainmap.value, marker);
     });
+    const mountain = {
+      id: mtn.id,
+      prefix: mtn.prefix,
+      name: mtn.name,
+      altitude: mtn.altitude,
+      regions: mtn.regions,
+      countries: mtn.countries,
+      mountaingroups: mtn.mountaingroups,
+      ascended: mtn.ascended,
+      marker: marker,
+      visible: true,
+      infowinfow: infowindow,
+    };
+    mountains.push(mountain);
   }
+  mainmap.value.addListener("zoom_changed", onZoomChanged);
 });
+
+function hideMarker(mountain: object) {
+  if (mountain.marker.getMap() !== null) {
+    mountain.visible = false;
+    mountain.marker.setMap(null);
+  }
+}
+function unhideMarker(mountain: object) {
+  if (mountain.marker.getMap() === null) {
+    mountain.visible = true;
+    toRaw(mountain.marker).setMap(mainmap.value);
+  }
+}
+
+function onZoomChanged() {
+  for (const mtn of mountains) {
+    if (mtn.visible) {
+      unhideMarker(mtn);
+    } else {
+      hideMarker(mtn);
+    }
+  }
+}
+
+function filterMarkers(content: object) {
+  for (const mtn of mountains) {
+    var hide_prefix = true;
+    var hide_region = false;
+    var hide_country = true;
+    var hide_mountaingroup = false;
+    var hide_min_altitude = true;
+    var hide_max_altitude = true;
+    var hide_ascended = true;
+    if (content.value.prefixes.length > 0) {
+      for (const prefix of content.value.prefixes) {
+        if (mtn.prefix === prefix.name) {
+          hide_prefix = false;
+        }
+      }
+    } else {
+      hide_prefix = false;
+    }
+    if (content.value.countries.length > 0) {
+      if (mtn.countries.length > 0) {
+        for (const country of content.value.countries) {
+          for (let i = 0 ; i < mtn.countries.length ; i++) {
+            if (mtn.countries[i] === country.name) {
+              hide_country = false;
+            }
+          }
+        }
+      } else {
+        hide_country = true;
+      }
+    } else {
+      hide_country = false;
+    }
+    if (content.value.regions.length > 0) {
+      if (mtn.regions.length > 0) {
+        for (const region of content.value.regions) {
+          for (let i = 0 ; i < mtn.regions.length ; i++) {
+            if (mtn.regions[i] === region.name) {
+              hide_region = false;
+            }
+          }
+        }
+      } else {
+        hide_region = true;
+      }
+    } else {
+      hide_region = false;
+    }
+    if (content.value.min_altitude !== "") {
+      if (mtn.altitude >= content.value.min_altitude) {
+        hide_min_altitude = false;
+      }
+    } else {
+      hide_min_altitude = false;
+    }
+
+    if (content.value.max_altitude !== "") {
+      if (mtn.altitude <= content.value.max_altitude) {
+        hide_max_altitude = false;
+      }
+    } else {
+      hide_max_altitude = false;
+    }
+    if (content.value.ascended.length < 2) {
+      if (mtn.ascended === content.value.ascended[0]) {
+        hide_ascended = false;
+      }
+    } else {
+      console.log("alguna vez?")
+      hide_ascended = false;
+    }
+
+    if (hide_prefix || hide_min_altitude || hide_max_altitude || hide_region || hide_country || hide_mountaingroup || hide_ascended) {
+      hideMarker(mtn);
+    } else {
+      unhideMarker(mtn);
+    }
+  }
+}
+
+defineExpose({
+  filterMarkers,
+});
+
 </script>
 <style lang="scss">
 .main-map {
   height: calc(100vh - 88px);
   width: calc(100% - 48px);
   margin: 9px auto auto auto;
+  border-radius: 10px 10px 0 0;
 }
 .mtn-popup-link {
   cursor: pointer;

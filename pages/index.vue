@@ -1,22 +1,28 @@
 <template>
   <div class="content-wrapper">
-    <MapGoogleMap />
-    <div class="mapbutton" @click="">
+    <MapGoogleMap :currentParams="filterText" ref="child" />
+    <MapFilterWrapper :active="activeFilter" @changeFilters="changeFilters" />
+    <div class="mapbutton" @click="toggleWrapper">
       <p>FILTROS</p>
     </div>
 
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+const child = ref(null);
+const currentFilter: Ref<[{id: number, text: string}]> = ref([])
+const filterText = ref("");
 
-definePageMeta({
-  title: 'Home',
-  description: 'This is the home page',
-  layout: 'default',
-})
-
-
+const activeFilter = ref("");
+function toggleWrapper() {
+  activeFilter.value = activeFilter.value === "" ? "active" : "";
+}
+const changeFilters = (id: number, params: object) => {
+  if (child) {
+    child.value.filterMarkers(params);
+  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -35,6 +41,7 @@ definePageMeta({
   transform: translateX(-50%);
   text-align: center;
   line-height: initial;
+  border: 3px solid $color-light;
   p {
     bottom: 10px;
     left: 26px;

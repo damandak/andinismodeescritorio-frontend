@@ -96,7 +96,7 @@ onMounted(async () => {
 </script>
 <style scoped lang="scss">
 .mtn-map {
-  height: 50vh;
+  height: 75vh;
   width: calc(100% - 48px);
   margin: 9px auto auto auto;
 }
