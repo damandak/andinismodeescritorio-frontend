@@ -5,7 +5,7 @@ authorid: 1241
 description: 1500 metros de soberbia impronta en la Cordillera Ferrosa. Una pared que tal vez es mejor observarla y disfrutarla desde las tranquilas vegas del Río Olivares. Una incógnita debatible ¿ha sido ascendida?
 date: 2021-09-04
 datespanish: 4 de Septiembre del 2021
-mainimageid: 2
+mainimageid: 1
 draft: true
 ---
 ::blog-header
@@ -15,7 +15,7 @@ title: Pared Sur del Cerro Tronco - Inescalada
 authorID: 1241
 abstract: 1500 metros de soberbia impronta en la Cordillera Ferrosa. Una pared que tal vez es mejor observarla y disfrutarla desde las tranquilas vegas del Río Olivares. Una incógnita debatible ¿ha sido ascendida?
 datespanish: 4 de Septiembre del 2021
-image_id: 2
+image_id: 1
 alt: A Cool Image
 ---
 ::
@@ -45,9 +45,9 @@ La pared sur -suroeste si somos estrictos- del Cerro Tronco tiene 1500 metros de
 ### Imágenes
 ::blog-image
 ---
-image_id: 1
+image_id: 2
 alt: A Cool Image
-image_detail: Dos montañistas observando la inmensidad del Glaciar Olivares Beta, con la Cordillera Morada de fondo. Al medio, con un glaciar que llega a su cumbre, se observa el Cerro Negro.
+image_detail: Pared sur del Tronco desde la Vega Honda tras una nevada veraniega.
 ---
 ::
 
@@ -55,7 +55,7 @@ image_detail: Dos montañistas observando la inmensidad del Glaciar Olivares Bet
 ---
 image_id: 3
 alt: A Cool Image
-image_detail: Caminando por el borde del Glaciar Juncal Sur rumbo al Nevado Juncal.
+image_detail: Nevado del Plomo, P5363, Risopatrón, Morro del Fierro y pared sur del Tronco desde el Estero Paramillo en un año particularmente seco (diciembre 2019).
 ---
 ::
 
