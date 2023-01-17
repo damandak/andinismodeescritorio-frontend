@@ -3,7 +3,7 @@ export const loadMarkers = () => {
 
   const getMapMarkers = async () => {
     try {
-      bar.value = await useFetch('http://localhost:8000/api/map/', {
+      bar.value = await useFetch('http://localhost:8000/djangoapi/map/', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
