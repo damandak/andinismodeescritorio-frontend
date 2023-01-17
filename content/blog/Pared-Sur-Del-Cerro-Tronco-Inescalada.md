@@ -1,11 +1,11 @@
 ---
 title: Pared Sur del Cerro Tronco - Inescalada
 author: Damir Mandakovic
-author-id: 1241
+authorid: 1241
 description: 1500 metros de soberbia impronta en la Cordillera Ferrosa. Una pared que tal vez es mejor observarla y disfrutarla desde las tranquilas vegas del Río Olivares. Una incógnita debatible ¿ha sido ascendida?
 date: 2021-09-04
-date-spanish: 4 de Septiembre del 2021
-main-image-id: 2
+datespanish: 4 de Septiembre del 2021
+mainimageid: 2
 draft: true
 ---
 ::blog-header
@@ -14,7 +14,7 @@ subtitle: Desafíos pendientes
 title: Pared Sur del Cerro Tronco - Inescalada
 authorID: 1241
 abstract: 1500 metros de soberbia impronta en la Cordillera Ferrosa. Una pared que tal vez es mejor observarla y disfrutarla desde las tranquilas vegas del Río Olivares. Una incógnita debatible ¿ha sido ascendida?
-date-spanish: 4 de Septiembre del 2021
+datespanish: 4 de Septiembre del 2021
 image_id: 2
 alt: A Cool Image
 ---

@@ -25,7 +25,7 @@
       <NuxtLink to="/ascensos" @click="$emit('closeExtendedNav')"> ascensos </NuxtLink>
     </div>
     <div class="extended-nav-link">
-      <NuxtLink to="/" @click="$emit('closeExtendedNav')"> blog </NuxtLink>
+      <NuxtLink to="/blog" @click="$emit('closeExtendedNav')"> blog </NuxtLink>
     </div>
   </div>
 </template>
