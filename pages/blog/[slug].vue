@@ -44,6 +44,25 @@ main {
       line-height: 2.2rem;
     }
   }
+  &:deep(blockquote) {
+    margin: 40px auto;
+    width: 500px;
+    border-left: 5px solid $color-main-first;
+    padding: 0 20px;
+    p {
+      margin: 0;
+      font-size: 1.1rem;
+      line-height: 2.2rem;
+      text-align: justify;
+      font-family: 'Lora', serif;
+      width: 500px;
+      strong {
+        font-weight: 900;
+        font-size: 1.2rem;
+        line-height: 2.2rem;
+      }
+    }
+  }
   &:deep(hr) {
     opacity: 0.4;
     margin: 30px 50px 50px 50px;

@@ -1,6 +1,7 @@
 <template>
-  <div class="blog-image">
-    <img :src="image.image" :alt="alt" />
+  <div class="blog-image" :class="not_fullwidth">
+    <img v-if="fullwidth" :src="image.image" :alt="alt" />
+    <img v-else :src="image.tb_item_cover" :alt="alt" />
     <div class="caption">
       {{ image_detail }}
       <div class="author-p">
@@ -19,8 +20,16 @@ const props = defineProps<{
   image_id: string;
   image_detail: string;
   alt: string;
+  fullwidth: { type: Boolean; default: true}
 }>();
 
+const not_fullwidth = computed(() => {
+  if (props.fullwidth) {
+    return "fullwidth"
+  } else {
+    return "not-fullwidth"
+  }
+})
 const apiURLImage = runtimeConfig.public.apiBase + "image/" + props.image_id + "/" 
 const { data } = await useFetch(apiURLImage)
 const image = data.value
@@ -53,6 +62,13 @@ const image = data.value
         }
       }
     }
+  }
+}
+.not-fullwidth {
+  width: 600px !important;
+  margin: auto;
+  img {
+    width: 600px !important ;
   }
 }
 @media screen and (max-width: 680px) {
