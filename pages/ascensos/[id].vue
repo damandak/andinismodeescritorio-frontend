@@ -40,9 +40,9 @@ import { onMounted, ref } from 'vue';
 const config = useRuntimeConfig();
 const route = useRoute()
 const tabs = [
-  { id: 0, title: "General" },
-  { id: 1, title: "Fotos" },
-  { id: 2, title: "Referencias" },
+  { id: 0, title: "General", iconname: "ico-general" },
+  { id: 1, title: "Fotos", iconname: "ico-photo" },
+  { id: 2, title: "Referencias", iconname: "ico-sources" },
 ]
 const apiURLAscent = config.public.apiBase + "ascent/" + route.params.id + "/" 
 const { data } = await useFetch(apiURLAscent)

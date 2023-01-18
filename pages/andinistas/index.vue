@@ -119,8 +119,10 @@ async function reloadAndinists() {
   }
   .adetable {
     margin: 20px auto;
-    width: 80% !important;
+    width: 90% !important;
     max-width: 1000px;
+    display: block;
+    overflow-x: auto;
     th {
       text-align: left;
     }

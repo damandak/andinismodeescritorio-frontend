@@ -84,5 +84,14 @@ const image = data.value
       }
     }
   }
+  .not-fullwidth {
+    width: 90% !important;
+    margin: auto;
+    text-align: center;
+    img {
+      width: 90% !important ;
+      margin: auto;
+    }
+  }
 }
 </style>

@@ -48,7 +48,7 @@ main {
     margin: 40px auto;
     width: 500px;
     border-left: 5px solid $color-main-first;
-    padding: 0 20px;
+    padding: 0 10px;
     p {
       margin: 0;
       font-size: 1.1rem;
@@ -83,6 +83,17 @@ main {
       font-size: 1.2rem;
       strong {
         font-size: 1.3rem;
+      }
+    }
+    &:deep(blockquote) {
+      width: 80%;
+      margin-left: 10%;
+      p {
+        width: 80%;
+        font-size: 1rem;
+        strong {
+          font-size: 1.1rem;
+        }
       }
     }
   }

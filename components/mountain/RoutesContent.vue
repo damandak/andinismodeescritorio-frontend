@@ -25,7 +25,8 @@ const mtnRoutes = data.value.results
   text-align: center;
   .routes-list {
     a {
-      height: 50px;
+      height: auto;
+      min-height: 50px;
       background-color: $color-main-second;
       width: 40%;
       min-width: 250px;

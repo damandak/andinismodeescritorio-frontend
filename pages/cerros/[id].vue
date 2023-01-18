@@ -61,12 +61,12 @@ const config = useRuntimeConfig();
 const route = useRoute()
 
 const tabs = [
-  { id: 0, title: "General" },
-  { id: 1, title: "Ubicación" },
-  { id: 2, title: "Rutas" },
-  { id: 3, title: "Ascensos" },
-  { id: 4, title: "Fotos" },
-  { id: 5, title: "Referencias" },
+  { id: 0, title: "General", iconname: "ico-general" },
+  { id: 1, title: "Ubicación", iconname: "ico-map" },
+  { id: 2, title: "Rutas", iconname: "ico-route" },
+  { id: 3, title: "Ascensos", iconname: "ico-ascent" },
+  { id: 4, title: "Fotos", iconname: "ico-photo" },
+  { id: 5, title: "Referencias", iconname: "ico-sources" },
 ]
 
 const apiURLMountain = config.public.apiBase + "mountain/" + route.params.id + "/" 

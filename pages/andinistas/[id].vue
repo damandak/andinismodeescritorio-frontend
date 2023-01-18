@@ -43,10 +43,10 @@ import { onMounted, ref } from 'vue';
 const config = useRuntimeConfig();
 const route = useRoute()
 const tabs = [
-  { id: 0, title: "General" },
-  { id: 1, title: "Ascensos" },
-  { id: 2, title: "Fotos" },
-  { id: 3, title: "Referencias" },
+  { id: 0, title: "General", iconname: "ico-general" },
+  { id: 1, title: "Ascensos", iconname: "ico-ascent" },
+  { id: 2, title: "Fotos", iconname: "ico-photo" },
+  { id: 3, title: "Referencias", iconname: "ico-sources" },
 ]
 const apiURLAndinist = config.public.apiBase + "andinist/" + route.params.id + "/" 
 const { data } = await useFetch(apiURLAndinist)

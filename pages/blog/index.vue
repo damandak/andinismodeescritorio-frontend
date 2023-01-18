@@ -107,6 +107,16 @@ const image_urls = await Promise.all(
   }
   
 }
+@media screen and (max-width: 768px) {
+  .blog-index {
+    .blog-cards {
+      .blog-card {
+        width: 90%;
+      }
+    }
+  }
+  
+}
 </style>
 
 

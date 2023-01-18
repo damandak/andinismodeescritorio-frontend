@@ -55,4 +55,16 @@ const props = defineProps<{
     font-size: 0.9em;
   }
 }
+@media screen and (max-width: 768px) {
+  .adetable-general {
+    width: 95% !important;
+    overflow-x: auto;
+    td {
+      font-size: 0.8rem !important;
+      a {
+        font-size: 0.8rem !important;
+      }
+    }
+  }
+}
 </style>

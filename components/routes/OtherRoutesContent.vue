@@ -29,7 +29,8 @@ const mtnRoutes = data.value.results.filter((mtnroute: any) => mtnroute.id != pr
   }
   .routes-list {
     a {
-      height: 50px;
+      height: auto;
+      min-height: 50px;
       background-color: $color-main-second;
       width: 40%;
       min-width: 250px;

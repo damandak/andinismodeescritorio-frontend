@@ -69,4 +69,17 @@ const props = defineProps<{
   width: 100%;
   text-align: center;
 }
+@media screen and (max-width: 768px) {
+  .adetable-general {
+    width: 95% !important;
+    display: block;
+    overflow-x: auto;
+    td {
+      font-size: 0.8rem !important;
+      a {
+        font-size: 0.8rem !important;
+      }
+    }
+  }
+}
 </style>

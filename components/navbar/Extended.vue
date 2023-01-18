@@ -6,7 +6,7 @@
     <div class="extended-nav-link">
       <NuxtLink to="/" @click="$emit('closeExtendedNav')"> inicio </NuxtLink>
     </div>
-    <div class="extended-nav-link">
+    <div class="extended-nav-link" style="text-align: right; width: 95%; margin-left: 0;">
       <NuxtLink to="/" @click="$emit('closeExtendedNav')"> quiénes somos </NuxtLink>
     </div>
     <div class="extended-nav-link">

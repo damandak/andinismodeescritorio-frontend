@@ -105,4 +105,17 @@ for (const ascent of ascents) {
     }
   }
 }
+@media screen and (max-width: 768px) {
+  .adetable-ascents {
+    width: 95% !important;
+    display: block;
+    overflow-x: auto;
+    td {
+      font-size: 0.8rem !important;
+      a {
+        font-size: 0.8rem !important;
+      }
+    }
+  }
+}
 </style>

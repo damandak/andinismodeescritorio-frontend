@@ -63,12 +63,12 @@ import GeneralContent from '~~/components/ascent/GeneralContent.vue';
 const config = useRuntimeConfig();
 const route = useRoute()
 const tabs = [
-  { id: 0, title: "General" },
-  { id: 1, title: "Ascensos" },
-  { id: 2, title: "Descargables"},
-  { id: 3, title: "Otras Rutas" },
-  { id: 4, title: "Fotos" },
-  { id: 5, title: "Referencias" },
+  { id: 0, title: "General", iconname: "ico-general" },
+  { id: 1, title: "Ascensos", iconname: "ico-ascent"},
+  { id: 2, title: "Descargables", iconname: "ico-download"},
+  { id: 3, title: "Otras Rutas", iconname: "ico-route"},
+  { id: 4, title: "Fotos", iconname: "ico-photo"},
+  { id: 5, title: "Referencias", iconname: "ico-sources" },
 ]
 const apiURLRoute = config.public.apiBase + "route/" + route.params.id + "/" 
 const { data } = await useFetch(apiURLRoute)

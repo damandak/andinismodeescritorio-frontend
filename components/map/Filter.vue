@@ -186,4 +186,28 @@ function toggleSelectItem(id: number) {
     }
   }
 }
+@media screen and (max-width: 1220px) {
+  .filter {
+    font-size: 0.8rem;
+    line-height: 1rem;
+    width: 130px;
+  }
+  .select-group {
+    .select-item {
+      font-size: 0.8rem;
+    }
+  }
+}
+@media screen and (max-width: 850px) {
+  .filter {
+    height: 40px;
+  }
+  .select-group {
+    top: 340px;
+    flex-wrap: wrap;
+    .select-item {
+      height: 40px;
+    }
+  }
+}
 </style>

@@ -143,4 +143,18 @@ function changeApiFilter(id: number, param: number[]) {
     transform: translateY(0);
   }
 }
+@media screen and (max-width: 850px) {
+  .filter-wrapper {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100%;
+    padding-top: 10px;
+    border-radius: 0;
+    border-bottom: none;
+    &.active {
+      transform: translateY(0);
+    }
+  }
+}
 </style>

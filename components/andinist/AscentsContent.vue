@@ -69,37 +69,50 @@ for (const ascent of ascents) {
 </script>
 <style lang="scss" scoped>
 .adetable-ascents {
-margin-top: 15px !important;
-width: 80% !important;
-max-width: 1200px !important;
-td {
-  text-align: left !important;
-  a {
-    color: $color-dark !important;
-    text-decoration: none !important;
-    font-weight: 900;
-    &:hover {
-      color: $color-main-second !important;
+  margin-top: 15px !important;
+  width: 80% !important;
+  max-width: 1200px !important;
+  td {
+    text-align: left !important;
+    a {
+      color: $color-dark !important;
+      text-decoration: none !important;
+      font-weight: 900;
+      &:hover {
+        color: $color-main-second !important;
+      }
+    }
+    span {
+      a {
+        font-weight: 400;
+        font-size: 0.8rem;
+        line-height: 10px;
+      }
     }
   }
-  span {
+  td.date {
+    width: 90px;
+    font-size: 0.9rem
+  }
+  td.route {
     a {
       font-weight: 400;
-      font-size: 0.8rem;
+      font-size: 0.9rem;
       line-height: 10px;
     }
   }
 }
-td.date {
-  width: 90px;
-  font-size: 0.9rem
-}
-td.route {
-  a {
-    font-weight: 400;
-    font-size: 0.9rem;
-    line-height: 10px;
+@media screen and (max-width: 768px) {
+  .adetable-ascents {
+    width: 95% !important;
+    display: block;
+    overflow-x: auto;
+    td {
+      font-size: 0.8rem !important;
+      a {
+        font-size: 0.8rem !important;
+      }
+    }
   }
-}
 }
 </style>
