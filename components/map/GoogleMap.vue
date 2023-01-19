@@ -1,5 +1,6 @@
 <template>
   <div ref="mapDiv" class="main-map"></div>
+  <MainstructureLoader v-if="loading" />
 </template>
 <script setup lang="ts">
 /* eslint-disable no-undef */
@@ -38,6 +39,8 @@ const mainmap = ref(null);
 const image = {
     url: "/img/marker3.png",
   };
+
+const loading = ref(true)
 
 onMounted(async () => {
   await loader.load();
@@ -88,6 +91,8 @@ onMounted(async () => {
     mountains.push(mountain);
   }
   mainmap.value.addListener("zoom_changed", onZoomChanged);
+  loading.value = false;
+  console.log(loading)
 });
 
 function hideMarker(mountain: object) {

@@ -9,6 +9,7 @@
       </NuxtLink>
     </span>
   </div>
+  <MainstructureLoader v-if="loading" />
 </template>
 <script setup lang="ts">
 import { Loader } from "@googlemaps/js-api-loader";
@@ -38,7 +39,7 @@ const loader = new Loader({
   apiKey: config.public.googleMapsApiKey,
   version: "weekly",
 });
-
+const loading = ref(true)
 const mapDiv = ref(null);
 onMounted(async () => {
   await loader.load();
@@ -92,6 +93,7 @@ onMounted(async () => {
       });
     }
   }
+  loading.value = false
 });
 </script>
 <style scoped lang="scss">
