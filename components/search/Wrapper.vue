@@ -15,7 +15,7 @@
           </div>
           <div class="search-results-cerros__list">
             <div v-for="mtn in searchedMountains" :key="mtn.id" class="search-results-cerros__list__item">
-              <NuxtLink :to="'/cerros/' + mtn.id">
+              <NuxtLink :to="'/cerros/' + mtn.id" @click="$emit('closeSearch')">
                 <span class="prefix"><strong>{{ mtn.prefix }}</strong>{{" "}}</span>
                 <span class="name"><strong>{{ mtn.name }}</strong></span>
                 <span class="altitude">{{ " - " + mtn.altitude + " mts"}} </span>
@@ -29,7 +29,7 @@
           </div>
           <div class="search-results-rutas__list">
             <div v-for="route in searchedRoutes" :key="route.id" class="search-results-rutas__list__item">
-              <NuxtLink :to="'/rutas/' + route.id">
+              <NuxtLink :to="'/rutas/' + route.id" @click="$emit('closeSearch')">
                 <span class="name"><strong>{{ route.name }}</strong>{{" - "}}</span>
                 <span class="mountain">{{ route.mountain_name }}</span>
               </NuxtLink>
@@ -42,7 +42,7 @@
           </div>
           <div class="search-results-ascensos__list">
             <div v-for="asc in searchedAscents" :key="asc.id" class="search-results-ascensos__list__item">
-              <NuxtLink :to="'/ascensos/' + asc.id">
+              <NuxtLink :to="'/ascensos/' + asc.id" @click="$emit('closeSearch')">
                 <span class="name"><strong>{{ asc.name }}</strong> {{ " - " }}</span>
                 <span class="route">{{ asc.route_name + " - " }}</span>
                 <span class="mountain">{{ asc.mountain_name }}</span>
@@ -56,7 +56,7 @@
           </div>
           <div class="search-results-andinistas__list">
             <div v-for="and in searchedAndinists" :key="and.id" class="search-results-andinistas__list__item">
-              <NuxtLink :to="'/andinistas/' + and.id">
+              <NuxtLink :to="'/andinistas/' + and.id" @click="$emit('closeSearch')">
                 <span class="name">{{ and.fullname }}</span>
               </NuxtLink>
             </div>
