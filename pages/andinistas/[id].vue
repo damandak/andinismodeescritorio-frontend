@@ -1,8 +1,8 @@
 <template>
    <div class="content-wrapper andinist-wrapper">
     <MainstructureTitleSection :name="name + ' ' + surname" :mts="false" />
-    <div class="main-image-section">
-      <img src="https://media.istockphoto.com/id/1288385045/photo/snowcapped-k2-peak.jpg?s=612x612&w=0&k=20&c=sfA4jU8kXKZZqQiy0pHlQ4CeDR0DxCxXhtuTDEW81oo=" alt="">
+    <div class="main-image-section" v-if="img_url" >
+      <img :src="img_url" alt="">
     </div>
     <div class="body-section">
       <BodyTabWrapper
@@ -61,6 +61,7 @@ const clubs = andinist.clubs_tostr
 const ascent_count = andinist.ascent_count
 const first_ascent_count = andinist.first_ascent_count
 const new_routes_count = andinist.new_routes_count
+const img_url = andinist.img_url
 
 var selectedTab = ref(0)
 function switchTab(tabNumber: number) {

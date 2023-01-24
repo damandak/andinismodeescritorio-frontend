@@ -1,8 +1,8 @@
 <template>
   <div class="content-wrapper route-wrapper">
     <MainstructureTitleSection :prefix="route_mountain_name" :name="route_name" :mts="false" />
-    <div class="main-image-section">
-      <img src="https://media.istockphoto.com/id/1288385045/photo/snowcapped-k2-peak.jpg?s=612x612&w=0&k=20&c=sfA4jU8kXKZZqQiy0pHlQ4CeDR0DxCxXhtuTDEW81oo=" alt="">
+    <div v-if="img_url" class="main-image-section">
+      <img :src="img_url" alt="">
     </div>
     <div class="body-section">
       <BodyTabWrapper

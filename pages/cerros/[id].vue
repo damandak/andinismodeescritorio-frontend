@@ -1,11 +1,8 @@
 <template>
   <div class="content-wrapper mountain-wrapper">
     <MainstructureTitleSection :prefix="mtnPrefix" :name="mtnName" :subtitle="mtnAltitude" :mts="true" />
-    <div class="main-image-section">
-      <img v-if="img_url" :src="img_url" alt="">
-      <div v-else class="no-image">
-        Sin imagen
-      </div>
+    <div v-if="img_url" class="main-image-section">
+      <img :src="img_url" alt="">
     </div>
     <div class="body-section">
       <BodyTabWrapper :tabs="tabs" @switchTab="switchTab" :selected-tab="selectedTab" />
