@@ -1,5 +1,5 @@
 <template>
-    <table class="adetable adetable-ascents">
+  <table class="adetable adetable-ascents">
     <thead>
       <tr>
         <th>Fecha</th>

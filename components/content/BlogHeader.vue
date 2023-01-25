@@ -1,26 +1,28 @@
 <template>
-  <h4>{{ subtitle }}</h4>
-  <h1>{{ title }}</h1>
-  <div class="image-container"> 
-    <img :src="image.image" alt="blog image" />
-  </div>
-  <div class="abstract">
-    {{ abstract }}
-  </div>
-  <div class="author">
-    <strong>POR </strong>
-    <NuxtLink :to="'/andinistas/' + authorID">
-      {{ author.name + " " + author.surname }}
-    </NuxtLink>
-  </div>
-  <!-- <div class="photographers">
-    <strong>FOTOS POR </strong>
-    <NuxtLink v-for="photographer in photographers"  :to="'/andinistas/' + authorID">
-      {{ author.name + " " + author.surname }}
-    </NuxtLink>
-  </div> -->
-  <div class="date">
-    {{ dateSpanish }}
+  <div class="blog-header">
+    <h4>{{ subtitle }}</h4>
+    <h1>{{ title }}</h1>
+    <div class="image-container"> 
+      <img :src="image.image" alt="blog image" />
+    </div>
+    <div class="abstract">
+      {{ abstract }}
+    </div>
+    <div class="author">
+      <strong>POR </strong>
+      <NuxtLink :to="'/andinistas/' + authorID">
+        {{ author.name + " " + author.surname }}
+      </NuxtLink>
+    </div>
+    <!-- <div class="photographers">
+      <strong>FOTOS POR </strong>
+      <NuxtLink v-for="photographer in photographers"  :to="'/andinistas/' + authorID">
+        {{ author.name + " " + author.surname }}
+      </NuxtLink>
+    </div> -->
+    <div class="date">
+      {{ dateSpanish }}
+    </div>
   </div>
 </template>
 <script setup lang="ts">

@@ -1,15 +1,17 @@
 <template>
-  <div ref="mapDiv" class="mtn-map"></div>
-  <div class="nearby-mountains">
-    <p>Cumbres cercanas: </p>
-    <span v-for="mtn in nearbyMountains" :key="mtn.id">
-      <NuxtLink :to="'/cerros/' + mtn.id">
-        <span class="prefix">{{ mtn.prefix + " "}}</span>
-        <span class="name">{{ mtn.name }}</span>
-      </NuxtLink>
-    </span>
+  <div class="location-content">
+    <div ref="mapDiv" class="mtn-map"></div>
+    <div class="nearby-mountains">
+      <p>Cumbres cercanas: </p>
+      <span v-for="mtn in nearbyMountains" :key="mtn.id">
+        <NuxtLink :to="'/cerros/' + mtn.id">
+          <span class="prefix">{{ mtn.prefix + " "}}</span>
+          <span class="name">{{ mtn.name }}</span>
+        </NuxtLink>
+      </span>
+    </div>
+    <MainstructureLoader v-if="loading" />
   </div>
-  <MainstructureLoader v-if="loading" />
 </template>
 <script setup lang="ts">
 import { Loader } from "@googlemaps/js-api-loader";

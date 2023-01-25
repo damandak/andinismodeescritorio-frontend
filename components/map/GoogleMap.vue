@@ -1,6 +1,8 @@
 <template>
-  <div ref="mapDiv" class="main-map"></div>
-  <MainstructureLoader v-if="loading" />
+  <div class="main-map">
+    <div ref="mapDiv" class="main-map"></div>
+    <MainstructureLoader v-if="loading" />
+  </div>
 </template>
 <script setup lang="ts">
 /* eslint-disable no-undef */

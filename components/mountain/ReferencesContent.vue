@@ -1,75 +1,77 @@
 <template>
-  <h3 v-if="mtnAHB || mtnWikiExplora">Referencias externas</h3>
-  <div v-if="mtnAHB || mtnWikiExplora" class="main-references">
-    <span v-if="mtnAHB">
-      <a :href="mtnAHB">
-        Andeshandbook
-      </a>
-    </span>
-    <span v-if="mtnWikiExplora">
-      <a :href="mtnWikiExplora">
-        WikiExplora
-      </a>
-    </span>
+  <div class="mountain-references">
+    <h3 v-if="mtnAHB || mtnWikiExplora">Referencias externas</h3>
+    <div v-if="mtnAHB || mtnWikiExplora" class="main-references">
+      <span v-if="mtnAHB">
+        <a :href="mtnAHB">
+          Andeshandbook
+        </a>
+      </span>
+      <span v-if="mtnWikiExplora">
+        <a :href="mtnWikiExplora">
+          WikiExplora
+        </a>
+      </span>
+    </div>
+    <BodyReferences :references="references" />
+    <h3 v-if="nomenclatura">Datos Nomenclatura</h3>
+    <table v-if="nomenclatura" class="adetable adetable-ascents">
+      <tr>
+        <th>ID Nomenclatura</th>
+        <td>
+          {{ nomenclatura.id_nomenclatura }}
+        </td>
+      </tr>
+      <tr>
+        <th>Nombre</th>
+        <td>
+          {{ nomenclatura.name }}
+        </td>
+      </tr>
+      <tr>
+        <th>Hoja IGM</th>
+        <td>
+          {{ nomenclatura.igm_rectangle_name }}
+        </td>
+      </tr>
+      <tr>
+        <th>Altura IGM</th>
+        <td>
+          {{ nomenclatura.altitude_igm }}
+        </td>
+      </tr>
+      <tr>
+        <th>Latitud</th>
+        <td>
+          {{ nomenclatura.latitude }}
+        </td>
+      </tr>
+      <tr>
+        <th>Longitud</th>
+        <td>
+          {{ nomenclatura.longitude }}
+        </td>
+      </tr>
+      <tr>
+        <th>Observaciones</th>
+        <td>
+          {{ nomenclatura.observations }}
+        </td>
+      </tr>
+      <tr>
+        <th>Comentario</th>
+        <td>
+          {{ nomenclatura.comment }}
+        </td>
+      </tr>
+      <tr>
+        <th>Código de revisión</th>
+        <td>
+          {{ nomenclatura.cod_revision }}
+        </td>
+      </tr>
+    </table>
   </div>
-  <BodyReferences :references="references" />
-  <h3 v-if="nomenclatura">Datos Nomenclatura</h3>
-  <table v-if="nomenclatura" class="adetable adetable-ascents">
-    <tr>
-      <th>ID Nomenclatura</th>
-      <td>
-        {{ nomenclatura.id_nomenclatura }}
-      </td>
-    </tr>
-    <tr>
-      <th>Nombre</th>
-      <td>
-        {{ nomenclatura.name }}
-      </td>
-    </tr>
-    <tr>
-      <th>Hoja IGM</th>
-      <td>
-        {{ nomenclatura.igm_rectangle_name }}
-      </td>
-    </tr>
-    <tr>
-      <th>Altura IGM</th>
-      <td>
-        {{ nomenclatura.altitude_igm }}
-      </td>
-    </tr>
-    <tr>
-      <th>Latitud</th>
-      <td>
-        {{ nomenclatura.latitude }}
-      </td>
-    </tr>
-    <tr>
-      <th>Longitud</th>
-      <td>
-        {{ nomenclatura.longitude }}
-      </td>
-    </tr>
-    <tr>
-      <th>Observaciones</th>
-      <td>
-        {{ nomenclatura.observations }}
-      </td>
-    </tr>
-    <tr>
-      <th>Comentario</th>
-      <td>
-        {{ nomenclatura.comment }}
-      </td>
-    </tr>
-    <tr>
-      <th>Código de revisión</th>
-      <td>
-        {{ nomenclatura.cod_revision }}
-      </td>
-    </tr>
-  </table>
 </template>
 <script setup lang="ts">
 const props = defineProps<{
