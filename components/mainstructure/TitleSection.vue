@@ -35,7 +35,7 @@ const props = defineProps({
   width: 90%;
   //height: 100px;
   padding: 20px 0 10px 0;
-  margin: auto;
+  margin: 0 auto;
   .title {
     display: flex;
     flex-direction: column;
