@@ -88,7 +88,7 @@ onMounted(async () => {
       ascended: mtn.ascended,
       marker: marker,
       visible: true,
-      infowinfow: infowindow,
+      infowindow: infowindow,
     };
     mountains.push(mountain);
   }
