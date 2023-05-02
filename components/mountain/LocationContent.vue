@@ -1,6 +1,5 @@
 <template>
   <div class="location-content">
-    <div ref="mapDiv" class="mtn-map"></div>
     <div class="nearby-mountains">
       <p>Cumbres cercanas: </p>
       <span v-for="mtn in nearbyMountains" :key="mtn.id">
@@ -10,6 +9,7 @@
         </NuxtLink>
       </span>
     </div>
+    <div ref="mapDiv" class="mtn-map"></div>
     <MainstructureLoader v-if="loading" />
   </div>
 </template>
@@ -49,7 +49,7 @@ onMounted(async () => {
     mapDiv.value,
     {
       center: { lat: parseFloat(props.latitude), lng: parseFloat(props.longitude) },
-      zoom: 12,
+      zoom: 13,
       mapTypeId: "satellite",
       gestureHandling: 'cooperative',
       rotateControl: false,
