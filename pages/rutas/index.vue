@@ -12,7 +12,7 @@
         <span>por página</span>
       </div>
       <div class="search-table">
-        <input type="text" v-model="search" v-on:input="reloadRoutes()" placeholder="Buscar" />
+        <input type="text" v-model="search" v-on:input="reloadRoutes(true)" placeholder="Buscar" />
       </div>
       <div class="page-number-banner">
         <span>Página</span>
@@ -93,10 +93,14 @@ rutas_count.value = data.value.count
 rutas.value = data.value.results
 page_list.value = Array.from(Array(Math.ceil(rutas_count.value / page_size.value)).keys()).map((x) => x + 1);
 
-async function reloadRoutes() {  
+async function reloadRoutes(resetPage = false) {
+  if (resetPage) {
+    page_number.value = 1;
+  }
   const apiURLnewroutes = config.public.apiBase + "route/table?page_size=" + page_size.value + "&page=" + page_number.value + "&search=" + search.value
   const { data } = await useFetch(apiURLnewroutes)
   rutas.value = data.value.results
+  rutas_count.value = data.value.count
   page_list.value = Array.from(Array(Math.ceil(rutas_count.value / page_size.value)).keys()).map((x) => x + 1);
 }
 
