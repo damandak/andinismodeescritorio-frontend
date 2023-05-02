@@ -27,7 +27,7 @@
           <NuxtLink v-for="(andinist, index) in firstAbsoluteTeam" :to="`/andinistas/${andinist[0]}`">
             <span v-if="index !== 0">{{ ", " }}</span>
             {{ andinist[1] }}
-          </NuxtLink>
+          </NuxtLink> 
         </td>
       </tr>
     </tbody>
@@ -56,6 +56,9 @@ const props = defineProps<{
   margin-top: 15px !important;
   td.smaller {
     font-size: 0.9em;
+    a:hover {
+      color: $color-main-second;
+    }
   }
 }
 @media screen and (max-width: 768px) {

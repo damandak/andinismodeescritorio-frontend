@@ -49,6 +49,9 @@ h3 {
 }
 .adetable-ascents {
   margin-top: 10px !important;
+  a:hover {
+    color: $color-main-second;
+  }
 }
 @media screen and (max-width: 768px) {
   .adetable-ascents {

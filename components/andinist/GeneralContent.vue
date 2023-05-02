@@ -53,6 +53,9 @@ const props = defineProps<{
   margin-top: 15px !important;
   td.smaller {
     font-size: 0.9em;
+    a:hover {
+      color: $color-main-second;
+    }
   }
 }
 @media screen and (max-width: 768px) {
