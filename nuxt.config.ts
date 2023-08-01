@@ -1,4 +1,3 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 const apiAddress = process.env.NODE_ENV === 'development' ? 'http://localhost:8000/djangoapi/' : 'http://24.199.116.133/djangoapi/'
 
 export default defineNuxtConfig({
