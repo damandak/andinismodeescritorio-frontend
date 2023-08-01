@@ -5,7 +5,7 @@ authorid: 1241
 description: Poco se ha escrito hasta el año 2021 sobre el Estero Esmeralda y el anfiteatro de montaña que lo encierra. En la era del desprecio a los Andes Centrales, con un aumento de restricciones de acceso, sectores intervenidos y destruidos y los efectos del calentamiento global, un valle se mantiene aislado, no por lejanía, sino por desconocimiento.
 date: 2021-11-28
 datespanish: 28 de noviembre del 2021
-mainimageid: 23
+mainimageid: 3
 draft: true
 ---
 ::blog-header

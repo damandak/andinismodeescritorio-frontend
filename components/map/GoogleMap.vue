@@ -15,11 +15,7 @@ const props = defineProps<{
   currentParams: String
 }>();
 
-const loader = new Loader({
-  apiKey: config.public.googleMapsApiKey,
-  version: "weekly",
-  libraries: ["places"],
-});
+const loader = getGoogleMapsLoader(config.public.googleMapsApiKey);
 
 const mapDiv = ref(null);
 
@@ -207,7 +203,7 @@ defineExpose({
 </script>
 <style lang="scss">
 .main-map {
-  height: calc(100vh - 88px);
+  height: calc(100vh - 108px);
   width: calc(100% - 48px);
   margin: 9px auto auto auto;
   border-radius: 10px 10px 0 0;

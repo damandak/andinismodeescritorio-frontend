@@ -37,10 +37,8 @@ const apiURLnearby = config.public.apiBase + "mountain/" + props.mtnID + "/nearb
 const { data } = await useFetch(apiURLnearby)
 const nearbyMountains = data.value.results
 
-const loader = new Loader({
-  apiKey: config.public.googleMapsApiKey,
-  version: "weekly",
-});
+const loader = getGoogleMapsLoader(config.public.googleMapsApiKey);
+
 const loading = ref(true)
 const mapDiv = ref(null);
 onMounted(async () => {

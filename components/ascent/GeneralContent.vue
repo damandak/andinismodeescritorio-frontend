@@ -24,7 +24,10 @@
       <tr>
         <th>Andinistas</th>
         <td class="smaller">
-          <NuxtLink v-for="(andinist, index) in andinists" :to="`/andinistas/${andinist[0]}`">
+          <NuxtLink
+            v-for="(andinist, index) in andinists"
+            :to="`/andinistas/${andinist[0]}`"
+          >
             <span v-if="index !== 0">{{ ", " }}</span>
             {{ andinist[1] }}
           </NuxtLink>
@@ -33,7 +36,10 @@
       <tr>
         <th>Andinistas de apoyo</th>
         <td class="smaller">
-          <NuxtLink v-for="(andinist, index) in supporting_andinists" :to="`/andinistas/${andinist[0]}`">
+          <NuxtLink
+            v-for="(andinist, index) in supporting_andinists"
+            :to="`/andinistas/${andinist[0]}`"
+          >
             <span v-if="index !== 0">{{ ", " }}</span>
             {{ andinist[1] }}
           </NuxtLink>
@@ -41,7 +47,7 @@
       </tr>
       <tr>
         <th>Fecha</th>
-        <td>{{ date_tostr }}</td>
+        <td>{{ date }}</td>
       </tr>
       <tr>
         <th>Honores</th>
@@ -65,7 +71,7 @@ const props = defineProps<{
     id: String;
     name: String;
   }>;
-  date_tostr: String;
+  date: String;
 }>();
 </script>
 <style lang="scss" scoped>

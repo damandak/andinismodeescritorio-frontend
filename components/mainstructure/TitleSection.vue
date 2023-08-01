@@ -44,20 +44,20 @@ const props = defineProps({
     width: 100%;
     //height: 100%;
     h2 {
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       font-weight: 400;
       color: $color-dark;
       margin: 0;
     }
     h1 {
-      font-size: 2.5rem;
+      font-size: 1.8rem;
       font-weight: 900;
       color: $color-dark;
       margin: 0;
       text-align: center;
     }
     p {
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 400;
       color: $color-dark;
       margin: 0;

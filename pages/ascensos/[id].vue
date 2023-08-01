@@ -1,8 +1,13 @@
 <template>
   <div class="content-wrapper ascent-wrapper">
-    <MainstructureTitleSection :prefix="ascent_mountain_name" :name="ascent_name" :subtitle="ascent_route_name" :mts="false" />
+    <MainstructureTitleSection
+      :prefix="ascent_mountain_name"
+      :name="ascent_name"
+      :subtitle="ascent_route_name"
+      :mts="false"
+    />
     <div v-if="img_url" class="main-image-section">
-      <img :src="img_url" alt="">
+      <img :src="img_url" alt="" />
     </div>
     <div class="body-section">
       <BodyTabWrapper
@@ -14,66 +19,62 @@
         <h2 class="content-title">{{ tabs[selectedTab].title }}</h2>
         <AscentGeneralContent
           v-if="selectedTab === 0"
-          :mtnID = "ascent_mountain_id"
-          :mtnName = "ascent_mountain_name"
-          :routeID = "ascent_route_id"
-          :routeName = "ascent_route_name"
-          :ascentName = "ascent_name"
-          :andinists = "ascent_andinists"
-          :supporting_andinists = "ascent_support_andinists"
-          :date_tostr = "ascent_date_tostr"
+          :mtnID="ascent_mountain_id"
+          :mtnName="ascent_mountain_name"
+          :routeID="ascent_route_id"
+          :routeName="ascent_route_name"
+          :ascentName="ascent_name"
+          :andinists="ascent_andinists"
+          :supporting_andinists="ascent_support_andinists"
+          :date="ascent_date"
         />
-        <AscentPhotosContent
-          v-if="selectedTab === 1"
-          :ascentID = "ascent_id"
-        />
+        <AscentPhotosContent v-if="selectedTab === 1" :ascentID="ascent_id" />
         <AscentReferencesContent
           v-if="selectedTab === 2"
-          :ascentID = "ascent_id"
+          :ascentID="ascent_id"
         />
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, ref } from "vue";
 const config = useRuntimeConfig();
-const route = useRoute()
+const route = useRoute();
 const tabs = [
   { id: 0, title: "General", iconname: "ico-general" },
   { id: 1, title: "Fotos", iconname: "ico-photo" },
   { id: 2, title: "Referencias", iconname: "ico-sources" },
-]
-const apiURLAscent = config.public.apiBase + "ascent/" + route.params.id + "/" 
-const { data } = await useFetch(apiURLAscent)
-const ascent = data.value
+];
+const apiURLAscent = config.public.apiBase + "ascent/" + route.params.id + "/";
+const { data } = await useFetch(apiURLAscent);
+const ascent = data.value;
 
-const ascent_id = ascent.id
-const ascent_name = ascent.name
-const ascent_route_id = ascent.route
-const ascent_route_name = ascent.route_name
-const ascent_mountain_id = ascent.mountain
-const ascent_mountain_name = ascent.mountain_name
-const ascent_andinists = ascent.andinists
-const ascent_support_andinists = ascent.support_andinists
-const ascent_completed = ascent.completed
-const ascent_date_tostr = ascent.date_tostr
-const ascent_is_first_ascent = ascent.is_first_ascent
-const ascent_new_route = ascent.new_route
+const ascent_id = ascent.id;
+const ascent_name = ascent.name;
+const ascent_route_id = ascent.route;
+const ascent_route_name = ascent.route_name;
+const ascent_mountain_id = ascent.mountain;
+const ascent_mountain_name = ascent.mountain_name;
+const ascent_andinists = ascent.andinists;
+const ascent_support_andinists = ascent.support_andinists;
+const ascent_completed = ascent.completed;
+const ascent_date = ascent.date;
+const ascent_is_first_ascent = ascent.is_first_ascent;
+const ascent_new_route = ascent.new_route;
 
-
-var selectedTab = ref(0)
+var selectedTab = ref(0);
 function switchTab(tabNumber: number) {
   if (selectedTab.value === tabNumber) {
-    return
+    return;
   }
   // erase selected class from all tabs
-  var tabs = document.getElementsByClassName("tab")
+  var tabs = document.getElementsByClassName("tab");
   for (var i = 0; i < tabs.length; i++) {
-    tabs[i].classList.remove("selected")
+    tabs[i].classList.remove("selected");
   }
-  tabs[tabNumber].classList.add("selected")
-  selectedTab.value = tabNumber
+  tabs[tabNumber].classList.add("selected");
+  selectedTab.value = tabNumber;
 }
 </script>
 <style scoped lang="scss">
@@ -107,7 +108,7 @@ function switchTab(tabNumber: number) {
       min-height: 500px;
       h2.content-title {
         font-size: 1.5rem;
-        font-family: 'Lato', sans-serif;
+        font-family: "Lato", sans-serif;
         font-weight: 600;
         margin: 15px auto;
         padding: 0 0 0 10px;

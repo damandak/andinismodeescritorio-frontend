@@ -12,21 +12,26 @@
     </thead>
     <tbody>
       <tr v-for="ascent in ascents" key="ascent.id">
-        <td class="date">{{ ascent.date_tostr }}</td>
+        <td class="date">{{ ascent.date }}</td>
         <td>
-          <NuxtLink :to="`/cerros/${ ascent.mountain }`">
+          <NuxtLink :to="`/cerros/${ascent.mountain}`">
             {{ ascent.mountain_name }}
           </NuxtLink>
         </td>
         <td class="route">
-          <NuxtLink :to="`/rutas/${ ascent.route }`">
+          <NuxtLink :to="`/rutas/${ascent.route}`">
             {{ ascent.route_name }}
           </NuxtLink>
         </td>
-        <td><NuxtLink :to="`/ascensos/${ ascent.id }`">{{ ascent.name }}</NuxtLink></td>
         <td>
-          <span v-for="(andinist, index) in ascent.andinist_list" key="andinist.id">
-            <NuxtLink :to="`/andinistas/${ andinist.id }`">
+          <NuxtLink :to="`/ascensos/${ascent.id}`">{{ ascent.name }}</NuxtLink>
+        </td>
+        <td>
+          <span
+            v-for="(andinist, index) in ascent.andinist_list"
+            key="andinist.id"
+          >
+            <NuxtLink :to="`/andinistas/${andinist.id}`">
               <span v-if="index !== 0">{{ ", " }}</span>
               {{ andinist.fullname }}
             </NuxtLink>
@@ -39,33 +44,33 @@
 </template>
 <script setup lang="ts">
 const props = defineProps<{
-id: String;
+  id: String;
 }>();
 
 const config = useRuntimeConfig();
 
-const apiURLascents = config.public.apiBase + "andinist/" + props.id + "/ascents/"
-const { data } = await useFetch(apiURLascents)
-const ascents = data.value.results
+const apiURLascents =
+  config.public.apiBase + "andinist/" + props.id + "/ascents/";
+const { data } = await useFetch(apiURLascents);
+const ascents = data.value.results;
 
 for (const ascent of ascents) {
-  ascent.andinist_list = []
-  ascent.resulting_date = ""
-  ascent.route_name = ""
+  ascent.andinist_list = [];
+  ascent.resulting_date = "";
+  ascent.route_name = "";
   for (const individual_andinist of ascent.andinists) {
-    const apiURLandinist = config.public.apiBase + "andinist/" + individual_andinist[0] + "/basic/"
-    const { data } = await useFetch(apiURLandinist)
-    const andinist = data.value
-    ascent.andinist_list = [...ascent.andinist_list, andinist]
+    const apiURLandinist =
+      config.public.apiBase + "andinist/" + individual_andinist[0] + "/basic/";
+    const { data } = await useFetch(apiURLandinist);
+    const andinist = data.value;
+    ascent.andinist_list = [...ascent.andinist_list, andinist];
   }
-  const apiURLroute = config.public.apiBase + "route/" + ascent.route + "/name/"
-  const { data } = await useFetch(apiURLroute)
-  const route = data.value
-  ascent.route_name = route.name
+  const apiURLroute =
+    config.public.apiBase + "route/" + ascent.route + "/name/";
+  const { data } = await useFetch(apiURLroute);
+  const route = data.value;
+  ascent.route_name = route.name;
 }
-
-
-
 </script>
 <style lang="scss" scoped>
 .adetable-ascents {
@@ -92,7 +97,7 @@ for (const ascent of ascents) {
   }
   td.date {
     width: 90px;
-    font-size: 0.9rem
+    font-size: 0.9rem;
   }
   td.route {
     a {

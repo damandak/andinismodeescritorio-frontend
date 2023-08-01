@@ -5,14 +5,23 @@
       <div class="page-size-selector">
         <span>Mostrar</span>
         <select v-model="page_size" @change="reloadAscents()">
-          <option v-for="option in page_size_options" :key="option" :value="option">
+          <option
+            v-for="option in page_size_options"
+            :key="option"
+            :value="option"
+          >
             {{ option }}
           </option>
         </select>
         <span>por página</span>
       </div>
       <div class="search-table">
-        <input type="text" v-model="search" v-on:input="reloadAscents(true)" placeholder="Buscar" />
+        <input
+          type="text"
+          v-model="search"
+          v-on:input="reloadAscents(true)"
+          placeholder="Buscar"
+        />
       </div>
       <div class="page-number-banner">
         <span>Página</span>
@@ -23,51 +32,23 @@
         </select>
       </div>
     </div>
-    <table class="adetable">
-      <thead>
-        <tr>
-          <th>Montaña</th>
-          <th>Ruta</th> <!-- CUANDO SON INCOMPLETAS, HACER ALGO -->
-          <th>Descripción</th>
-          <th>Andinistas</th>
-          <th>Fecha</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="ascenso in ascensos" :key="ascenso.id">
-          <td>
-            <NuxtLink :to="'/cerros/' + ascenso.mountain">
-              {{ ascenso.mountain_name }}
-            </NuxtLink>
-          </td>
-          <td>
-            <NuxtLink :to="'/rutas/' + ascenso.route">
-              {{ ascenso.route_name }}
-            </NuxtLink>
-            <span v-if="ascenso.completed === false">*</span>
-          </td>
-          <td class="main-column">
-            <NuxtLink :to="'/ascensos/' + ascenso.id">
-              {{ ascenso.name }}
-            </NuxtLink>
-          </td>
-          <td class="small-column">
-            <NuxtLink v-for="(andinist, index) in ascenso.andinists" :to="'/andinistas/' + andinist[0]">
-              <span v-if="index !== 0">{{ ", " }}</span>
-              {{ andinist[1] }}
-            </NuxtLink>
-          </td>
-          <td class="small-column">
-            {{ ascenso.date_tostr }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <IndexTable
+      :columns="columns"
+      :data="ascensos"
+      :order_field="order_field"
+      :order_direction="order_direction"
+      :changeOrder="changeOrder"
+      :reloadMethod="reloadAscents"
+    />
     <div class="page-filters">
       <div class="page-size-selector">
         <span>Mostrar</span>
         <select v-model="page_size" @change="reloadAscents()">
-          <option v-for="option in page_size_options" :key="option" :value="option">
+          <option
+            v-for="option in page_size_options"
+            :key="option"
+            :value="option"
+          >
             {{ option }}
           </option>
         </select>
@@ -86,6 +67,58 @@
 </template>
 <script setup lang="ts">
 import { ref } from "vue";
+
+const columns = [
+  {
+    class: "",
+    field: "mountain_name",
+    label: "Montaña",
+    sortable: true,
+    is_boolean: false,
+    link: (ascenso) => "/cerros/" + ascenso.mountain,
+  },
+  {
+    class: "",
+    field: "route_name",
+    label: "Ruta",
+    sortable: true,
+    is_boolean: false,
+    link: (ascenso) => "/rutas/" + ascenso.route,
+  },
+  {
+    class: "main-column",
+    field: "name",
+    label: "Descripción",
+    sortable: true,
+    is_boolean: false,
+    link: (ascenso) => "/ascensos/" + ascenso.id,
+  },
+  {
+    class: "small-column",
+    field: "andinists",
+    label: "Andinistas",
+    sortable: false,
+    is_boolean: false,
+    formatter: (row) =>
+      row.andinists
+        .map(
+          (andinist, index) =>
+            `<a href='/andinistas/${andinist[0]}'>${index !== 0 ? ", " : ""}${
+              andinist[1]
+            }</a>`
+        )
+        .join(""),
+    formatter_html: true,
+  },
+  {
+    class: "small-column",
+    field: "date",
+    label: "Fecha",
+    sortable: true,
+    is_boolean: false,
+  },
+];
+
 const config = useRuntimeConfig();
 
 const page_size = ref(10);
@@ -96,23 +129,73 @@ const page_list = ref([]);
 const ascensos = ref([]);
 const search = ref("");
 
-const apiURLascents = config.public.apiBase + "ascent/table?page_size=" + page_size.value + "&page=" + page_number.value
-const { data } = await useFetch(apiURLascents)
-ascensos_count.value = data.value.count
-ascensos.value = data.value.results
-page_list.value = Array.from(Array(Math.ceil(ascensos_count.value / page_size.value)).keys()).map((x) => x + 1);
+const order_field = ref("");
+const order_direction = ref("asc");
+
+const apiURLascents =
+  config.public.apiBase +
+  "ascent/table?page_size=" +
+  page_size.value +
+  "&page=" +
+  page_number.value;
+const { data } = await useFetch(apiURLascents);
+ascensos_count.value = data.value.count;
+ascensos.value = data.value.results;
+page_list.value = Array.from(
+  Array(Math.ceil(ascensos_count.value / page_size.value)).keys()
+).map((x) => x + 1);
 
 async function reloadAscents(resetPage = false) {
   if (resetPage) {
     page_number.value = 1;
   }
-  const apiURLascents = config.public.apiBase + "ascent/table?page_size=" + page_size.value + "&page=" + page_number.value + "&search=" + search.value
-  const { data } = await useFetch(apiURLascents)
-  ascensos.value = data.value.results
-  ascensos_count.value = data.value.count
-  page_list.value = Array.from(Array(Math.ceil(ascensos_count.value / page_size.value)).keys()).map((x) => x + 1);
+  let apiURLascents =
+    config.public.apiBase +
+    "ascent/table?page_size=" +
+    page_size.value +
+    "&page=" +
+    page_number.value +
+    "&search=" +
+    search.value;
+
+  if (order_field.value && order_direction.value) {
+    apiURLascents +=
+      "&ordering=" +
+      (order_direction.value === "desc" ? "-" : "") +
+      order_field.value;
+  }
+
+  const { data } = await useFetch(apiURLascents);
+  ascensos.value = data.value.results;
+  ascensos_count.value = data.value.count;
+  page_list.value = Array.from(
+    Array(Math.ceil(ascensos_count.value / page_size.value)).keys()
+  ).map((x) => x + 1);
 }
 
+function changeOrder(field: string) {
+  console.log(
+    "change order field: " +
+      field +
+      " " +
+      order_field.value +
+      " " +
+      order_direction.value +
+      ""
+  );
+  if (order_field.value === field) {
+    console.log("order_field is field");
+    order_direction.value = order_direction.value === "asc" ? "desc" : "asc";
+    console.log("new order_direction: " + order_direction.value);
+  } else {
+    console.log("order_field is not field");
+    order_field.value = field;
+    console.log("new order_field: " + order_field.value);
+    order_direction.value = "asc";
+    console.log("new order_direction: " + order_direction.value);
+  }
+  reloadAscents();
+}
 </script>
 <style scoped lang="scss">
 .index-wrapper {
@@ -124,31 +207,6 @@ async function reloadAscents(resetPage = false) {
   padding-bottom: 50px;
   .title-section {
     height: 50px;
-  }
-  .adetable {
-    margin: 20px auto;
-    width: 90% !important;
-    max-width: 1000px;
-    display: block;
-    overflow-x: auto;
-    th {
-      text-align: left;
-    }
-    td {
-      text-align:left;
-      width: 20%;
-      a {
-        &:hover {
-          color: $color-main-second;
-        }
-      }
-    }
-    td.main-column {
-      font-weight: 900;
-    }
-    td.small-column {
-      font-size: 0.9rem;
-    }
   }
 }
 </style>

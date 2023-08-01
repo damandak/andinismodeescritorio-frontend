@@ -3,12 +3,12 @@
     <h4>{{ subtitle }}</h4>
     <h1>{{ title }}</h1>
     <div class="image-container"> 
-      <img :src="image.image" alt="blog image" />
+      <img :src="image.image" alt="blog image" :class="coverimgclass"/>
     </div>
     <div class="abstract">
       {{ abstract }}
     </div>
-    <div class="author">
+    <div class="author" v-if="authorID">
       <strong>POR </strong>
       <NuxtLink :to="'/andinistas/' + authorID">
         {{ author.name + " " + author.surname }}
@@ -35,6 +35,7 @@ const props = defineProps<{
   abstract: string;
   authorID: string;
   dateSpanish: string;
+  coverimgclass: string;
 }>()
 
 const apiURLImage = config.public.apiBase + "image/" + props.image_id + "/" 
@@ -102,6 +103,9 @@ h4 {
     object-fit: cover;
     object-position: center;
     margin: auto;
+  }
+  img.smaller {
+    height: 300px;
   }
 }
 

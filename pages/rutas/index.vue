@@ -5,14 +5,23 @@
       <div class="page-size-selector">
         <span>Mostrar</span>
         <select v-model="page_size" @change="reloadRoutes()">
-          <option v-for="option in page_size_options" :key="option" :value="option">
+          <option
+            v-for="option in page_size_options"
+            :key="option"
+            :value="option"
+          >
             {{ option }}
           </option>
         </select>
         <span>por página</span>
       </div>
       <div class="search-table">
-        <input type="text" v-model="search" v-on:input="reloadRoutes(true)" placeholder="Buscar" />
+        <input
+          type="text"
+          v-model="search"
+          v-on:input="reloadRoutes(true)"
+          placeholder="Buscar"
+        />
       </div>
       <div class="page-number-banner">
         <span>Página</span>
@@ -23,42 +32,22 @@
         </select>
       </div>
     </div>
-    <table class="adetable">
-      <thead>
-        <tr>
-          <th>Montaña</th>
-          <th>Ruta</th>
-          <th>Dificultad</th>
-          <th>Primer Ascenso</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="ruta in rutas" :key="ruta.id">
-          <td>
-            <NuxtLink :to="'/cerros/' + ruta.mountain">
-              {{ ruta.mountain_name }}
-            </NuxtLink>
-          </td>
-          <td class="main-column">
-            <NuxtLink :to="'/rutas/' + ruta.id">
-              {{ ruta.name }}
-            </NuxtLink>
-          </td>
-
-          <td>
-            {{ ruta.difficulty }}
-          </td>
-          <td>
-            {{ ruta.first_ascent_info }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <IndexTable
+      :columns="columns"
+      :data="rutas"
+      :order_field="order_field"
+      :order_direction="order_direction"
+      :changeOrder="changeOrder"
+    />
     <div class="page-filters">
       <div class="page-size-selector">
         <span>Mostrar</span>
         <select v-model="page_size" @change="reloadRoutes()">
-          <option v-for="option in page_size_options" :key="option" :value="option">
+          <option
+            v-for="option in page_size_options"
+            :key="option"
+            :value="option"
+          >
             {{ option }}
           </option>
         </select>
@@ -77,6 +66,39 @@
 </template>
 <script setup lang="ts">
 import { ref } from "vue";
+
+const columns = [
+  {
+    class: "",
+    field: "mountain_name",
+    label: "Montaña",
+    sortable: true,
+    is_boolean: false,
+    link: (ascenso) => "/cerros/" + ascenso.mountain,
+  },
+  {
+    class: "main-column",
+    field: "name",
+    label: "Ruta",
+    sortable: true,
+    is_boolean: false,
+    link: (ascenso) => "/rutas/" + ascenso.id,
+  },
+  {
+    class: "",
+    field: "difficulty",
+    label: "Dificultad",
+    sortable: true,
+    is_boolean: false,
+  },
+  {
+    class: "",
+    field: "first_ascent_year",
+    label: "Primer Ascenso",
+    sortable: true,
+    is_boolean: false,
+  },
+];
 const config = useRuntimeConfig();
 
 const page_size = ref(10);
@@ -87,23 +109,73 @@ const page_list = ref([]);
 const rutas = ref([]);
 const search = ref("");
 
-const apiURLroutes = config.public.apiBase + "route/table?page_size=" + page_size.value + "&page=" + page_number.value
-const { data } = await useFetch(apiURLroutes)
-rutas_count.value = data.value.count
-rutas.value = data.value.results
-page_list.value = Array.from(Array(Math.ceil(rutas_count.value / page_size.value)).keys()).map((x) => x + 1);
+const order_field = ref("");
+const order_direction = ref("asc");
+
+const apiURLroutes =
+  config.public.apiBase +
+  "route/table?page_size=" +
+  page_size.value +
+  "&page=" +
+  page_number.value;
+const { data } = await useFetch(apiURLroutes);
+rutas_count.value = data.value.count;
+rutas.value = data.value.results;
+page_list.value = Array.from(
+  Array(Math.ceil(rutas_count.value / page_size.value)).keys()
+).map((x) => x + 1);
 
 async function reloadRoutes(resetPage = false) {
   if (resetPage) {
     page_number.value = 1;
   }
-  const apiURLnewroutes = config.public.apiBase + "route/table?page_size=" + page_size.value + "&page=" + page_number.value + "&search=" + search.value
-  const { data } = await useFetch(apiURLnewroutes)
-  rutas.value = data.value.results
-  rutas_count.value = data.value.count
-  page_list.value = Array.from(Array(Math.ceil(rutas_count.value / page_size.value)).keys()).map((x) => x + 1);
+  let apiURLnewroutes =
+    config.public.apiBase +
+    "route/table?page_size=" +
+    page_size.value +
+    "&page=" +
+    page_number.value +
+    "&search=" +
+    search.value;
+
+  if (order_field.value && order_direction.value) {
+    apiURLnewroutes +=
+      "&ordering=" +
+      (order_direction.value === "desc" ? "-" : "") +
+      order_field.value;
+  }
+
+  const { data } = await useFetch(apiURLnewroutes);
+  rutas.value = data.value.results;
+  rutas_count.value = data.value.count;
+  page_list.value = Array.from(
+    Array(Math.ceil(rutas_count.value / page_size.value)).keys()
+  ).map((x) => x + 1);
 }
 
+function changeOrder(field: string) {
+  console.log(
+    "change order field: " +
+      field +
+      " " +
+      order_field.value +
+      " " +
+      order_direction.value +
+      ""
+  );
+  if (order_field.value === field) {
+    console.log("order_field is field");
+    order_direction.value = order_direction.value === "asc" ? "desc" : "asc";
+    console.log("new order_direction: " + order_direction.value);
+  } else {
+    console.log("order_field is not field");
+    order_field.value = field;
+    console.log("new order_field: " + order_field.value);
+    order_direction.value = "asc";
+    console.log("new order_direction: " + order_direction.value);
+  }
+  reloadRoutes();
+}
 </script>
 <style scoped lang="scss">
 .index-wrapper {
@@ -126,7 +198,7 @@ async function reloadRoutes(resetPage = false) {
       text-align: left;
     }
     td {
-      text-align:left;
+      text-align: left;
       width: 25%;
       a {
         &:hover {

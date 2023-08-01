@@ -1,28 +1,45 @@
 <template>
   <div class="extended-nav-wrapper" :class="active">
-    <client-only >
-      <font-awesome-icon icon="fa-solid fa-rectangle-xmark" class="extended-nav__close" @click="$emit('closeExtendedNav')" />
+    <client-only>
+      <font-awesome-icon
+        icon="fa-solid fa-rectangle-xmark"
+        class="extended-nav__close"
+        @click="$emit('closeExtendedNav')"
+      />
     </client-only>
     <div class="extended-nav-link">
       <NuxtLink to="/" @click="$emit('closeExtendedNav')"> inicio </NuxtLink>
     </div>
-    <div class="extended-nav-link" style="text-align: right; width: 95%; margin-left: 30px;">
-      <NuxtLink to="/" @click="$emit('closeExtendedNav')"> quiénes somos </NuxtLink>
+    <div
+      class="extended-nav-link"
+      style="text-align: right; width: 95%; margin-left: 30px"
+    >
+      <NuxtLink to="/" @click="$emit('closeExtendedNav')">
+        quiénes somos
+      </NuxtLink>
     </div>
     <div class="extended-nav-link">
-      <NuxtLink to="/cerros" @click="$emit('closeExtendedNav')"> cerros </NuxtLink>
+      <NuxtLink to="/cerros" @click="$emit('closeExtendedNav')">
+        cerros
+      </NuxtLink>
     </div>
     <div class="extended-nav-link">
       <NuxtLink to="/" @click="$emit('closeExtendedNav')"> sectores </NuxtLink>
     </div>
     <div class="extended-nav-link">
-      <NuxtLink to="/andinistas" @click="$emit('closeExtendedNav')"> andinistas </NuxtLink>
+      <NuxtLink to="/andinistas" @click="$emit('closeExtendedNav')">
+        andinistas
+      </NuxtLink>
     </div>
     <div class="extended-nav-link">
-      <NuxtLink to="/rutas" @click="$emit('closeExtendedNav')"> rutas </NuxtLink>
+      <NuxtLink to="/rutas" @click="$emit('closeExtendedNav')">
+        rutas
+      </NuxtLink>
     </div>
     <div class="extended-nav-link">
-      <NuxtLink to="/ascensos" @click="$emit('closeExtendedNav')"> ascensos </NuxtLink>
+      <NuxtLink to="/ascensos" @click="$emit('closeExtendedNav')">
+        ascensos
+      </NuxtLink>
     </div>
     <div class="extended-nav-link">
       <NuxtLink to="/blog" @click="$emit('closeExtendedNav')"> blog </NuxtLink>
@@ -32,7 +49,7 @@
 <script setup lang="ts">
 const props = defineProps<{
   active: string;
-}>(); 
+}>();
 
 const emit = defineEmits<{
   closeExtendedNav: () => void;
@@ -54,6 +71,7 @@ const emit = defineEmits<{
   justify-content: center;
   align-items: flex-end;
   gap: 3.5vh;
+  border-left: 10px #222222 solid;
   .extended-nav__close {
     color: $color-light;
     font-size: 4rem;
@@ -66,7 +84,7 @@ const emit = defineEmits<{
   }
   .extended-nav-link {
     color: $color-light;
-    font-family: 'Arvo', serif;
+    font-family: "Arvo", serif;
     font-size: 3rem;
     font-weight: 900;
     text-transform: lowercase;
