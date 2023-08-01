@@ -80,7 +80,7 @@ const props = defineProps({
   td {
     text-align: left;
     width: 20%;
-    ::v-deep a {
+    :deep(a) {
       &:hover {
         color: $color-main-second;
       }
