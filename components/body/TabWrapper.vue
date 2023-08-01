@@ -8,17 +8,17 @@
       @click="$emit('switchTab', tab.id)"
     >
       <!-- use svg file from public folder-->
-      <img :src="'/img/' + tab.iconname + '.svg'" alt="ascents" class="icon"/>
+      <img :src="'/img/' + tab.iconname + '.svg'" alt="ascents" class="icon" />
       <span>{{ tab.title }}</span>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-const emit = defineEmits(['switchTab'])
+const emit = defineEmits(["switchTab"]);
 const props = defineProps<{
-  tabs: Array<{id: number, title: string, iconname: string }>;
+  tabs: Array<{ id: number; title: string; iconname: string }>;
   selectedTab: number;
-}>()
+}>();
 </script>
 <style scoped lang="scss">
 .tab-wrapper {
