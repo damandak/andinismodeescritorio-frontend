@@ -5,7 +5,7 @@ authorid: 1201
 description: En el Cristo Redentor del límite fronterizo de Chile – Argentina, en las cercanías del ya clásico Cerro Santa Elena y del imponente Cerro Navarro Norte, se alza la P4596. Increíblemente poco visitada por montañistas e injustamente conocida en ocasiones como “Santa Elenita”. Lo cierto es que sus empinados acarreos y su intimidante cumbre piramidal no conocían de ascensos documentados hasta hoy. Un testimonio de cumbre de la década del 80 y la posibilidad de homenajear a quién dedicó su vida a las montañas.
 date: 2021-12-29
 datespanish: 29 de diciembre del 2021
-mainimageid: 1
+mainimageid: 27
 draft: true
 ---
 ::blog-header
@@ -15,7 +15,7 @@ title: 'Cerro Ulrich Lorber: Desentrañando Una Confusa Historia'
 authorID: 1201
 abstract: En el Cristo Redentor del límite fronterizo de Chile – Argentina, en las cercanías del ya clásico Cerro Santa Elena y del imponente Cerro Navarro Norte, se alza la P4596. Increíblemente poco visitada por montañistas e injustamente conocida en ocasiones como “Santa Elenita”. Lo cierto es que sus empinados acarreos y su intimidante cumbre piramidal no conocían de ascensos documentados hasta hoy. Un testimonio de cumbre de la década del 80 y la posibilidad de homenajear a quién dedicó su vida a las montañas.
 datespanish: 29 de diciembre del 2021
-image_id: 1
+image_id: 27
 alt: A Cool Image
 ---
 ::
@@ -24,10 +24,10 @@ Inconmensurables son los secretos que guarda la cordillera de los andes. Quizás
 
 ::blog-image
 ---
-image_id: 2
+image_id: 27
 alt: A Cool Image
 image_detail: Caras oeste del Santa Elena y del Innominado P4596. Vista aérea desde la quebrada Rodado Mecha.
-fullwidth: true
+fullwidth: false
 ---
 ::
 
@@ -47,10 +47,10 @@ En la revista Andina N°78 pag 10, se menciona sobre el primer ascenso a una cum
 
 ::blog-image
 ---
-image_id: 2
+image_id: 28
 alt: A Cool Image
 image_detail: Extracto de la revista Andina N°78, pág 10
-fullwidth: true
+fullwidth: false
 ---
 ::
 
@@ -64,7 +64,7 @@ Al día siguiente partimos a las 8:00 am con luz para poder ver con claridad una
 
 ::blog-image
 ---
-image_id: 2
+image_id: 29
 alt: A Cool Image
 image_detail: Ruta de ascenso de la P4596, se aprecian los glaciares de escombros en su falda
 fullwidth: true
@@ -75,7 +75,7 @@ Emociones muchas y una historia por revelar guardada en un clásico tarro de lat
 
 ::blog-image
 ---
-image_id: 2
+image_id: 30
 alt: A Cool Image
 image_detail: Testimonio de cumbre del ascenso de 1986
 fullwidth: true
@@ -84,10 +84,10 @@ fullwidth: true
 
 ::blog-image
 ---
-image_id: 2
+image_id: 31
 alt: A Cool Image
-image_detail: Río Olivares con la Cordillera Ferrosa de fondo.
-fullwidth: true
+image_detail: Testimonio de cumbre del ascenso de 1986
+fullwidth: false
 ---
 ::
 
@@ -99,16 +99,16 @@ A él esta linda aventura, que buscó desentrañar un misterio más de la gran c
 
 ::blog-image
 ---
-image_id: 2
+image_id: 32
 alt: A Cool Image
 image_detail: Testimonio de cumbre
-fullwidth: true
+fullwidth: false
 ---
 ::
 
 ::blog-image
 ---
-image_id: 2
+image_id: 33
 alt: A Cool Image
 image_detail: Cumbre principal de la P4596
 fullwidth: true
