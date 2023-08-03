@@ -25,7 +25,7 @@ main {
     // REVISAR ESO PARA ARREGLAR ESTE DESASTREEE
     font-size: 2rem;
     text-align: center;
-    font-family: 'Lora', serif;
+    font-family: "Lora", serif;
     margin: 70px auto 40px auto;
     line-height: 2.2rem;
   }
@@ -35,7 +35,7 @@ main {
     text-align: justify;
     margin-block-start: 2em;
     margin-block-end: 2em;
-    font-family: 'Lora', serif;
+    font-family: "Lora", serif;
     width: 600px;
     margin: 40px auto;
     strong {
@@ -54,7 +54,7 @@ main {
       font-size: 1.1rem;
       line-height: 2.2rem;
       text-align: justify;
-      font-family: 'Lora', serif;
+      font-family: "Lora", serif;
       width: 500px;
       strong {
         font-weight: 900;
@@ -67,11 +67,27 @@ main {
     opacity: 0.4;
     margin: 30px 50px 50px 50px;
     height: 10px;
-    background: $color-main-first; /* For browsers that do not support gradients */ 
-    background: -webkit-linear-gradient(left, $color-main-first , $color-main-second); /*For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(right, $color-main-first, $color-main-second); /* For Opera 11.1 to 12.0 */ 
-    background: -moz-linear-gradient(right, $color-main-first, $color-main-second); /* For Firefox 3.6 to 15 */ 
-    background: linear-gradient(to right, $color-main-first , $color-main-second); /* Standard syntax */
+    background: $color-main-first; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(
+      left,
+      $color-main-first,
+      $color-main-second
+    ); /*For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(
+      right,
+      $color-main-first,
+      $color-main-second
+    ); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(
+      right,
+      $color-main-first,
+      $color-main-second
+    ); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(
+      to right,
+      $color-main-first,
+      $color-main-second
+    ); /* Standard syntax */
     border: 0px solid transparent;
   }
 }
@@ -98,5 +114,4 @@ main {
     }
   }
 }
-
 </style>

@@ -5,7 +5,13 @@
       <ContentList path="/blog" v-slot="{ list }">
         <div v-for="article in list" :key="article._path" class="blog-card">
           <div class="blog-card-header">
-            <img :src="image_urls.find((image) => image.id === article.mainimageid).image" alt="blog image" />
+            <img
+              :src="
+                image_urls.find((image) => image.id === article.mainimageid)
+                  .image
+              "
+              alt="blog image"
+            />
             <NuxtLink :to="article._path">
               <h2>{{ article.title }}</h2>
             </NuxtLink>
@@ -25,21 +31,22 @@
 const runtimeConfig = useRuntimeConfig();
 
 // save mainimageid from every article of content NUXT
-const contents = await queryContent('blog').only('mainimageid').find()
+const contents = await queryContent("blog").only("mainimageid").find();
 // const image_ids = contents.map((content) => content.mainimageid)
 
 const image_urls = await Promise.all(
   contents.map(async (article) => {
-    const apiURLImage = runtimeConfig.public.apiBase + "image/" + article.mainimageid + "/" 
-    const { data } = await useFetch(apiURLImage)
-    return {id: article.mainimageid, image: data.value.tb_item_cover}
+    const apiURLImage =
+      runtimeConfig.public.apiBase + "image/" + article.mainimageid + "/";
+    const { data } = await useFetch(apiURLImage);
+    return { id: article.mainimageid, image: data.value.tb_item_cover };
   })
-)
+);
 </script>
 
 <style scoped lang="scss">
 .blog-index {
-  margin: 45px auto auto auto;
+  margin: 45px auto 50px auto;
   .blog-cards {
     display: flex;
     flex-direction: row;
@@ -55,9 +62,9 @@ const image_urls = await Promise.all(
       border-radius: 0 0 20px 20px;
       background-color: $color-light;
       padding-bottom: 15px;
-      -webkit-box-shadow: 4px 4px 18px -13px rgba(0,0,0,0.42);
-      -moz-box-shadow: 4px 4px 18px -13px rgba(0,0,0,0.42);
-      box-shadow: 4px 4px 18px -13px rgba(0,0,0,0.42);
+      -webkit-box-shadow: 4px 4px 18px -13px rgba(0, 0, 0, 0.42);
+      -moz-box-shadow: 4px 4px 18px -13px rgba(0, 0, 0, 0.42);
+      box-shadow: 4px 4px 18px -13px rgba(0, 0, 0, 0.42);
       .blog-card-header {
         position: relative;
         img {
@@ -81,7 +88,9 @@ const image_urls = await Promise.all(
           }
         }
       }
-      h2, h3, p {
+      h2,
+      h3,
+      p {
         margin: 0;
         padding: 0 15px 0 15px;
       }
@@ -94,7 +103,7 @@ const image_urls = await Promise.all(
       }
       p {
         font-weight: 200;
-        font-family: 'Lora', serif;
+        font-family: "Lora", serif;
         font-size: 0.9em;
       }
       .datespanish {
@@ -102,10 +111,8 @@ const image_urls = await Promise.all(
         font-weight: 200;
         color: $color-main-second;
       }
-
     }
   }
-  
 }
 @media screen and (max-width: 768px) {
   .blog-index {
@@ -115,8 +122,5 @@ const image_urls = await Promise.all(
       }
     }
   }
-  
 }
 </style>
-
-
