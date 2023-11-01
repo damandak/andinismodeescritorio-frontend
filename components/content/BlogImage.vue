@@ -5,7 +5,7 @@
     <div class="caption">
       {{ image_detail }}
       <div class="author-p">
-        <strong>Fotografía por </strong> 
+        <strong>Fotografía por </strong>
         <NuxtLink :to="'/andinistas/' + image.author + '/'">
           {{ image.author_name }}
         </NuxtLink>
@@ -16,23 +16,29 @@
 <script setup lang="ts">
 const runtimeConfig = useRuntimeConfig();
 
-const props = defineProps<{
-  image_id: string;
-  image_detail: string;
-  alt: string;
-  fullwidth: { type: Boolean; default: true}
-}>();
+const props = withDefaults(
+  defineProps<{
+    image_id: Number;
+    image_detail: string;
+    alt: string;
+    fullwidth: Boolean;
+  }>(),
+  {
+    fullwidth: true,
+  }
+);
 
 const not_fullwidth = computed(() => {
   if (props.fullwidth) {
-    return "fullwidth"
+    return "fullwidth";
   } else {
-    return "not-fullwidth"
+    return "not-fullwidth";
   }
-})
-const apiURLImage = runtimeConfig.public.apiBase + "image/" + props.image_id + "/" 
-const { data } = await useFetch(apiURLImage)
-const image = data.value
+});
+const apiURLImage =
+  runtimeConfig.public.apiBase + "image/" + props.image_id + "/";
+const { data } = await useFetch(apiURLImage);
+const image = data.value;
 </script>
 <style scoped lang="scss">
 .blog-image {
@@ -42,13 +48,12 @@ const image = data.value
   img {
     width: 100%;
     margin: auto;
-    
   }
   .caption {
     width: 600px;
     margin: auto;
     font-size: 0.9rem;
-    font-family: 'Lora', serif;
+    font-family: "Lora", serif;
     .author-p {
       display: block;
       text-transform: uppercase;
@@ -56,7 +61,7 @@ const image = data.value
       font-size: 0.8rem;
       letter-spacing: 0.2rem;
       a {
-        font-family: 'Lora', serif;
+        font-family: "Lora", serif;
         &:hover {
           text-decoration: underline;
         }

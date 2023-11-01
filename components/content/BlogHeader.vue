@@ -2,8 +2,8 @@
   <div class="blog-header">
     <h4>{{ subtitle }}</h4>
     <h1>{{ title }}</h1>
-    <div class="image-container"> 
-      <img :src="image.image" alt="blog image" :class="coverimgclass"/>
+    <div class="image-container">
+      <img :src="image.image" alt="blog image" :class="coverimgclass" />
     </div>
     <div class="abstract">
       {{ abstract }}
@@ -21,7 +21,7 @@
       </NuxtLink>
     </div> -->
     <div class="date">
-      {{ dateSpanish }}
+      {{ datespanish }}
     </div>
   </div>
 </template>
@@ -33,18 +33,18 @@ const props = defineProps<{
   subtitle: string;
   image_id: number;
   abstract: string;
-  authorID: string;
-  dateSpanish: string;
+  authorID: Number;
+  datespanish: string;
   coverimgclass: string;
-}>()
+}>();
 
-const apiURLImage = config.public.apiBase + "image/" + props.image_id + "/" 
-const { data } = await useFetch(apiURLImage)
-const image = data.value
+const apiURLImage = config.public.apiBase + "image/" + props.image_id + "/";
+const { data } = await useFetch(apiURLImage);
+const image = data.value;
 
-const apiURLauthor = config.public.apiBase + "andinist/" + props.authorID + "/"
-const { data: authorData } = await useFetch(apiURLauthor)
-const author = authorData.value
+const apiURLauthor = config.public.apiBase + "andinist/" + props.authorID + "/";
+const { data: authorData } = await useFetch(apiURLauthor);
+const author = authorData.value;
 </script>
 <style scoped lang="scss">
 h1 {
@@ -65,14 +65,13 @@ h4 {
   text-align: justify;
   margin-block-start: 2em;
   margin-block-end: 2em;
-  font-family: 'Lora', serif;
+  font-family: "Lora", serif;
   font-weight: 900;
   font-size: 1.5rem;
   line-height: 2.2rem;
   width: 600px;
   margin: 30px auto 0px auto;
   font-style: italic;
-
 }
 .author {
   width: 600px;
@@ -82,7 +81,7 @@ h4 {
   font-size: 0.8rem;
   letter-spacing: 0.2rem;
   a {
-    font-family: 'Lora', serif;
+    font-family: "Lora", serif;
     &:hover {
       text-decoration: underline;
     }
@@ -138,7 +137,4 @@ h4 {
     text-align: center;
   }
 }
-
 </style>
-
-
