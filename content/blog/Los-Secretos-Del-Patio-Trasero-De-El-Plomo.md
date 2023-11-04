@@ -6,7 +6,7 @@ description: Poco se ha escrito hasta el año 2021 sobre el Estero Esmeralda y e
 date: 2021-11-28
 datespanish: 28 de noviembre del 2021
 mainimageid: 23
-draft: true
+draft: false
 ---
 ::blog-header
 ---

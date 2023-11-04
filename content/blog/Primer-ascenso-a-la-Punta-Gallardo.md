@@ -6,7 +6,7 @@ description: Un relato emotivo de un primer ascenso en las Termas de Colina por 
 date: 2022-11-09
 datespanish: 09 de noviembre del 2022
 mainimageid: 34
-draft: true
+draft: false
 ---
 ::blog-header
 ---

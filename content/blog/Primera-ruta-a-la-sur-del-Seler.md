@@ -6,7 +6,7 @@ description: Tres amigos abrieron la primera ruta en la cara sur del Cerro Seler
 date: 2022-11-09
 datespanish: 11 de febrero del 2022
 mainimageid: 39
-draft: true
+draft: false
 ---
 ::blog-header
 ---

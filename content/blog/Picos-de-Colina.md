@@ -6,7 +6,7 @@ description: Entre los pasos limítrofes del Nieves Negras y del Portillo de Col
 date: 2021-04-12
 datespanish: 17 de abril del 2021
 mainimageid: 4
-draft: true
+draft: false
 ---
 ::blog-header
 ---

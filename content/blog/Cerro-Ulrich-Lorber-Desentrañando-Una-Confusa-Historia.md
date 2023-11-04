@@ -6,7 +6,7 @@ description: En el Cristo Redentor del límite fronterizo de Chile – Argentina
 date: 2021-12-29
 datespanish: 29 de diciembre del 2021
 mainimageid: 27
-draft: true
+draft: false
 ---
 ::blog-header
 ---

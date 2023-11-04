@@ -6,7 +6,7 @@ description: 1500 metros de soberbia impronta en la Cordillera Ferrosa. Una pare
 date: 2021-04-12
 datespanish: 12 de abril del 2021
 mainimageid: 1
-draft: true
+draft: false
 ---
 ::blog-header
 ---

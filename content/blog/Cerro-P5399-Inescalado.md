@@ -6,7 +6,7 @@ description: Para quienes han observado el paisaje entre el Paso Piuquenes y el 
 date: 2021-04-24
 datespanish: 24 de abril del 2021
 mainimageid: 10
-draft: true
+draft: false
 ---
 ::blog-header
 ---
