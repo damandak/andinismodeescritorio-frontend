@@ -167,6 +167,7 @@ const image_urls = await Promise.all(
         h2 {
           font-size: 3rem;
           line-height: 1.3em;
+          padding: 35px;
         }
       }
     }
