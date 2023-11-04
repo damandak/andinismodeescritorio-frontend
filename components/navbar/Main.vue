@@ -6,7 +6,10 @@
       </div>
     </NuxtLink>
     <NavbarRight @openExtendedNav="openExtendedNav" @openSearch="openSearch" />
-    <NavbarExtended :active="activeExtended" @closeExtendedNav="closeExtendedNav" />
+    <NavbarExtended
+      :active="activeExtended"
+      @closeExtendedNav="closeExtendedNav"
+    />
     <SearchWrapper :active="activeSearch" @closeSearch="closeSearch" />
   </nav>
 </template>
@@ -32,8 +35,9 @@ function closeSearch() {
 <style scoped lang="scss">
 nav.navbar {
   background-color: $color-light;
-  background: linear-gradient($color-light, $color-light) padding-box,
-              linear-gradient(to right, $color-main-first, $color-main-second) border-box;
+  background:
+    linear-gradient($color-light, $color-light) padding-box,
+    linear-gradient(to right, $color-main-first, $color-main-second) border-box;
   border-bottom: 2px solid transparent;
   display: flex;
   justify-content: space-between;

@@ -44,6 +44,11 @@
     <div class="extended-nav-link">
       <NuxtLink to="/blog" @click="$emit('closeExtendedNav')"> blog </NuxtLink>
     </div>
+    <div class="extended-nav-link">
+      <NuxtLink to="/admin" @click="$emit('closeExtendedNav')">
+        admin
+      </NuxtLink>
+    </div>
   </div>
 </template>
 <script setup lang="ts">

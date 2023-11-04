@@ -2,13 +2,23 @@
   <div class="nav-right">
     <div class="nav-right__item">
       <client-only>
-        <font-awesome-icon icon="fa-solid fa-magnifying-glass" @click="$emit('openSearch')" />
+        <font-awesome-icon
+          icon="fa-solid fa-magnifying-glass"
+          @click="$emit('openSearch')"
+        />
       </client-only>
     </div>
     <MainstructureMainButton
       :buttonclass="'nav-right__item navbutton'"
       :to="'/'"
-      :text="'INGRESAR'"
+      :text="'PORTADA'"
+      v-if="route.name == 'blog'"
+    />
+    <MainstructureMainButton
+      :buttonclass="'nav-right__item navbutton'"
+      :to="'/blog'"
+      :text="'BLOG'"
+      v-else
     />
     <div class="nav-right__item">
       <client-only>
@@ -23,6 +33,8 @@ const emit = defineEmits<{
   openExtendedNav: () => void;
   openSearch: () => void;
 }>();
+
+const route = useRoute();
 </script>
 
 <style lang="scss">
