@@ -20,7 +20,7 @@ alt: A Cool Image
 ---
 ::
 ---
-Corría septiembre de 2015 y con un grupo de amigos fuimos a conocer el cerro Aparejo, probablemente uno de los más lindos del Cajón del Maipo junto con el Arenas y el Morado. Este invierno llegó tarde y con mucha nieve, lo que fue un gran obstáculo para alcanzar su cumbre. Fue una linda salida en la que volvimos más amigos y con grandes aprendizajes.
+Corría septiembre de 2015 y con un grupo de amigos fuimos a conocer el cerro Aparejo, probablemente uno de los más lindos del Cajón del Maipo junto con el Arenas y el Morado. Ese invierno llegó tarde y con mucha nieve, lo que fue un gran obstáculo para alcanzar su cumbre. Fue una linda salida en la que volvimos más amigos y con grandes aprendizajes.
 
 Volví a intentar el mismo cerro en noviembre de 2020 y la situación fue al revés. La ruta normal, en su cara este, estaba muy seca. El avance fue lento por laderas empinadas de acarreos. Una no despreciable caída de material nos forzó a volver a casa antes de tiempo. Pese a esto, en esa salida, pude observar y sacar varias fotos de una cumbre innominada. Esta está ubicada al suroeste del Aparejo y en la carta IGM Embalse del Yeso aparece como P4225. Con Daniel Pérez, amigo también muy apasionado por la documentación andina, ya la teníamos en mente.
 
@@ -92,7 +92,7 @@ fullwidth: false
 ---
 ::
 
-Abrazos, sonrisas y rápidamente nos olvidamos del gran esfuerzo requerido para llegar hasta allí. Nos acompañaba una reconfortante vista despejada: el lejano Plomo, los cerros del valle del río Colorado, los vecinos del cajón de Casa de Piedra, Aparejo, el Nevado de Piuquenes, Pirámide, Marmolejo, etc. Escudriñamos todo el sector por alguna pista de un ascenso previo, incluso cavamos con una pala la delgada capa de nieve que cubría la cumbre. No encontramos nada, ni pirca, ni testimonio. Rafa tenía gran experiencia en pillarlos, dado que este último año había encontrado el testimonio de los primeros ascensos en el Manchado y en el Cincuentenario.
+Abrazos, sonrisas y rápidamente nos olvidamos del gran esfuerzo requerido para llegar hasta allí. Nos acompañaba una hermosa vista despejada: el lejano Plomo, los cerros del valle del río Colorado, los vecinos del cajón de Casa de Piedra, Aparejo, el Nevado de Piuquenes, Pirámide, Marmolejo, etc. Escudriñamos todo el sector por alguna pista de un ascenso previo, incluso cavamos con una pala la delgada capa de nieve que cubría la cumbre. No encontramos nada, ni pirca, ni testimonio. Rafa tenía gran experiencia en pillarlos, dado que este último año había encontrado el testimonio de los primeros ascensos en el Manchado y en el Cincuentenario.
 
 ::blog-image
 ---
