@@ -21,10 +21,9 @@ alt: A Cool Image
 ::
 ---
 
-Tras conversar con distintos integrantes de mis cordadas en montaña, presentándoles este objetivo, no logré llegar a buen puerto. Por distintos motivos, o no podían, o simplemente respondían: ¿qué es el Pico Colina Oriente?
+Tras conversar con distintos integrantes de mis cordadas en montaña y presentarles este objetivo, no logré llegar a buen puerto. Por distintos motivos, algunos no podían o simplemente respondían: "¿Qué es el Pico Colina Oriente?"
 
-No logrando coincidir con algún interesado en mi propuesta, tomé la decisión de ascender la montaña en modo solitario en septiembre de 2022.
-Era un objetivo al que no le quité la mirada desde el primer ascenso al Pico Colina Sur el 2021, al que fui invitado por Damir Mandakovic y Federico Caballero. Comencé a planificar silenciosamente esta nueva visita al sector donde el protagonista era el que ya habíamos ascendido, pero el Pico Colina Oriente merecía ser visitado.
+Al no encontrar a alguien interesado en mi propuesta, decidí ascender la montaña en solitario en septiembre de 2022. Era un objetivo que había captado mi atención desde el primer ascenso al Pico Colina Sur en 2021, al que fui invitado por Damir Mandakovic y Federico Caballero. Comencé a planificar en silencio esta nueva visita al sector, donde el protagonista era el ya ascendido Pico Colina Sur, pero el Pico Colina Oriente también merecía ser visitado.
 
 Hace poco me había comprado una cámara y quería hacer un registro fotográfico que me permitiera apreciar las reales características del lugar una vez estando en casa. Quería poder mostrarlo tal y como es, ya que para el ascenso al Pico Colina Sur mi registro fotográfico fue paupérrimo. Esto solo era una excusa para autoconvencerme en esta decisión que ya estaba tomada.
 
