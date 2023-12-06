@@ -1,19 +1,19 @@
 export const loadMarkers = () => {
-  const bar = ref([])
+  const bar = ref([]);
 
   const getMapMarkers = async () => {
     try {
-      bar.value = await useFetch('http://localhost:8000/djangoapi/map/', {
-        method: 'GET',
+      bar.value = await useFetch("http://localhost:8000/djangoapi/map/", {
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': 'no-cors',
-          },
-      })
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "no-cors",
+        },
+      });
     } catch (error) {
-      console.log("ERROR DAMIR")
+      console.log("ERROR DAMIR");
     }
-  }
+  };
 
-  return { bar, getMapMarkers }
-}
+  return { bar, getMapMarkers };
+};
