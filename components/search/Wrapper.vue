@@ -1,24 +1,44 @@
 <template>
   <div class="search-wrapper" :class="active">
     <client-only>
-      <font-awesome-icon icon="fa-solid fa-rectangle-xmark" class="search__close" @click="$emit('closeSearch')" />
+      <font-awesome-icon
+        icon="fa-solid fa-rectangle-xmark"
+        class="search__close"
+        @click="$emit('closeSearch')"
+      />
     </client-only>
     <div class="search-bar" :class="searchbarUp">
-      <input type="text" class="search-input" placeholder="Buscar" @input="searchTimer" />
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Buscar"
+        @input="searchTimer"
+      />
     </div>
     <div class="search-results" :class="activeSearch">
       <MainstructureLoader v-if="loading" />
       <div v-if="!noItems">
         <div v-if="searchedMountains.length > 0" class="search-results-cerros">
           <div class="search-results-cerros__title">
-            <h2 style="margin-top:0;">Cerros</h2>
+            <h2 style="margin-top: 0">Cerros</h2>
           </div>
           <div class="search-results-cerros__list">
-            <div v-for="mtn in searchedMountains" :key="mtn.id" class="search-results-cerros__list__item">
+            <div
+              v-for="mtn in searchedMountains"
+              :key="mtn.id"
+              class="search-results-cerros__list__item"
+            >
               <NuxtLink :to="'/cerros/' + mtn.id" @click="$emit('closeSearch')">
-                <span class="prefix"><strong>{{ mtn.prefix }}</strong>{{" "}}</span>
-                <span class="name"><strong>{{ mtn.name }}</strong></span>
-                <span class="altitude">{{ " - " + mtn.altitude + " mts"}} </span>
+                <span class="prefix"
+                  ><strong>{{ mtn.prefix }}</strong
+                  >{{ " " }}</span
+                >
+                <span class="name"
+                  ><strong>{{ mtn.name }}</strong></span
+                >
+                <span class="altitude"
+                  >{{ " - " + mtn.altitude + " mts" }}
+                </span>
               </NuxtLink>
             </div>
           </div>
@@ -28,9 +48,19 @@
             <h2>Rutas</h2>
           </div>
           <div class="search-results-rutas__list">
-            <div v-for="route in searchedRoutes" :key="route.id" class="search-results-rutas__list__item">
-              <NuxtLink :to="'/rutas/' + route.id" @click="$emit('closeSearch')">
-                <span class="name"><strong>{{ route.name }}</strong>{{" - "}}</span>
+            <div
+              v-for="route in searchedRoutes"
+              :key="route.id"
+              class="search-results-rutas__list__item"
+            >
+              <NuxtLink
+                :to="'/rutas/' + route.id"
+                @click="$emit('closeSearch')"
+              >
+                <span class="name"
+                  ><strong>{{ route.name }}</strong
+                  >{{ " - " }}</span
+                >
                 <span class="mountain">{{ route.mountain_name }}</span>
               </NuxtLink>
             </div>
@@ -41,22 +71,41 @@
             <h2>Ascensos</h2>
           </div>
           <div class="search-results-ascensos__list">
-            <div v-for="asc in searchedAscents" :key="asc.id" class="search-results-ascensos__list__item">
-              <NuxtLink :to="'/ascensos/' + asc.id" @click="$emit('closeSearch')">
-                <span class="name"><strong>{{ asc.name }}</strong> {{ " - " }}</span>
+            <div
+              v-for="asc in searchedAscents"
+              :key="asc.id"
+              class="search-results-ascensos__list__item"
+            >
+              <NuxtLink
+                :to="'/ascensos/' + asc.id"
+                @click="$emit('closeSearch')"
+              >
+                <span class="name"
+                  ><strong>{{ asc.name }}</strong> {{ " - " }}</span
+                >
                 <span class="route">{{ asc.route_name + " - " }}</span>
                 <span class="mountain">{{ asc.mountain_name }}</span>
               </NuxtLink>
             </div>
           </div>
         </div>
-        <div v-if="searchedAndinists.length > 0" class="search-results-andinistas">
+        <div
+          v-if="searchedAndinists.length > 0"
+          class="search-results-andinistas"
+        >
           <div class="search-results-andinistas__title">
             <h2>Andinistas</h2>
           </div>
           <div class="search-results-andinistas__list">
-            <div v-for="and in searchedAndinists" :key="and.id" class="search-results-andinistas__list__item">
-              <NuxtLink :to="'/andinistas/' + and.id" @click="$emit('closeSearch')">
+            <div
+              v-for="and in searchedAndinists"
+              :key="and.id"
+              class="search-results-andinistas__list__item"
+            >
+              <NuxtLink
+                :to="'/andinistas/' + and.id"
+                @click="$emit('closeSearch')"
+              >
                 <span class="name">{{ and.fullname }}</span>
               </NuxtLink>
             </div>
@@ -80,7 +129,7 @@ const emit = defineEmits<{
   closeSearch: () => void;
 }>();
 
-const loading = ref(false)
+const loading = ref(false);
 
 const activeSearch = ref("");
 const searchbarUp = ref("");
@@ -96,12 +145,11 @@ const noItems = ref(true);
 
 var timer: any;
 function searchTimer(e: any) {
-  loading.value = true
+  loading.value = true;
   clearTimeout(timer);
   timer = setTimeout(() => {
     searchAgain(e);
-  },
-  300);
+  }, 300);
 }
 
 async function searchAgain(e: any) {
@@ -113,26 +161,30 @@ async function searchAgain(e: any) {
     searchbarUp.value = "";
   }
 
-  const apiURLMountains = config.public.apiBase + "?search=" + e.target.value
-  const { data: mountaindata } = await useFetch(apiURLMountains)
-  searchedMountains.value = mountaindata.value.results
+  const apiURLMountains =
+    config.public.apiBase + "mountains/?basic&search=" + e.target.value;
+  const { data: mountaindata } = await useFetch(apiURLMountains);
+  searchedMountains.value = mountaindata.value.results;
 
-  const apiURLRoutes = config.public.apiBase + "route/table/?search=" + e.target.value
-  const { data: routesdata } = await useFetch(apiURLRoutes)
-  searchedRoutes.value = routesdata.value.results
+  const apiURLRoutes =
+    config.public.apiBase + "route/table/?search=" + e.target.value;
+  const { data: routesdata } = await useFetch(apiURLRoutes);
+  searchedRoutes.value = routesdata.value.results;
 
-  const apiURLAscents = config.public.apiBase + "ascent/table/?search=" + e.target.value
-  const { data: ascentdata } = await useFetch(apiURLAscents)
-  searchedAscents.value = ascentdata.value.results
+  const apiURLAscents =
+    config.public.apiBase + "ascent/table/?search=" + e.target.value;
+  const { data: ascentdata } = await useFetch(apiURLAscents);
+  searchedAscents.value = ascentdata.value.results;
 
-  const apiURLAndinists = config.public.apiBase + "andinist/table/?search=" + e.target.value
-  const { data: andinistsdata } = await useFetch(apiURLAndinists)
-  searchedAndinists.value = andinistsdata.value.results
+  const apiURLAndinists =
+    config.public.apiBase + "andinist/table/?search=" + e.target.value;
+  const { data: andinistsdata } = await useFetch(apiURLAndinists);
+  searchedAndinists.value = andinistsdata.value.results;
 
   if (
-    searchedMountains.value.length > 0 || 
+    searchedMountains.value.length > 0 ||
     searchedRoutes.value.length > 0 ||
-    searchedAscents.value.length > 0 || 
+    searchedAscents.value.length > 0 ||
     searchedAndinists.value.length > 0
   ) {
     noItems.value = false;
@@ -140,9 +192,8 @@ async function searchAgain(e: any) {
     noItems.value = true;
   }
 
-  loading.value = false
+  loading.value = false;
 }
-
 </script>
 <style lang="scss">
 .search-wrapper {
@@ -187,7 +238,7 @@ async function searchAgain(e: any) {
       background-color: $color-light;
       border: none;
       padding: 10px 30px;
-      font-family: 'Arvo';
+      font-family: "Arvo";
       text-transform: lowercase;
       border-radius: 5px;
       width: 70%;
@@ -243,6 +294,6 @@ async function searchAgain(e: any) {
       right: 5px;
       font-size: 2rem;
     }
-  }  
+  }
 }
 </style>

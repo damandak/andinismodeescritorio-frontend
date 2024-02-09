@@ -12,60 +12,70 @@ import { ref, onMounted, toRaw } from "vue";
 const config = useRuntimeConfig();
 
 const props = defineProps<{
-  currentParams: String
+  currentParams: String;
 }>();
 
 const loader = getGoogleMapsLoader(config.public.googleMapsApiKey);
 
 const mapDiv = ref(null);
 
-var mountains : {
-  id: number,
-  prefix: string,
-  name: string,
-  altitude: string,
-  regions: string,
-  countries: string,
-  mountaingroups: string,
-  ascended: boolean,
-  marker: google.maps.Marker,
-  visible: boolean,
-  infowindow: google.maps.InfoWindow,
+var mountains: {
+  id: number;
+  prefix: string;
+  name: string;
+  altitude: string;
+  regions: string;
+  countries: string;
+  mountaingroups: string;
+  ascended: boolean;
+  marker: google.maps.Marker;
+  visible: boolean;
+  infowindow: google.maps.InfoWindow;
 }[] = [];
 
 const mainmap = ref(null);
 const image = {
-    url: "/img/marker3.png",
-  };
+  url: "/img/marker3.png",
+};
 
-const loading = ref(true)
+const loading = ref(true);
 
 onMounted(async () => {
   await loader.load();
-  mainmap.value = new google.maps.Map(
-    mapDiv.value,
-    {
-      center: { lat: -34, lng: -70.47 },
-      zoom: 8,
-      mapTypeId: "satellite",
-      rotateControl: false,
-      streetViewControl: false,
-    },
-  );
+  mainmap.value = new google.maps.Map(mapDiv.value, {
+    center: { lat: -34, lng: -70.47 },
+    zoom: 8,
+    mapTypeId: "satellite",
+    rotateControl: false,
+    streetViewControl: false,
+  });
 
-  const apiURL = config.public.apiBase + "map" + props.currentParams;
-  const { data } = await useFetch(apiURL)
+  const apiURL =
+    config.public.apiBase + "mountains/?no_pagination" + props.currentParams;
+  const { data } = await useFetch(apiURL);
 
   for (const mtn of data.value) {
     const infowindow = new google.maps.InfoWindow({
-      content: '<a href="/cerros/' + mtn.id + '" class="mtn-popup-link">' +
-        '<p class="prefix">' + mtn.prefix + '</p>' +
-        '<p class="name">' + mtn.name + '</p></a>' +
-        '<p class="mtn-popup-altitude">' + mtn.altitude + ' mts</p>',
-      ariaLabel: mtn.prefix + ' ' + mtn.name,
+      content:
+        '<a href="/cerros/' +
+        mtn.id +
+        '" class="mtn-popup-link">' +
+        '<p class="prefix">' +
+        mtn.prefix +
+        "</p>" +
+        '<p class="name">' +
+        mtn.name +
+        "</p></a>" +
+        '<p class="mtn-popup-altitude">' +
+        mtn.altitude +
+        " mts</p>",
+      ariaLabel: mtn.prefix + " " + mtn.name,
     });
     const marker = new google.maps.Marker({
-      position: { lat: parseFloat(mtn.latitude), lng: parseFloat(mtn.longitude) },
+      position: {
+        lat: parseFloat(mtn.latitude),
+        lng: parseFloat(mtn.longitude),
+      },
       map: mainmap.value,
       title: mtn.title,
       icon: image,
@@ -90,7 +100,7 @@ onMounted(async () => {
   }
   mainmap.value.addListener("zoom_changed", onZoomChanged);
   loading.value = false;
-  console.log(loading)
+  console.log(loading);
 });
 
 function hideMarker(mountain: object) {
@@ -137,7 +147,7 @@ function filterMarkers(content: object) {
     if (content.value.countries.length > 0) {
       if (mtn.countries.length > 0) {
         for (const country of content.value.countries) {
-          for (let i = 0 ; i < mtn.countries.length ; i++) {
+          for (let i = 0; i < mtn.countries.length; i++) {
             if (mtn.countries[i] === country.name) {
               hide_country = false;
             }
@@ -152,7 +162,7 @@ function filterMarkers(content: object) {
     if (content.value.regions.length > 0) {
       if (mtn.regions.length > 0) {
         for (const region of content.value.regions) {
-          for (let i = 0 ; i < mtn.regions.length ; i++) {
+          for (let i = 0; i < mtn.regions.length; i++) {
             if (mtn.regions[i] === region.name) {
               hide_region = false;
             }
@@ -184,11 +194,19 @@ function filterMarkers(content: object) {
         hide_ascended = false;
       }
     } else {
-      console.log("alguna vez?")
+      console.log("alguna vez?");
       hide_ascended = false;
     }
 
-    if (hide_prefix || hide_min_altitude || hide_max_altitude || hide_region || hide_country || hide_mountaingroup || hide_ascended) {
+    if (
+      hide_prefix ||
+      hide_min_altitude ||
+      hide_max_altitude ||
+      hide_region ||
+      hide_country ||
+      hide_mountaingroup ||
+      hide_ascended
+    ) {
       hideMarker(mtn);
     } else {
       unhideMarker(mtn);
@@ -199,7 +217,6 @@ function filterMarkers(content: object) {
 defineExpose({
   filterMarkers,
 });
-
 </script>
 <style lang="scss">
 .main-map {

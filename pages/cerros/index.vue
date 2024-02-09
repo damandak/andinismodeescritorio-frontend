@@ -106,7 +106,7 @@ const order_direction = ref("asc");
 
 const apiURLmountains =
   config.public.apiBase +
-  "mountain/table?page_size=" +
+  "mountains/?table&page_size=" +
   page_size.value +
   "&page=" +
   page_number.value;

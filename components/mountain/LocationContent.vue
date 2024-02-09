@@ -1,10 +1,10 @@
 <template>
   <div class="location-content">
     <div class="nearby-mountains">
-      <p>Cumbres cercanas: </p>
+      <p>Cumbres cercanas:</p>
       <span v-for="mtn in nearbyMountains" :key="mtn.id">
         <NuxtLink :to="'/cerros/' + mtn.id">
-          <span class="prefix">{{ mtn.prefix + " "}}</span>
+          <span class="prefix">{{ mtn.prefix + " " }}</span>
           <span class="name">{{ mtn.name }}</span>
         </NuxtLink>
       </span>
@@ -33,47 +33,60 @@ const props = defineProps({
 });
 const config = useRuntimeConfig();
 
-const apiURLnearby = config.public.apiBase + "mountain/" + props.mtnID + "/nearby_mountains/"
-const { data } = await useFetch(apiURLnearby)
-const nearbyMountains = data.value.results
+const apiURLnearby =
+  config.public.apiBase + "mountains/?nearby=" + props.mtnID + "&no_pagination";
+const { data } = await useFetch(apiURLnearby);
+const nearbyMountains = data.value.results;
 
 const loader = getGoogleMapsLoader(config.public.googleMapsApiKey);
 
-const loading = ref(true)
+const loading = ref(true);
 const mapDiv = ref(null);
 onMounted(async () => {
   await loader.load();
-  const map = new google.maps.Map(
-    mapDiv.value,
-    {
-      center: { lat: parseFloat(props.latitude), lng: parseFloat(props.longitude) },
-      zoom: 13,
-      mapTypeId: "satellite",
-      gestureHandling: 'cooperative',
-      rotateControl: false,
-      streetViewControl: false,
+  const map = new google.maps.Map(mapDiv.value, {
+    center: {
+      lat: parseFloat(props.latitude),
+      lng: parseFloat(props.longitude),
     },
-  );
+    zoom: 13,
+    mapTypeId: "satellite",
+    gestureHandling: "cooperative",
+    rotateControl: false,
+    streetViewControl: false,
+  });
 
   const apiURL = config.public.apiBase + "map/";
-  const { data } = await useFetch(apiURL)
+  const { data } = await useFetch(apiURL);
   const image = {
     url: "/img/marker3.png",
   };
   const image_alt = {
     url: "/img/marker-alt-3.png",
-  }
+  };
   for (const mtn of data.value) {
     const infowindow = new google.maps.InfoWindow({
-      content: '<a href="/cerros/' + mtn.id + '" class="mtn-popup-link">' +
-        '<p class="prefix">' + mtn.prefix + '</p>' +
-        '<p class="name">' + mtn.name + '</p></a>' +
-        '<p class="mtn-popup-altitude">' + mtn.altitude + ' mts</p>',
-      ariaLabel: mtn.prefix + ' ' + mtn.name,
+      content:
+        '<a href="/cerros/' +
+        mtn.id +
+        '" class="mtn-popup-link">' +
+        '<p class="prefix">' +
+        mtn.prefix +
+        "</p>" +
+        '<p class="name">' +
+        mtn.name +
+        "</p></a>" +
+        '<p class="mtn-popup-altitude">' +
+        mtn.altitude +
+        " mts</p>",
+      ariaLabel: mtn.prefix + " " + mtn.name,
     });
     if (mtn.id === parseFloat(props.mtnID)) {
       const marker = new google.maps.Marker({
-        position: { lat: parseFloat(mtn.latitude), lng: parseFloat(mtn.longitude) },
+        position: {
+          lat: parseFloat(mtn.latitude),
+          lng: parseFloat(mtn.longitude),
+        },
         map: map,
         title: mtn.title,
         icon: image_alt,
@@ -83,7 +96,10 @@ onMounted(async () => {
       });
     } else {
       const marker = new google.maps.Marker({
-        position: { lat: parseFloat(mtn.latitude), lng: parseFloat(mtn.longitude) },
+        position: {
+          lat: parseFloat(mtn.latitude),
+          lng: parseFloat(mtn.longitude),
+        },
         map: map,
         title: mtn.title,
         icon: image,
@@ -93,7 +109,7 @@ onMounted(async () => {
       });
     }
   }
-  loading.value = false
+  loading.value = false;
 });
 </script>
 <style scoped lang="scss">
