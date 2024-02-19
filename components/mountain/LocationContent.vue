@@ -56,7 +56,7 @@ onMounted(async () => {
     streetViewControl: false,
   });
 
-  const apiURL = config.public.apiBase + "map/";
+  const apiURL = config.public.apiBase + "mountains/?no_pagination";
   const { data } = await useFetch(apiURL);
   const image = {
     url: "/img/marker3.png",
