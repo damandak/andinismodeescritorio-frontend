@@ -13,8 +13,7 @@
   },
   "devDependencies": {
     "@nuxt/content": "^2.3.0",
-    "nuxi": "^3.10.0",
-    "nuxt": "^3.10.1",
+    "nuxt": "3.0.0",
     "sass": "^1.56.1"
   },
   "dependencies": {
