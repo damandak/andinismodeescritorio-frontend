@@ -1,8 +1,8 @@
 <template>
-   <div class="content-wrapper andinist-wrapper">
+  <div class="content-wrapper andinist-wrapper">
     <MainstructureTitleSection :name="name + ' ' + surname" :mts="false" />
-    <div class="main-image-section" v-if="img_url" >
-      <img :src="img_url" alt="">
+    <div class="main-image-section" v-if="img_url">
+      <img :src="img_url" alt="" />
     </div>
     <div class="body-section">
       <BodyTabWrapper
@@ -23,58 +23,50 @@
           :first_ascent_count="first_ascent_count"
           :new_routes_count="new_routes_count"
         />
-        <AndinistAscentsContent
-          v-if="selectedTab === 1"
-          :id="id"
-        />
-        <AndinistPhotosContent
-          v-if="selectedTab === 2"
-        />
-        <AndinistReferencesContent
-          v-if="selectedTab === 3"
-          :andinist="id"
-        />
+        <AndinistAscentsContent v-if="selectedTab === 1" :id="id" />
+        <AndinistPhotosContent v-if="selectedTab === 2" />
+        <AndinistReferencesContent v-if="selectedTab === 3" :andinist="id" />
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, ref } from "vue";
 const config = useRuntimeConfig();
-const route = useRoute()
+const route = useRoute();
 const tabs = [
   { id: 0, title: "General", iconname: "ico-general" },
   { id: 1, title: "Ascensos", iconname: "ico-ascent" },
   { id: 2, title: "Fotos", iconname: "ico-photo" },
   { id: 3, title: "Referencias", iconname: "ico-sources" },
-]
-const apiURLAndinist = config.public.apiBase + "andinist/" + route.params.id + "/" 
-const { data } = await useFetch(apiURLAndinist)
-const andinist = data.value
+];
+const apiURLAndinist =
+  config.public.apiBase + "andinist/" + route.params.id + "/";
+const andinist = await $fetch(apiURLAndinist);
 
-const id = route.params.id
-const name = andinist.name
-const surname = andinist.surname
-const gender = andinist.gender
-const nationalities = andinist.nationalities_tostr
-const clubs = andinist.clubs_tostr
-const ascent_count = andinist.ascent_count
-const first_ascent_count = andinist.first_ascent_count
-const new_routes_count = andinist.new_routes_count
-const img_url = andinist.img_url
+const id = route.params.id;
+const name = andinist.name;
+const surname = andinist.surname;
+const gender = andinist.gender;
+const nationalities = andinist.nationalities_tostr;
+const clubs = andinist.clubs_tostr;
+const ascent_count = andinist.ascent_count;
+const first_ascent_count = andinist.first_ascent_count;
+const new_routes_count = andinist.new_routes_count;
+const img_url = andinist.img_url;
 
-var selectedTab = ref(0)
+var selectedTab = ref(0);
 function switchTab(tabNumber: number) {
   if (selectedTab.value === tabNumber) {
-    return
+    return;
   }
   // erase selected class from all tabs
-  var tabs = document.getElementsByClassName("tab")
+  var tabs = document.getElementsByClassName("tab");
   for (var i = 0; i < tabs.length; i++) {
-    tabs[i].classList.remove("selected")
+    tabs[i].classList.remove("selected");
   }
-  tabs[tabNumber].classList.add("selected")
-  selectedTab.value = tabNumber
+  tabs[tabNumber].classList.add("selected");
+  selectedTab.value = tabNumber;
 }
 </script>
 <style scoped lang="scss">
@@ -108,7 +100,7 @@ function switchTab(tabNumber: number) {
       min-height: 500px;
       h2.content-title {
         font-size: 1.5rem;
-        font-family: 'Lato', sans-serif;
+        font-family: "Lato", sans-serif;
         font-weight: 600;
         margin: 15px auto;
         padding: 0 0 0 10px;

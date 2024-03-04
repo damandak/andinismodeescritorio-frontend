@@ -3,7 +3,7 @@
     <MainstructureTitleSection
       :prefix="mtnPrefix"
       :name="mtnName"
-      :subtitle="mtnAltitude"
+      :subtitle="stringAltitude"
       :mts="true"
     />
     <div v-if="img_url" class="main-image-section">
@@ -71,14 +71,14 @@ const tabs = [
 
 const apiURLMountain =
   config.public.apiBase + "mountain/" + route.params.id + "/";
-const { data } = await useFetch(apiURLMountain);
-const mtn = data.value;
+const mtn = await $fetch(apiURLMountain);
 
 const mtnID = ref(route.params.id);
 const mtnName = ref(mtn.name);
 const mtnPrefix = ref(mtn.prefix);
 const mtnFullName = ref(mtnPrefix.value + " " + mtnName.value);
 const mtnAltitude = ref(mtn.altitude);
+const stringAltitude = ref(mtn.altitude.toString());
 const mtnAltitudeIgm = ref(mtn.altitude_igm);
 const mtnAltitudeArg = ref(mtn.altitude_arg);
 const mtnAltitudeGps = ref(mtn.altitude_gps);
@@ -95,7 +95,9 @@ const mtnMountainGroupIDs = ref(mtn.mountain_group);
 const firstAbsolute = ref(mtn.first_absolute);
 const firstAbsoluteName = ref(mtn.first_absolute_name);
 const firstAbsoluteDate = ref(mtn.first_absolute_date);
-const firstAbsoluteTeam = ref(mtn.first_absolute_team);
+const firstAbsoluteTeam = ref(
+  Array.isArray(mtn.first_absolute_team) ? mtn.first_absolute_team : []
+);
 const unregisteredNonSportAscent = ref(mtn.unregistered_non_sport_ascent);
 
 const main_image = ref(mtn.main_image);
@@ -105,8 +107,8 @@ const author = ref(null);
 
 if (main_image.value != null) {
   const apiURLImage = config.public.apiBase + "image/" + main_image.value + "/";
-  const { data: dataImage } = await useFetch(apiURLImage);
-  image.value = dataImage.value;
+  const dataImage = await $fetch(apiURLImage);
+  image.value = dataImage;
   img_url.value = image.value.image;
   author.value = image.author;
 }

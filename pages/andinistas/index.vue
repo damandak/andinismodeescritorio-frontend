@@ -130,9 +130,9 @@ const apiURLandinists =
   page_size.value +
   "&page=" +
   page_number.value;
-const { data } = await useFetch(apiURLandinists);
-andinistas_count.value = data.value.count;
-andinistas.value = data.value.results;
+const data = await $fetch(apiURLandinists);
+andinistas_count.value = data.count;
+andinistas.value = data.results;
 page_list.value = Array.from(
   Array(Math.ceil(andinistas_count.value / page_size.value)).keys()
 ).map((x) => x + 1);
@@ -157,34 +157,20 @@ async function reloadAndinists(resetPage = false) {
       order_field.value;
   }
 
-  const { data } = await useFetch(apiURLandinists);
-  andinistas.value = data.value.results;
-  andinistas_count.value = data.value.count;
+  const andinists = await $fetch(apiURLandinists);
+  andinistas.value = andinists.results;
+  andinistas_count.value = andinists.count;
   page_list.value = Array.from(
     Array(Math.ceil(andinistas_count.value / page_size.value)).keys()
   ).map((x) => x + 1);
 }
 
 function changeOrder(field: string) {
-  console.log(
-    "change order field: " +
-      field +
-      " " +
-      order_field.value +
-      " " +
-      order_direction.value +
-      ""
-  );
   if (order_field.value === field) {
-    console.log("order_field is field");
     order_direction.value = order_direction.value === "asc" ? "desc" : "asc";
-    console.log("new order_direction: " + order_direction.value);
   } else {
-    console.log("order_field is not field");
     order_field.value = field;
-    console.log("new order_field: " + order_field.value);
     order_direction.value = "asc";
-    console.log("new order_direction: " + order_direction.value);
   }
   reloadAndinists();
 }

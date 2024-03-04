@@ -118,9 +118,9 @@ const apiURLroutes =
   page_size.value +
   "&page=" +
   page_number.value;
-const { data } = await useFetch(apiURLroutes);
-rutas_count.value = data.value.count;
-rutas.value = data.value.results;
+const data = await $fetch(apiURLroutes);
+rutas_count.value = data.count;
+rutas.value = data.results;
 page_list.value = Array.from(
   Array(Math.ceil(rutas_count.value / page_size.value)).keys()
 ).map((x) => x + 1);
@@ -145,34 +145,20 @@ async function reloadRoutes(resetPage = false) {
       order_field.value;
   }
 
-  const { data } = await useFetch(apiURLnewroutes);
-  rutas.value = data.value.results;
-  rutas_count.value = data.value.count;
+  const newroutes = await $fetch(apiURLnewroutes);
+  rutas.value = newroutes.results;
+  rutas_count.value = newroutes.count;
   page_list.value = Array.from(
     Array(Math.ceil(rutas_count.value / page_size.value)).keys()
   ).map((x) => x + 1);
 }
 
 function changeOrder(field: string) {
-  console.log(
-    "change order field: " +
-      field +
-      " " +
-      order_field.value +
-      " " +
-      order_direction.value +
-      ""
-  );
   if (order_field.value === field) {
-    console.log("order_field is field");
     order_direction.value = order_direction.value === "asc" ? "desc" : "asc";
-    console.log("new order_direction: " + order_direction.value);
   } else {
-    console.log("order_field is not field");
     order_field.value = field;
-    console.log("new order_field: " + order_field.value);
     order_direction.value = "asc";
-    console.log("new order_direction: " + order_direction.value);
   }
   reloadRoutes();
 }

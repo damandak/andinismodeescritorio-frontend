@@ -1,8 +1,12 @@
 <template>
   <div class="content-wrapper route-wrapper">
-    <MainstructureTitleSection :prefix="route_mountain_name" :name="route_name" :mts="false" />
+    <MainstructureTitleSection
+      :prefix="route_mountain_name"
+      :name="route_name"
+      :mts="false"
+    />
     <div v-if="img_url" class="main-image-section">
-      <img :src="img_url" alt="">
+      <img :src="img_url" alt="" />
     </div>
     <div class="body-section">
       <BodyTabWrapper
@@ -46,69 +50,65 @@
           :routeID="route_id"
           :mtnID="route_mountain_id"
         />
-        <RoutesPhotosContent
-          v-if="selectedTab === 4"
-        />
-        <RoutesReferencesContent
-          v-if="selectedTab === 5"
-          :routeID="route_id"
-        />
+        <RoutesPhotosContent v-if="selectedTab === 4" />
+        <RoutesReferencesContent v-if="selectedTab === 5" :routeID="route_id" />
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import GeneralContent from '~~/components/ascent/GeneralContent.vue';
+import { onMounted, ref } from "vue";
+import GeneralContent from "~~/components/ascent/GeneralContent.vue";
 const config = useRuntimeConfig();
-const route = useRoute()
+const route = useRoute();
 const tabs = [
   { id: 0, title: "General", iconname: "ico-general" },
-  { id: 1, title: "Ascensos", iconname: "ico-ascent"},
-  { id: 2, title: "Descargables", iconname: "ico-download"},
-  { id: 3, title: "Otras Rutas", iconname: "ico-route"},
-  { id: 4, title: "Fotos", iconname: "ico-photo"},
+  { id: 1, title: "Ascensos", iconname: "ico-ascent" },
+  { id: 2, title: "Descargables", iconname: "ico-download" },
+  { id: 3, title: "Otras Rutas", iconname: "ico-route" },
+  { id: 4, title: "Fotos", iconname: "ico-photo" },
   { id: 5, title: "Referencias", iconname: "ico-sources" },
-]
-const apiURLRoute = config.public.apiBase + "route/" + route.params.id + "/" 
-const { data } = await useFetch(apiURLRoute)
-const ruta = data.value
+];
+const apiURLRoute = config.public.apiBase + "route/" + route.params.id + "/";
+const ruta = await $fetch(apiURLRoute);
 
-const route_id = ref(ruta.id)
-const route_name = ref(ruta.name)
-const route_parent_route = ref(ruta.parent_route)
-const route_parent_route_name = ref(ruta.parent_route_name)
-const route_mountain_id = ref(ruta.mountain)
-const route_mountain_name = ref(ruta.mountain_name)
-const route_summit = ref(ruta.summit)
-const route_ascended = ref(ruta.ascended)
-const route_first_ascent = ref(ruta.first_ascent)
-const route_first_ascent_name = ref(ruta.first_ascent_name)
-const route_first_ascent_date = ref(ruta.first_ascent_date)
-const route_first_ascent_team = ref(ruta.first_ascent_team)
-const route_unregistered_non_sport_ascent = ref(ruta.unregistered_non_sport_ascent)
-const route_unregistered_sport_ascent = ref(ruta.unregistered_sport_ascent)
-const route_alpine_grade = ref(ruta.alpine_grade)
-const route_aid_climbing_grade = ref(ruta.aid_climbing_grade)
-const route_ice_climbing_grade = ref(ruta.ice_climbing_grade)
-const route_rock_climbing_grade = ref(ruta.rock_climbing_grade)
-const route_description = ref(ruta.description)
-const route_kml = ref(ruta.kml)
-const route_gpx = ref(ruta.gpx)
-const route_notes = ref(ruta.notes)
+const route_id = ref(ruta.id);
+const route_name = ref(ruta.name);
+const route_parent_route = ref(ruta.parent_route);
+const route_parent_route_name = ref(ruta.parent_route_name);
+const route_mountain_id = ref(ruta.mountain);
+const route_mountain_name = ref(ruta.mountain_name);
+const route_summit = ref(ruta.summit);
+const route_ascended = ref(ruta.ascended);
+const route_first_ascent = ref(ruta.first_ascent);
+const route_first_ascent_name = ref(ruta.first_ascent_name);
+const route_first_ascent_date = ref(ruta.first_ascent_date);
+const route_first_ascent_team = ref(ruta.first_ascent_team);
+const route_unregistered_non_sport_ascent = ref(
+  ruta.unregistered_non_sport_ascent
+);
+const route_unregistered_sport_ascent = ref(ruta.unregistered_sport_ascent);
+const route_alpine_grade = ref(ruta.alpine_grade);
+const route_aid_climbing_grade = ref(ruta.aid_climbing_grade);
+const route_ice_climbing_grade = ref(ruta.ice_climbing_grade);
+const route_rock_climbing_grade = ref(ruta.rock_climbing_grade);
+const route_description = ref(ruta.description);
+const route_kml = ref(ruta.kml);
+const route_gpx = ref(ruta.gpx);
+const route_notes = ref(ruta.notes);
 
-var selectedTab = ref(0)
+var selectedTab = ref(0);
 function switchTab(tabNumber: number) {
   if (selectedTab.value === tabNumber) {
-    return
+    return;
   }
   // erase selected class from all tabs
-  var tabs = document.getElementsByClassName("tab")
+  var tabs = document.getElementsByClassName("tab");
   for (var i = 0; i < tabs.length; i++) {
-    tabs[i].classList.remove("selected")
+    tabs[i].classList.remove("selected");
   }
-  tabs[tabNumber].classList.add("selected")
-  selectedTab.value = tabNumber
+  tabs[tabNumber].classList.add("selected");
+  selectedTab.value = tabNumber;
 }
 </script>
 <style scoped lang="scss">
@@ -142,7 +142,7 @@ function switchTab(tabNumber: number) {
       min-height: 500px;
       h2.content-title {
         font-size: 1.5rem;
-        font-family: 'Lato', sans-serif;
+        font-family: "Lato", sans-serif;
         font-weight: 600;
         margin: 15px auto;
         padding: 0 0 0 10px;

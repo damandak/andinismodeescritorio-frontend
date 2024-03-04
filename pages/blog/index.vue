@@ -77,11 +77,11 @@ const image_urls = await Promise.all(
   contents.map(async (article) => {
     const apiURLImage =
       config.public.apiBase + "image/" + article.mainimageid + "/";
-    const { data } = await useFetch(apiURLImage);
+    const data = await $fetch(apiURLImage);
     return {
       id: article.mainimageid,
-      image: data.value.tb_item_cover,
-      main_image: data.value.image,
+      image: data.tb_item_cover,
+      main_image: data.image,
     };
   })
 );

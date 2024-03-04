@@ -110,9 +110,9 @@ const apiURLmountains =
   page_size.value +
   "&page=" +
   page_number.value;
-const { data } = await useFetch(apiURLmountains);
-cerros_count.value = data.value.count;
-cerros.value = data.value.results;
+const data = await $fetch(apiURLmountains);
+cerros_count.value = data.count;
+cerros.value = data.results;
 page_list.value = Array.from(
   Array(Math.ceil(cerros_count.value / page_size.value)).keys()
 ).map((x) => x + 1);
@@ -123,46 +123,33 @@ async function reloadMountains(resetPage = false) {
   }
   let apiURLmountains =
     config.public.apiBase +
-    "mountain/table?page_size=" +
+    "mountains/?table&page_size=" +
     page_size.value +
     "&page=" +
-    page_number.value +
-    "&search=" +
-    search.value;
+    page_number.value;
+  if (search.value !== "") {
+    apiURLmountains += "&search=" + search.value;
+  }
   if (order_field.value && order_direction.value) {
     apiURLmountains +=
       "&ordering=" +
       (order_direction.value === "desc" ? "-" : "") +
       order_field.value;
   }
-  const { data } = await useFetch(apiURLmountains);
-  cerros.value = data.value.results;
-  cerros_count.value = data.value.count;
+  const data = await $fetch(apiURLmountains);
+  cerros.value = data.results;
+  cerros_count.value = data.count;
   page_list.value = Array.from(
     Array(Math.ceil(cerros_count.value / page_size.value)).keys()
   ).map((x) => x + 1);
 }
 
 function changeOrder(field: string) {
-  console.log(
-    "change order field: " +
-      field +
-      " " +
-      order_field.value +
-      " " +
-      order_direction.value +
-      ""
-  );
   if (order_field.value === field) {
-    console.log("order_field is field");
     order_direction.value = order_direction.value === "asc" ? "desc" : "asc";
-    console.log("new order_direction: " + order_direction.value);
   } else {
-    console.log("order_field is not field");
     order_field.value = field;
-    console.log("new order_field: " + order_field.value);
     order_direction.value = "asc";
-    console.log("new order_direction: " + order_direction.value);
   }
   reloadMountains();
 }
