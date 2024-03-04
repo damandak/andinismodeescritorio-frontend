@@ -1,12 +1,14 @@
 <template>
   <div class="filter-wrapper" :class="active">
-    <MapFilter v-for="filter in filters" :key="filter.id"
-      :id='filter.id'
-      :name='filter.name'
-      :apiUrl='filter.apiUrl'
-      :filter_type='filter.filter_type'
-      :obj_type='filter.obj_type'
-      :selected_filter='selected_filter[filter.id]'
+    <MapFilter
+      v-for="filter in filters"
+      :key="filter.id"
+      :id="filter.id"
+      :name="filter.name"
+      :apiUrl="filter.apiUrl"
+      :filter_type="filter.filter_type"
+      :obj_type="filter.obj_type"
+      :selected_filter="selected_filter[filter.id]"
       @selectFilter="selectFilter"
       @changeApiFilter="changeApiFilter"
     />
@@ -14,12 +16,12 @@
 </template>
 <script setup lang="ts">
 const props = defineProps<{
-  active: String
-}>()
+  active: String;
+}>();
 
 const emit = defineEmits<{
-  changeFilters: (id: number, param_string: string) => void,
-}>()
+  changeFilters: (id: number, param_string: string) => void;
+}>();
 
 const filters = ref([
   {
@@ -64,15 +66,15 @@ const filters = ref([
     filter_type: "select",
     obj_type: "boolean",
   },
-])
+]);
 
-const selected_filter = ref([false, false, false, false, false])
+const selected_filter = ref([false, false, false, false, false]);
 
 function selectFilter(id: number) {
-  selected_filter.value[id] = !selected_filter.value[id]
+  selected_filter.value[id] = !selected_filter.value[id];
   for (let i = 0; i < selected_filter.value.length; i++) {
     if (i != id) {
-      selected_filter.value[i] = false
+      selected_filter.value[i] = false;
     }
   }
 }
@@ -85,37 +87,37 @@ const allFilters = ref({
   min_altitude: ref(0),
   max_altitude: ref(9000),
   ascended: ref([false, true]),
-})
+});
 
 function changeApiFilter(id: number, param: number[]) {
   if (id == 0) {
-    allFilters.value.prefixes = param
+    allFilters.value.prefixes = param;
   } else if (id == 1) {
-    allFilters.value.countries = param
+    allFilters.value.countries = param;
   } else if (id == 2) {
-    allFilters.value.regions = param
+    allFilters.value.regions = param;
   } else if (id == 3) {
     if (param.length == 0) {
-      allFilters.value.min_altitude = 0
+      allFilters.value.min_altitude = 0;
     } else {
-      allFilters.value.min_altitude = param[0].number
+      allFilters.value.min_altitude = param[0].number;
     }
   } else if (id == 4) {
     if (param.length == 0) {
-      allFilters.value.max_altitude = 9000
+      allFilters.value.max_altitude = 9000;
     } else {
-      allFilters.value.max_altitude = param[0].number
+      allFilters.value.max_altitude = param[0].number;
     }
   } else if (id == 5) {
     if (param.length == 0) {
-      allFilters.value.ascended = [false, true]
+      allFilters.value.ascended = [false, true];
     } else if (param[0].name == "No") {
-      allFilters.value.ascended = [false]
+      allFilters.value.ascended = [false];
     } else if (param[0].name == "Sí") {
-      allFilters.value.ascended = [true]
+      allFilters.value.ascended = [true];
     }
   }
-  emit("changeFilters", id, allFilters)
+  emit("changeFilters", id, allFilters);
 }
 </script>
 <style scoped lang="scss">
