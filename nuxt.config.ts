@@ -1,6 +1,6 @@
 const apiAddress =
   process.env.NODE_ENV === "development"
-    ? "http://localhost:8000/djangoapi/"
+    ? "http://127.0.0.1:8000/djangoapi/"
     : "https://andinismodeescritorio.cl/djangoapi/";
 
 export default defineNuxtConfig({
