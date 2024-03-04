@@ -8,9 +8,10 @@ const props = defineProps<{
 
 const config = useRuntimeConfig();
 
-const apiURLreferences = config.public.apiBase + "route/" + props.routeID + "/references/"
-const { data } = await useFetch(apiURLreferences)
-const references = data.value.results
+const apiURLreferences =
+  config.public.apiBase + "route/" + props.routeID + "/references/";
+const data = await $fetch(apiURLreferences);
+const references = data.results;
 </script>
 <style scoped lang="scss">
 .main-references {

@@ -51,8 +51,8 @@ const config = useRuntimeConfig();
 
 const apiURLascents =
   config.public.apiBase + "andinist/" + props.id + "/ascents/";
-const { data } = await useFetch(apiURLascents);
-const ascents = data.value.results;
+const data = await $fetch(apiURLascents);
+const ascents = data.results;
 
 for (const ascent of ascents) {
   ascent.andinist_list = [];
@@ -61,14 +61,12 @@ for (const ascent of ascents) {
   for (const individual_andinist of ascent.andinists) {
     const apiURLandinist =
       config.public.apiBase + "andinist/" + individual_andinist[0] + "/basic/";
-    const { data } = await useFetch(apiURLandinist);
-    const andinist = data.value;
+    const andinist = await $fetch(apiURLandinist);
     ascent.andinist_list = [...ascent.andinist_list, andinist];
   }
   const apiURLroute =
     config.public.apiBase + "route/" + ascent.route + "/name/";
-  const { data } = await useFetch(apiURLroute);
-  const route = data.value;
+  const route = await $fetch(apiURLroute);
   ascent.route_name = route.name;
 }
 </script>

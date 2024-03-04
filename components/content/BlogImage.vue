@@ -37,8 +37,8 @@ const not_fullwidth = computed(() => {
 });
 const apiURLImage =
   runtimeConfig.public.apiBase + "image/" + props.image_id + "/";
-const { data } = await useFetch(apiURLImage);
-const image = data.value;
+const data = await $fetch(apiURLImage);
+const image = data;
 </script>
 <style scoped lang="scss">
 .blog-image {

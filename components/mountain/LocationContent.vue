@@ -35,8 +35,7 @@ const config = useRuntimeConfig();
 
 const apiURLnearby =
   config.public.apiBase + "mountains/?nearby=" + props.mtnID + "&no_pagination";
-const { data } = await useFetch(apiURLnearby);
-const nearbyMountains = data.value.results;
+const nearbyMountains = await $fetch(apiURLnearby);
 
 const loader = getGoogleMapsLoader(config.public.googleMapsApiKey);
 
@@ -56,16 +55,15 @@ onMounted(async () => {
     streetViewControl: false,
   });
 
-  //const apiURL = config.public.apiBase + "mountains/?no_pagination";
-  const apiURL = config.public.apiBase + "map/";
-  const { data } = await useFetch(apiURL);
+  const apiURL = config.public.apiBase + "mountains/?no_pagination";
+  const mountains = await $fetch(apiURL);
   const image = {
     url: "/img/marker3.png",
   };
   const image_alt = {
     url: "/img/marker-alt-3.png",
   };
-  for (const mtn of data.value) {
+  for (const mtn of mountains) {
     const infowindow = new google.maps.InfoWindow({
       content:
         '<a href="/cerros/' +

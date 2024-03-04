@@ -39,12 +39,11 @@ const props = defineProps<{
 }>();
 
 const apiURLImage = config.public.apiBase + "image/" + props.image_id + "/";
-const { data } = await useFetch(apiURLImage);
-const image = data.value;
+const data = await $fetch(apiURLImage);
+const image = data;
 
 const apiURLauthor = config.public.apiBase + "andinist/" + props.authorID + "/";
-const { data: authorData } = await useFetch(apiURLauthor);
-const author = authorData.value;
+const author = await $fetch(apiURLauthor);
 </script>
 <style scoped lang="scss">
 h1 {

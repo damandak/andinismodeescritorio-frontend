@@ -3,14 +3,10 @@
     <h3 v-if="mtnAHB || mtnWikiExplora">Referencias externas</h3>
     <div v-if="mtnAHB || mtnWikiExplora" class="main-references">
       <span v-if="mtnAHB">
-        <a :href="mtnAHB">
-          Andeshandbook
-        </a>
+        <a :href="mtnAHB"> Andeshandbook </a>
       </span>
       <span v-if="mtnWikiExplora">
-        <a :href="mtnWikiExplora">
-          WikiExplora
-        </a>
+        <a :href="mtnWikiExplora"> WikiExplora </a>
       </span>
     </div>
     <BodyReferences :references="references" />
@@ -83,14 +79,14 @@ const props = defineProps<{
 
 const config = useRuntimeConfig();
 
-const apiURLreferences = config.public.apiBase + "mountain/" + props.mtnID + "/references/"
-const { data } = await useFetch(apiURLreferences)
-const references = data.value.results
+const apiURLreferences =
+  config.public.apiBase + "mountain/" + props.mtnID + "/references/";
+const data = await $fetch(apiURLreferences);
+const references = data.results;
 
-const apiURLnomenclatura = config.public.apiBase + "mountain/" + props.mtnID + "/nomenclatura/"
-const { data: dataNomenclatura } = await useFetch(apiURLnomenclatura)
-const nomenclatura = dataNomenclatura.value
-
+const apiURLnomenclatura =
+  config.public.apiBase + "mountain/" + props.mtnID + "/nomenclatura/";
+const nomenclatura = await $fetch(apiURLnomenclatura);
 </script>
 <style scoped lang="scss">
 .main-references {
