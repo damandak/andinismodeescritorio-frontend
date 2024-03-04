@@ -162,24 +162,24 @@ async function searchAgain(e: any) {
   }
 
   const apiURLMountains =
-    config.public.apiBase + "mountains/?basic&search=" + e.target.value;
-  const { data: mountaindata } = await useFetch(apiURLMountains);
-  searchedMountains.value = mountaindata.value.results;
+    config.public.apiBase + "mountains/?search=" + e.target.value;
+  const mountaindata = await $fetch(apiURLMountains);
+  searchedMountains.value = mountaindata.results;
 
   const apiURLRoutes =
     config.public.apiBase + "route/table/?search=" + e.target.value;
-  const { data: routesdata } = await useFetch(apiURLRoutes);
-  searchedRoutes.value = routesdata.value.results;
+  const routesdata = await $fetch(apiURLRoutes);
+  searchedRoutes.value = routesdata.results;
 
   const apiURLAscents =
     config.public.apiBase + "ascent/table/?search=" + e.target.value;
-  const { data: ascentdata } = await useFetch(apiURLAscents);
-  searchedAscents.value = ascentdata.value.results;
+  const ascentdata = await $fetch(apiURLAscents);
+  searchedAscents.value = ascentdata.results;
 
   const apiURLAndinists =
     config.public.apiBase + "andinist/table/?search=" + e.target.value;
-  const { data: andinistsdata } = await useFetch(apiURLAndinists);
-  searchedAndinists.value = andinistsdata.value.results;
+  const andinistsdata = await $fetch(apiURLAndinists);
+  searchedAndinists.value = andinistsdata.results;
 
   if (
     searchedMountains.value.length > 0 ||
