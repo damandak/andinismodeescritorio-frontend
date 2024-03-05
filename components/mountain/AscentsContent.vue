@@ -71,7 +71,6 @@ for (const ascent of ascents) {
     config.public.apiBase + "route/" + ascent.route + "/name/";
   const route = await $fetch(apiURLroute);
   ascent.route_name = route.name;
-  console.log(ascent);
   ascent.honours = ascent.is_first_ascent ? "Primera ascensión" : "";
   if (ascent.honours === "") {
     ascent.honours = ascent.new_route ? "Nueva ruta" : "";

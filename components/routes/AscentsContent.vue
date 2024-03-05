@@ -25,7 +25,7 @@
             </NuxtLink>
           </span>
         </td>
-        <td>Primera ascensión</td>
+        <td>{{ ascent.honours }}</td>
       </tr>
     </tbody>
   </table>
@@ -65,6 +65,10 @@ for (const ascent of ascents) {
     config.public.apiBase + "route/" + ascent.route + "/name/";
   const route = await $fetch(apiURLroute);
   ascent.route_name = route.name;
+  ascent.honours = ascent.is_first_ascent ? "Primera ascensión" : "";
+  if (ascent.honours === "") {
+    ascent.honours = ascent.new_route ? "Nueva ruta" : "";
+  }
 }
 </script>
 <style lang="scss" scoped>
