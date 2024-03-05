@@ -8,7 +8,11 @@
     </div>
     <div v-if="selected_filter" class="select-group">
       <div v-for="item in filterItems">
-        <div class="select-item" :class="item.class" @click="toggleSelectItem(item.id)">
+        <div
+          class="select-item"
+          :class="item.class"
+          @click="toggleSelectItem(item.id)"
+        >
           <p>{{ item.name }}</p>
         </div>
       </div>
@@ -17,85 +21,109 @@
 </template>
 
 <script setup lang="ts">
-import { emit } from 'process';
 const config = useRuntimeConfig();
 const props = defineProps<{
-  id: number,
-  name: String,
-  filter_type: String,
-  obj_type: String,
-  selected_filter: Boolean,
-  apiUrl: String,
-}>()
+  id: number;
+  name: String;
+  filter_type: String;
+  obj_type: String;
+  selected_filter: Boolean;
+  apiUrl: String;
+}>();
 const emit = defineEmits<{
-  selectFilter : (id: number) => void,
-  changeApiFilter: (id: number, param_string: string) => void,
-}>()
+  selectFilter: (id: number) => void;
+  changeApiFilter: (id: number, param_string: string) => void;
+}>();
 
-const is_active = ref("")
+const is_active = ref("");
 
 // define a list of objects with id and name
-const filterItems : Ref<[{id: number, name: string, class: string}]> = ref([])
+const filterItems: Ref<[{ id: number; name: string; class: string }]> = ref([]);
 
-if (props.apiUrl != "") {
-  const apiURL = config.public.apiBase + props.apiUrl 
-  const { data } = await useFetch(apiURL)
-  const output = data.value.results
-  for (let i = 0; i < output.length; i++) {
-    if (props.name == "prefijo") {
-      filterItems.value.push({id: output[i].id, name: output[i].prefix, class: "" })
-    } else {
-      filterItems.value.push({id: output[i].id, name: output[i].name, class: "" })
+async function updateFilterItems() {
+  if (props.apiUrl != "") {
+    const apiURL = config.public.apiBase + props.apiUrl;
+    const { data, execute } = useFetch(apiURL);
+
+    // Immediately invoke the fetch operation
+    await execute();
+
+    const output = data.value.results;
+
+    for (let i = 0; i < output.length; i++) {
+      if (props.name == "prefijo") {
+        filterItems.value.push({
+          id: output[i].id,
+          name: output[i].prefix,
+          class: "",
+        });
+      } else {
+        filterItems.value.push({
+          id: output[i].id,
+          name: output[i].name,
+          class: "",
+        });
+      }
     }
-  }
-} else {
-  if (props.name == "altura mínima") {
-    filterItems.value.push({id: 0, name: "1000", number: 1000, class: "" })
-    filterItems.value.push({id: 1, name: "2000", number: 2000, class: "" })
-    filterItems.value.push({id: 2, name: "3000", number: 3000, class: "" })
-    filterItems.value.push({id: 3, name: "4000", number: 4000, class: "" })
-    filterItems.value.push({id: 4, name: "5000", number: 5000, class: "" })
-    filterItems.value.push({id: 5, name: "6000", number: 6000, class: "" })
-  } else if (props.name == "altura máxima") {
-    filterItems.value.push({id: 0, name: "1000", number: 1000, class: "" })
-    filterItems.value.push({id: 1, name: "2000", number: 2000, class: "" })
-    filterItems.value.push({id: 2, name: "3000", number: 3000, class: "" })
-    filterItems.value.push({id: 3, name: "4000", number: 4000, class: "" })
-    filterItems.value.push({id: 4, name: "5000", number: 5000, class: "" })
-    filterItems.value.push({id: 5, name: "6000", number: 6000, class: "" })
-    filterItems.value.push({id: 6, name: "7000", number: 7000, class: "" })
-  } else if (props.name == "ascendida") {
-    filterItems.value.push({id: 0, name: "Sí", class: "" })
-    filterItems.value.push({id: 1, name: "No", class: "" })
+  } else {
+    if (props.name == "altura mínima") {
+      filterItems.value.push({ id: 0, name: "1000", number: 1000, class: "" });
+      filterItems.value.push({ id: 1, name: "2000", number: 2000, class: "" });
+      filterItems.value.push({ id: 2, name: "3000", number: 3000, class: "" });
+      filterItems.value.push({ id: 3, name: "4000", number: 4000, class: "" });
+      filterItems.value.push({ id: 4, name: "5000", number: 5000, class: "" });
+      filterItems.value.push({ id: 5, name: "6000", number: 6000, class: "" });
+    } else if (props.name == "altura máxima") {
+      filterItems.value.push({ id: 0, name: "1000", number: 1000, class: "" });
+      filterItems.value.push({ id: 1, name: "2000", number: 2000, class: "" });
+      filterItems.value.push({ id: 2, name: "3000", number: 3000, class: "" });
+      filterItems.value.push({ id: 3, name: "4000", number: 4000, class: "" });
+      filterItems.value.push({ id: 4, name: "5000", number: 5000, class: "" });
+      filterItems.value.push({ id: 5, name: "6000", number: 6000, class: "" });
+      filterItems.value.push({ id: 6, name: "7000", number: 7000, class: "" });
+    } else if (props.name == "ascendida") {
+      filterItems.value.push({ id: 0, name: "Sí", class: "" });
+      filterItems.value.push({ id: 1, name: "No", class: "" });
+    }
   }
 }
 
-const selectedItems : Ref<[{id: number, name: string, number: number}]> = ref([])
+onMounted(() => {
+  updateFilterItems();
+});
+
+const selectedItems: Ref<[{ id: number; name: string; number: number }]> = ref(
+  []
+);
 
 function toggleSelectItem(id: number) {
-  const fullItem = filterItems.value.find(item => item.id === id)
+  const fullItem = filterItems.value.find((item) => item.id === id);
   if (selectedItems.value.includes(fullItem)) {
-    selectedItems.value.splice(selectedItems.value.indexOf(fullItem), 1)
-    filterItems.value.find(item => item.id === id).class = ""
+    selectedItems.value.splice(selectedItems.value.indexOf(fullItem), 1);
+    filterItems.value.find((item) => item.id === id).class = "";
   } else {
-    if (props.name == "altura mínima" || props.name == "altura máxima" || props.name == "ascendida") {
+    if (
+      props.name == "altura mínima" ||
+      props.name == "altura máxima" ||
+      props.name == "ascendida"
+    ) {
       // only allow one selected item
-      selectedItems.value = []
-      selectedItems.value.push(fullItem)
-      filterItems.value.forEach(item => item.class = "")
-      filterItems.value.find(item => item.id === id).class = "active"
+      selectedItems.value = [];
+      selectedItems.value.push(fullItem);
+      filterItems.value.forEach((item) => (item.class = ""));
+      filterItems.value.find((item) => item.id === id).class = "active";
     } else {
       // allow multiple selected items
-      selectedItems.value.push(fullItem)
-      filterItems.value.find(item => item.id === id).class = "active"
+      selectedItems.value.push(fullItem);
+      filterItems.value.find((item) => item.id === id).class = "active";
     }
   }
   if (selectedItems.value.length > 0) {
-    is_active.value = "active"
+    is_active.value = "active";
   } else {
-    is_active.value = ""
+    is_active.value = "";
   }
-  emit('changeApiFilter', props.id, selectedItems.value)
+  emit("changeApiFilter", props.id, selectedItems.value);
 }
 </script>
 <style scoped lang="scss">
@@ -111,7 +139,7 @@ function toggleSelectItem(id: number) {
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  &:hover{
+  &:hover {
     background: $color-dark;
     border: solid 3px $color-light;
     p {
@@ -129,11 +157,11 @@ function toggleSelectItem(id: number) {
     color: $color-light;
   }
   .arrow-down {
-    width: 0; 
-    height: 0; 
+    width: 0;
+    height: 0;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
-    
+
     border-top: 10px solid $color-light;
   }
   &.active {
@@ -153,7 +181,7 @@ function toggleSelectItem(id: number) {
   left: 50%;
   transform: translateX(-50%);
   width: 80%;
-  
+
   display: flex;
   flex-direction: row;
   justify-content: center;
