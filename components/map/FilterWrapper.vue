@@ -34,7 +34,7 @@ const filters = ref([
   {
     id: 1,
     name: "país",
-    apiUrl: "countries/",
+    apiUrl: "countries/?only_andes",
     filter_type: "select",
     obj_type: "object",
   },
