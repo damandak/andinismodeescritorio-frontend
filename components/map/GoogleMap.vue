@@ -52,9 +52,9 @@ onMounted(async () => {
 
   const apiURL =
     config.public.apiBase + "mountains/?no_pagination" + props.currentParams;
-  const { data } = await useFetch(apiURL);
+  const data = await $fetch(apiURL);
 
-  for (const mtn of data.value) {
+  for (const mtn of data) {
     const infowindow = new google.maps.InfoWindow({
       content:
         '<a href="/cerros/' +
@@ -194,7 +194,6 @@ function filterMarkers(content: object) {
         hide_ascended = false;
       }
     } else {
-      console.log("alguna vez?");
       hide_ascended = false;
     }
 
