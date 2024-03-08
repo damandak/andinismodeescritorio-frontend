@@ -3,7 +3,7 @@ title: Leo González y el mapa del tesoro del Alto de los Leones
 author: Álvaro Zerené
 authorid: 1201
 description: La documentación es una de las pocas herramientas que tenemos de preservación de nuestro patrimonio andino desde la perspectiva del andinista. Es como hacemos social una actividad a veces demasiado individualista. En esta publicación, Álvaro Zerené nos cuenta sobre la importancia de la documentación de rutas y nos comparte el topo de Leo González del Alto de los Leones, para que esté disponible de forma gratuita para la comunidad.
-date: 2023-11-24
+date: 2024-02-23
 datespanish: 23 de febrero del 2024
 mainimageid: 106
 draft: false
