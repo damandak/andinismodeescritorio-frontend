@@ -1,5 +1,5 @@
 <template>
-  <table class="adetable adetable-ascents">
+  <table class="adetable-reduced adetable-ascents">
     <thead>
       <tr>
         <th>Fecha</th>
@@ -82,12 +82,16 @@ for (const ascent of ascents) {
   margin-top: 15px !important;
   width: 80% !important;
   max-width: 1200px !important;
+  min-width: 600px !important;
+  overflow: auto;
+  height: 500px;
   td {
     text-align: left !important;
     a {
       color: $color-dark !important;
       text-decoration: none !important;
       font-weight: 900;
+      font-size: 0.8rem;
       &:hover {
         color: $color-main-second !important;
       }
@@ -95,20 +99,20 @@ for (const ascent of ascents) {
     span {
       a {
         font-weight: 400;
-        font-size: 0.8rem;
-        line-height: 10px;
+        font-size: 0.7rem;
+        line-height: 8px;
       }
     }
   }
   td.date {
     width: 90px;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
   td.route {
     a {
       font-weight: 400;
-      font-size: 0.9rem;
-      line-height: 10px;
+      font-size: 0.7rem;
+      line-height: 8px;
     }
   }
 }
@@ -118,9 +122,9 @@ for (const ascent of ascents) {
     display: block;
     overflow-x: auto;
     td {
-      font-size: 0.8rem !important;
+      font-size: 0.6rem !important;
       a {
-        font-size: 0.8rem !important;
+        font-size: 0.6rem !important;
       }
     }
   }
