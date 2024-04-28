@@ -92,6 +92,33 @@ table.adetable {
 
 }
 
+table.adetable-reduced {
+  width: 60%;
+  min-width: 300px;
+  max-width: 600px;
+  border-collapse: collapse;
+  border-spacing: 0;
+  border: 2px solid rgba(204, 204, 204, 0.372);
+  border-radius: 10px;
+  overflow: hidden;
+  //box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  th {
+    padding: 0.5rem 0.5rem;
+    border-top: 1px solid rgba(204, 204, 204, 0.372);
+    border-bottom: 1px solid rgba(204, 204, 204, 0.372);
+    text-align: left;
+    background-color: $color-light-dark;
+    color: $color-dark;
+    font-weight: 900;
+  }
+  td {
+    padding: 0.2rem 0.5rem;
+    border-top: 1px solid rgba(204, 204, 204, 0.372);
+    border-bottom: 1px solid rgba(204, 204, 204, 0.372);
+    text-align: right;
+    background-color: $color-light;
+  }
+}
 
 .page-filters {
   display: flex;
