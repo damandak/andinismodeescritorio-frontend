@@ -35,7 +35,7 @@ const mtnRoutes = data.results;
       background-color: $color-main-second;
       width: 40%;
       min-width: 250px;
-      margin: 5px auto;
+      margin: 5px 0;
       color: white !important;
       display: block;
       -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
