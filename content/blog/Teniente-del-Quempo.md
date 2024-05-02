@@ -2,7 +2,7 @@
 title: Las cosas que uno piensa - Teniente del Quempo
 author: Rafael Reinoso
 authorid: 1272
-description: Rafael Reinoso nos invita a conectar el presente con el pasado, a compartir el espíritu de aventura, la introspección y la cordada como unidad a través de un relato sobre una ascensión al Teniente del Quempo junto a sus amigos Emil Stefani, Jonathan Contreras y Víctor Trinidad. Es fácil perderse en la competencia y el individualismo, pero la montaña nos invita a descubrir otras formas de relacionarnos con el entorno y con quienes nos acompañan en la aventura.
+description: Es fácil perderse en la competencia y el individualismo, pero la montaña nos invita a descubrir otras formas de relacionarnos con el entorno y con quienes nos acompañan en la aventura. Rafael Reinoso nos invita a conectar el presente con el pasado, a compartir el espíritu de aventura, la introspección y la cordada como unidad a través de un relato sobre una ascensión al Teniente del Quempo junto a sus amigos Emil Stefani, Jonathan Contreras y Víctor Trinidad.
 date: 2024-04-29
 datespanish: 29 de abril del 2024
 mainimageid: 111
@@ -13,13 +13,23 @@ draft: false
 subtitle: Relato de montaña
 title: 'Las cosas que uno piensa: reflexiones sobre el Teniente del Quempo'
 authorID: 1272
-abstract: Rafael Reinoso nos invita a conectar el presente con el pasado, a compartir el espíritu de aventura, la introspección y la cordada como unidad a través de un relato sobre una ascensión al Teniente del Quempo junto a sus amigos Emil Stefani, Jonathan Contreras y Víctor Trinidad. Es fácil perderse en la competencia y el individualismo, pero la montaña nos invita a descubrir otras formas de relacionarnos con el entorno y con quienes nos acompañan en la aventura.
+abstract: Es fácil perderse en la competencia y el individualismo, pero la montaña nos invita a descubrir otras formas de relacionarnos con el entorno y con quienes nos acompañan en la aventura. Rafael Reinoso nos invita a conectar el presente con el pasado, a compartir el espíritu de aventura, la introspección y la cordada como unidad a través de un relato sobre una ascensión al Teniente del Quempo junto a sus amigos Emil Stefani, Jonathan Contreras y Víctor Trinidad.
 datespanish: 29 de abril del 2024
 image_id: 111
 alt: A Cool Image
 ---
 ::
 ---
+
+::blog-image
+---
+image_id: 121
+alt: A Cool Image
+image_detail: Ruta de ascenso al Teniente del Quempo por la cara este. Foto de arriba a la izquierda y ambos topos por Rafael Reinoso
+fullwidth: true
+---
+::
+
 Para los andinistas, el sentido contemplativo del montañismo va mucho más allá de ascender una montaña o romper las barreras deportivas. De cierto modo, esto último ha ido lapidando el espíritu de la aventura y lo desconocido. Ese patio de tesoros donde nos podemos desenvolver ha pasado a segundo plano en un entorno cada vez más individualista y competitivo, donde muchas veces el concepto de la cordada no está bien definido.
 
 ::blog-image
@@ -59,13 +69,13 @@ fullwidth: true
 
 Motivado por las palabras de mi amigo comencé a buscar información sobre la montaña. Fuera de los 3 ascensos antes mencionados, existía un intento realizado por Álvaro Vivanco, Eduardo Atalah, Jorge Hess el 2011, quienes desisten del Teniente. Lograron un primer ascenso en una montaña vecina, nombrándola cerro Bávaro.
 
-Viendo fotos de la cara este del cerro Teniente del Quempo sacadas desde el cerro Klemm, montaña que está más al norte, nos pudimos dar cuenta que desde el valle de la Jarilla se podría ir conectando los neveros hasta la parte más alta (ruta utilizada en 1957 por sus primeros ascensionistas).
+Viendo fotos de la cara este del cerro Teniente del Quempo sacadas desde los cerros Klemm y Salazar-montañas que están más al norte- nos pudimos dar cuenta que desde el valle de la Jarilla se podría ir conectando los neveros hasta la parte más alta (ruta utilizada en 1957 por sus primeros ascensionistas).
 
 ::blog-image
 ---
 image_id: 114
 alt: A Cool Image
-image_detail: Foto del Teniente del Quempo desde el cerro Klemm
+image_detail: Foto del Teniente del Quempo desde el cerro Salazar
 fullwidth: true
 ---
 ::
@@ -75,6 +85,15 @@ En ese punto el único convencido era yo, no había compartido la idea con ningu
 Fue así que, junto a Emil Stefani, Jonathan Contreras y Víctor Trinidad, el 15 de octubre del 2023, partimos rumbo a la Jarilla en busca de aquella montaña olvidada hace casi ya 23 años. La idea fue muy bien recibida por los integrantes, quienes son algunas de las personas más motivadas y enérgicas que conozco. Siempre están pensando a dónde ir la próxima vez que nos veamos.
 
 Partimos desde Santiago hacia el Alfalfal, en el camino nos desviamos hacia la casa de Ismael Ortega uno de los arrieros más conocidos por quienes practican el montañismo en ese lugar en particular. Tras pasar el control de AES GENER, nos dirigimos hacia la quebrada de la Jarilla, un cajón cordillerano por donde baja el estero homónimo.
+
+::blog-image
+---
+image_id: 120
+alt: A Cool Image
+image_detail: Emil Stefani descansando con estilo en la aproximación
+fullwidth: false
+---
+::
 
 Nuestro ascenso estuvo marcado por las buenas condiciones de la nieve. El invierno depositó gran cantidad de ésta en los valles y para la fecha de nuestro intento estaba dura y resistía bastante bien nuestro peso. Esto nos ayudó a mantener un buen ritmo y ganar altura bastante rápido. Decidimos llegar a la base de la cara este de la montaña, de esta manera en la madrugada saldríamos con una perspectiva de donde tendríamos que ir guiando nuestra marcha. Desde abajo, la ruta se veía bastante expedita.
 
@@ -87,7 +106,6 @@ image_detail: Ascendiendo las pendientes orientales del Teniente del Quempo
 fullwidth: true
 ---
 ::
-
 Al día siguiente salimos a oscuras, nos fuimos acercando a la cara este por una gran canaleta, nos pegamos al margen izquierdo (hacia el sur de esta). En su parte alta se presentaban dos opciones, cargarse lo más a la izquierda (sur), para pasar a la parte media por una pequeña canaleta y esto fue lo que decidimos. La otra opción era salir por el medio, por un lugar más expuesto, pero no imposible. Los neveros se presentaron en buenas condiciones para el ascenso, algunos tramos eran bastante verticales y expuestos, pero bastaba con estar concentrados en lo que hacíamos.
 
 Recuerdo lo frío de aquella mañana, condiciones óptimas para disminuir los peligros objetivos en particular de desprendimientos y avalanchas. Uno a uno fuimos llegando a la cumbre. Eran las 9:26 AM, y en ella encontramos una pequeña pirca y dentro de ella un tarro con un impacto de rayo. Dentro, un testimonio del año 2001 por sus terceros ascensionistas, un regalo que solo las montañas de nuestros Andes nos pueden entregar. En ellas está parte de nuestra historia y de quienes dedicaron sus días a ascender las alturas de los Andes Centrales, adentrándose en lo más salvaje y aún prístino de nuestro territorio.
@@ -129,3 +147,7 @@ image_detail: Descendiendo de vuelta a casa, con más tiempo para pensar
 fullwidth: true
 ---
 ::
+### Enlaces de interés
+[Cerro Teniente del Quempo](https://andinismodeescritorio.cl/cerros/500){target="_blank"} en Andinismo de Escritorio
+
+[Más fotos](https://www.andinoelal.cl/cerro-teniente-del-quempo-4-156msnm/){target="_blank"}, capturadas por Víctor Trinidad

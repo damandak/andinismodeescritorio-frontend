@@ -43,6 +43,13 @@ main {
       font-size: 1.5rem;
       line-height: 2.2rem;
     }
+    a {
+      color: $color-main-first;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
   &:deep(blockquote) {
     margin: 40px auto;
