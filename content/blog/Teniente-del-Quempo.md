@@ -25,7 +25,7 @@ alt: A Cool Image
 ---
 image_id: 121
 alt: A Cool Image
-image_detail: Ruta de ascenso al Teniente del Quempo por la cara este. Foto de arriba a la izquierda y ambos topos por Rafael Reinoso
+image_detail: Ruta de ascenso al Teniente del Quempo por la cara este. Foto de arriba a la izquierda de Emil Stefani
 fullwidth: true
 ---
 ::
