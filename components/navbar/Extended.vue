@@ -66,7 +66,11 @@ const emit = defineEmits<{
   position: fixed;
   top: 0;
   right: -100%;
-  height: 100%;
+  width: auto;
+  height: 100vh;
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow-y: auto;
   background: linear-gradient(to right, $color-main-first, $color-main-second);
   z-index: 100;
   transition: all 0.7s ease-in-out;
@@ -115,13 +119,8 @@ const emit = defineEmits<{
 @media screen and (max-width: 768px) {
   .extended-nav-wrapper {
     width: 100%;
+    min-height: 100dvh;
     gap: 2vh;
-    .extended-nav__close {
-      font-size: 3rem;
-    }
-    .extended-nav-link {
-      font-size: 2.3rem;
-    }
   }
 }
 </style>
