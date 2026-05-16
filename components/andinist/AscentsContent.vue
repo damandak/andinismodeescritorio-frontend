@@ -11,7 +11,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="ascent in ascents" key="ascent.id">
+      <tr v-for="ascent in ascents" :key="ascent.id">
         <td class="date">{{ ascent.date }}</td>
         <td>
           <NuxtLink :to="`/cerros/${ascent.mountain}`">
@@ -29,7 +29,7 @@
         <td>
           <span
             v-for="(andinist, index) in ascent.andinist_list"
-            key="andinist.id"
+            :key="andinist.id"
           >
             <NuxtLink :to="`/andinistas/${andinist.id}`">
               <span v-if="index !== 0">{{ ", " }}</span>
@@ -43,32 +43,39 @@
   </table>
 </template>
 <script setup lang="ts">
+type AndinistBasic = {
+  id: number | string;
+  fullname: string;
+};
+
+type AscentView = {
+  id: number | string;
+  name: string;
+  mountain: number | string;
+  mountain_name: string;
+  route: number | string;
+  route_name: string;
+  date: string;
+  resulting_date: string;
+  andinist_list: AndinistBasic[];
+  honours: string;
+};
+
 const props = defineProps<{
-  id: String;
+  id: string | number;
 }>();
 
 const config = useRuntimeConfig();
 
-const apiURLascents =
-  config.public.apiBase + "andinist/" + props.id + "/ascents/";
-const data = await $fetch(apiURLascents);
-const ascents = data.results;
+const { data } = await useAsyncData(
+  `andinist-ascents-${props.id}`,
+  () =>
+    $fetch<{ results: AscentView[] }>(
+      `${config.public.apiBase}andinist/${props.id}/ascents/`
+    )
+);
 
-for (const ascent of ascents) {
-  ascent.andinist_list = [];
-  ascent.resulting_date = "";
-  ascent.route_name = "";
-  for (const individual_andinist of ascent.andinists) {
-    const apiURLandinist =
-      config.public.apiBase + "andinist/" + individual_andinist[0] + "/basic/";
-    const andinist = await $fetch(apiURLandinist);
-    ascent.andinist_list = [...ascent.andinist_list, andinist];
-  }
-  const apiURLroute =
-    config.public.apiBase + "route/" + ascent.route + "/name/";
-  const route = await $fetch(apiURLroute);
-  ascent.route_name = route.name;
-}
+const ascents = computed(() => data.value?.results ?? []);
 </script>
 <style lang="scss" scoped>
 .adetable-ascents {
