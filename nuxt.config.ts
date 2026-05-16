@@ -1,9 +1,12 @@
-const apiAddress =
-  process.env.NODE_ENV === "d"
-    ? "http://127.0.0.1:8000/djangoapi/"
-    : "https://andinismodeescritorio.cl/djangoapi/";
-
 export default defineNuxtConfig({
+  nitro: {
+    preset: "node-server",
+    prerender: {
+      crawlLinks: false,
+      routes: [],
+    },
+  },
+
   app: {
     head: {
       link: [
@@ -24,23 +27,21 @@ export default defineNuxtConfig({
       ],
     },
   },
+
   runtimeConfig: {
-    // The private keys which are only available server-side
     apiSecret: "123",
-    // Keys within public are also exposed client-side
     public: {
       apiBase: apiAddress,
       googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
     },
-    // These variables are exposed to the rest of your application using the useRuntimeConfig composable.
   },
-  // app: {
-  //   pageTransition: { name: 'page', mode: 'out-in' }
-  // },
+
   build: {
     transpile: ["@googlemaps/js-api-loader"],
   },
+
   css: ["~/assets/scss/_typography.scss", "@/assets/styles/main.scss"],
+
   vite: {
     css: {
       preprocessorOptions: {
@@ -50,5 +51,6 @@ export default defineNuxtConfig({
       },
     },
   },
+
   modules: ["@nuxt/content"],
 });
