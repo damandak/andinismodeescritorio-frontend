@@ -1,3 +1,8 @@
+const apiAddress =
+  process.env.NODE_ENV === "d"
+    ? "http://127.0.0.1:8000/djangoapi/"
+    : "https://andinismodeescritorio.cl/djangoapi/";
+    
 export default defineNuxtConfig({
   nitro: {
     preset: "node-server",
