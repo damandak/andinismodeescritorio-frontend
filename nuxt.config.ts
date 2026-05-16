@@ -4,8 +4,18 @@ const apiAddress =
     : "https://andinismodeescritorio.cl/djangoapi/";
     
 export default defineNuxtConfig({
+  devtools: {
+    enabled: false,
+  },
+
+  sourcemap: {
+    server: false,
+    client: false,
+  },
+
   nitro: {
     preset: "node-server",
+    sourceMap: false,
     prerender: {
       crawlLinks: false,
       routes: [],
