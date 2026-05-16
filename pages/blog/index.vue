@@ -147,7 +147,7 @@ const image_urls = await Promise.all(
       }
       p {
         font-weight: 600;
-        font-family: "Lora", serif;
+        font-family: var(--font-serif);
         font-size: 0.9em;
       }
       .datespanish {

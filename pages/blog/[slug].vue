@@ -25,7 +25,7 @@ main {
     // REVISAR ESO PARA ARREGLAR ESTE DESASTREEE
     font-size: 2rem;
     text-align: center;
-    font-family: "Lora", serif;
+    font-family: var(--font-serif);
     margin: 70px auto 40px auto;
     line-height: 2.2rem;
   }
@@ -35,7 +35,7 @@ main {
     text-align: justify;
     margin-block-start: 2em;
     margin-block-end: 2em;
-    font-family: "Lora", serif;
+    font-family: var(--font-serif);
     width: 600px;
     margin: 40px auto;
     strong {
@@ -61,7 +61,7 @@ main {
       font-size: 1.1rem;
       line-height: 2.2rem;
       text-align: justify;
-      font-family: "Lora", serif;
+      font-family: var(--font-serif);
       width: 500px;
       strong {
         font-weight: 900;

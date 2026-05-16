@@ -159,7 +159,7 @@ function switchTab(tabNumber: number) {
       min-height: 500px;
       h2.content-title {
         font-size: 1.5rem;
-        font-family: "Lato", sans-serif;
+        font-family: var(--font-sans);
         font-weight: 600;
         margin: 15px auto;
         padding: 0 0 0 10px;

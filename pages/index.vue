@@ -5,13 +5,12 @@
     <div class="mapbutton" @click="toggleWrapper">
       <p>FILTROS</p>
     </div>
-
   </div>
 </template>
 
 <script setup lang="ts">
 const child = ref(null);
-const currentFilter: Ref<[{id: number, text: string}]> = ref([])
+const currentFilter: Ref<[{ id: number; text: string }]> = ref([]);
 const filterText = ref("");
 
 const activeFilter = ref("");
@@ -22,7 +21,7 @@ const changeFilters = (id: number, params: object) => {
   if (child) {
     child.value.filterMarkers(params);
   }
-}
+};
 </script>
 
 <style scoped lang="scss">
@@ -34,7 +33,8 @@ const changeFilters = (id: number, params: object) => {
   cursor: pointer;
 
   background: $color-light;
-  background: linear-gradient(to right, $color-main-first, $color-main-second) border-box;
+  background: linear-gradient(to right, $color-main-first, $color-main-second)
+    border-box;
   position: fixed;
   bottom: 45px;
   left: 50%;
@@ -52,7 +52,7 @@ const changeFilters = (id: number, params: object) => {
     text-transform: uppercase;
     transition: color 0.7s ease-in-out;
     margin: 0;
-    font-family: 'Arvo', serif;
+    font-family: var(--font-serif);
   }
   &:hover {
     background: linear-gradient(to right, $color-light, $color-light) border-box;

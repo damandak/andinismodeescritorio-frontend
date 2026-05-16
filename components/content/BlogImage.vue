@@ -53,7 +53,7 @@ const image = data;
     width: 600px;
     margin: auto;
     font-size: 0.9rem;
-    font-family: "Lora", serif;
+    font-family: var(--font-serif);
     .author-p {
       display: block;
       text-transform: uppercase;
@@ -61,7 +61,7 @@ const image = data;
       font-size: 0.8rem;
       letter-spacing: 0.2rem;
       a {
-        font-family: "Lora", serif;
+        font-family: var(--font-serif);
         &:hover {
           text-decoration: underline;
         }

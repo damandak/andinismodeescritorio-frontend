@@ -89,7 +89,7 @@ const emit = defineEmits<{
   }
   .extended-nav-link {
     color: $color-light;
-    font-family: "Arvo", serif;
+    font-family: var(--font-serif);
     font-size: 3rem;
     font-weight: 900;
     text-transform: lowercase;

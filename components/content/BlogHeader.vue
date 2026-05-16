@@ -64,7 +64,7 @@ h4 {
   text-align: justify;
   margin-block-start: 2em;
   margin-block-end: 2em;
-  font-family: "Lora", serif;
+  font-family: var(--font-serif);
   font-weight: 900;
   font-size: 1.5rem;
   line-height: 2.2rem;
@@ -80,7 +80,7 @@ h4 {
   font-size: 0.8rem;
   letter-spacing: 0.2rem;
   a {
-    font-family: "Lora", serif;
+    font-family: var(--font-serif);
     &:hover {
       text-decoration: underline;
     }

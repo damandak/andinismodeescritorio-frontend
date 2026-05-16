@@ -238,7 +238,7 @@ async function searchAgain(e: any) {
       background-color: $color-light;
       border: none;
       padding: 10px 30px;
-      font-family: "Arvo";
+      font-family: var(--font-serif);
       text-transform: lowercase;
       border-radius: 5px;
       width: 70%;
