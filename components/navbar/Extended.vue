@@ -64,63 +64,82 @@ const emit = defineEmits<{
 <style lang="scss">
 .extended-nav-wrapper {
   position: fixed;
-  top: 0;
-  right: -100%;
-  width: auto;
+  inset: 0 -100% 0 auto;
+  width: min(100%, 520px);
   height: 100vh;
   height: 100dvh;
-  max-height: 100dvh;
+  box-sizing: border-box;
   overflow-y: auto;
+  overscroll-behavior: contain;
+
   background: linear-gradient(to right, $color-main-first, $color-main-second);
   z-index: 100;
-  transition: all 0.7s ease-in-out;
+  transition: right 0.7s ease-in-out;
   opacity: 0.95;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
-  gap: 3.5vh;
+
+  gap: clamp(0.75rem, 2.2vh, 2rem);
+  padding: clamp(1rem, 3vh, 2rem) 40px;
   border-left: 10px #222222 solid;
+
   .extended-nav__close {
     color: $color-light;
-    font-size: 4rem;
-    margin: 0px 40px;
+    font-size: clamp(2.5rem, 8vh, 4rem);
+    margin: 0;
     cursor: pointer;
     transition: all 0.7s ease-in-out;
+
     &:hover {
       color: $color-main-first;
     }
   }
+
   .extended-nav-link {
     color: $color-light;
     font-family: var(--font-serif);
-    font-size: 3rem;
+    font-size: clamp(2rem, 6vh, 3rem);
+    line-height: 1;
     font-weight: 900;
     text-transform: lowercase;
-    margin: 10px 40px;
+    margin: 0;
     cursor: pointer;
     transition: all 0.7s ease-in-out;
+
     a {
       color: $color-light;
       text-decoration: none;
       transition: all 0.7s ease-in-out;
+
       &:hover {
         color: $color-main-first;
       }
     }
+
     &:hover {
       color: $color-main-first;
     }
   }
 }
+
 .extended-nav-wrapper.active {
   right: 0;
 }
+
+@media screen and (max-height: 720px) {
+  .extended-nav-wrapper {
+    justify-content: flex-start;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .extended-nav-wrapper {
     width: 100%;
-    min-height: 100dvh;
-    gap: 2vh;
+    border-left: 0;
+    padding-inline: 28px;
   }
 }
 </style>
