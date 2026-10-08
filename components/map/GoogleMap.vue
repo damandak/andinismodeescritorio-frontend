@@ -66,9 +66,9 @@ onMounted(async () => {
         '<p class="name">' +
         mtn.name +
         "</p></a>" +
-        '<p class="mtn-popup-altitude">' +
-        mtn.altitude +
-        " mts</p>",
+        (mtn.altitude != null
+          ? '<p class="mtn-popup-altitude">' + mtn.altitude + " mts</p>"
+          : ""),
       ariaLabel: mtn.prefix + " " + mtn.name,
     });
     const marker = new google.maps.Marker({

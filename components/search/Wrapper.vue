@@ -36,7 +36,7 @@
                 <span class="name"
                   ><strong>{{ mtn.name }}</strong></span
                 >
-                <span class="altitude"
+                <span v-if="mtn.altitude != null" class="altitude"
                   >{{ " - " + mtn.altitude + " mts" }}
                 </span>
               </NuxtLink>

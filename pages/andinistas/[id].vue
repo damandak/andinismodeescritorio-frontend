@@ -40,9 +40,10 @@ const tabs = [
   { id: 2, title: "Fotos", iconname: "ico-photo" },
   { id: 3, title: "Referencias", iconname: "ico-sources" },
 ];
-const apiURLAndinist =
-  config.public.apiBase + "andinist/" + route.params.id + "/";
-const andinist = await $fetch(apiURLAndinist);
+const andinist = await useApiDetail<any>(
+  `andinist-${route.params.id}`,
+  `andinist/${route.params.id}/`
+);
 
 const id = route.params.id;
 const name = andinist.name;

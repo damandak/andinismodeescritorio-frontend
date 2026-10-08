@@ -7,7 +7,7 @@
       </tr>
       <tr>
         <th>Altitud</th>
-        <td>{{ mtnAltitude }}</td>
+        <td>{{ mtnAltitude ?? "Sin dato" }}</td>
       </tr>
       <tr>
         <th>Latitud</th>

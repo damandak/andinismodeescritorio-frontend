@@ -46,9 +46,10 @@ const tabs = [
   { id: 1, title: "Fotos", iconname: "ico-photo" },
   { id: 2, title: "Referencias", iconname: "ico-sources" },
 ];
-const apiURLAscent = config.public.apiBase + "ascent/" + route.params.id + "/";
-const data = await $fetch(apiURLAscent);
-const ascent = data;
+const ascent = await useApiDetail<any>(
+  `ascent-${route.params.id}`,
+  `ascent/${route.params.id}/`
+);
 
 const ascent_id = ascent.id;
 const ascent_name = ascent.name;

@@ -69,16 +69,18 @@ const tabs = [
   { id: 5, title: "Referencias", iconname: "ico-sources" },
 ];
 
-const apiURLMountain =
-  config.public.apiBase + "mountain/" + route.params.id + "/";
-const mtn = await $fetch(apiURLMountain);
+const mtn = await useApiDetail<any>(
+  `mountain-${route.params.id}`,
+  `mountain/${route.params.id}/`
+);
 
 const mtnID = ref(route.params.id);
 const mtnName = ref(mtn.name);
 const mtnPrefix = ref(mtn.prefix);
 const mtnFullName = ref(mtnPrefix.value + " " + mtnName.value);
 const mtnAltitude = ref(mtn.altitude);
-const stringAltitude = ref(mtn.altitude.toString());
+// Some mountains have no altitude yet; an empty subtitle hides the line.
+const stringAltitude = ref(mtn.altitude != null ? String(mtn.altitude) : "");
 const mtnAltitudeIgm = ref(mtn.altitude_igm);
 const mtnAltitudeArg = ref(mtn.altitude_arg);
 const mtnAltitudeGps = ref(mtn.altitude_gps);
@@ -106,11 +108,16 @@ const image = ref(null);
 const author = ref(null);
 
 if (main_image.value != null) {
-  const apiURLImage = config.public.apiBase + "image/" + main_image.value + "/";
-  const dataImage = await $fetch(apiURLImage);
-  image.value = dataImage;
-  img_url.value = image.value.image;
-  author.value = image.author;
+  // A missing or broken image must not take the whole page down.
+  const { data: dataImage } = await useAsyncData(
+    `image-${main_image.value}`,
+    () => $fetch(config.public.apiBase + "image/" + main_image.value + "/")
+  );
+  if (dataImage.value) {
+    image.value = dataImage.value;
+    img_url.value = dataImage.value.image;
+    author.value = dataImage.value.author_name;
+  }
 }
 
 var selectedTab = ref(0);

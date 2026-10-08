@@ -69,8 +69,10 @@ const tabs = [
   { id: 4, title: "Fotos", iconname: "ico-photo" },
   { id: 5, title: "Referencias", iconname: "ico-sources" },
 ];
-const apiURLRoute = config.public.apiBase + "route/" + route.params.id + "/";
-const ruta = await $fetch(apiURLRoute);
+const ruta = await useApiDetail<any>(
+  `route-${route.params.id}`,
+  `route/${route.params.id}/`
+);
 
 const route_id = ref(ruta.id);
 const route_name = ref(ruta.name);
