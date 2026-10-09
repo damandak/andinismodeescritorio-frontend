@@ -14,7 +14,7 @@
       class="extended-nav-link"
       style="text-align: right; width: 95%; margin-left: 30px"
     >
-      <NuxtLink to="/" @click="$emit('closeExtendedNav')">
+      <NuxtLink to="/quienessomos" @click="$emit('closeExtendedNav')">
         quiénes somos
       </NuxtLink>
     </div>
@@ -22,9 +22,6 @@
       <NuxtLink to="/cerros" @click="$emit('closeExtendedNav')">
         cerros
       </NuxtLink>
-    </div>
-    <div class="extended-nav-link">
-      <NuxtLink to="/" @click="$emit('closeExtendedNav')"> sectores </NuxtLink>
     </div>
     <div class="extended-nav-link">
       <NuxtLink to="/andinistas" @click="$emit('closeExtendedNav')">
@@ -43,11 +40,6 @@
     </div>
     <div class="extended-nav-link">
       <NuxtLink to="/blog" @click="$emit('closeExtendedNav')"> blog </NuxtLink>
-    </div>
-    <div class="extended-nav-link">
-      <NuxtLink to="/admin" @click="$emit('closeExtendedNav')">
-        admin
-      </NuxtLink>
     </div>
   </div>
 </template>

@@ -3,12 +3,12 @@
     <h4>{{ subtitle }}</h4>
     <h1>{{ title }}</h1>
     <div class="image-container">
-      <img :src="image.image" alt="blog image" :class="coverimgclass" />
+      <img v-if="image" :src="image.image" :alt="title" :class="coverimgclass" />
     </div>
     <div class="abstract">
       {{ abstract }}
     </div>
-    <div class="author" v-if="authorID">
+    <div class="author" v-if="author">
       <strong>POR </strong>
       <NuxtLink :to="'/andinistas/' + authorID">
         {{ author.name + " " + author.surname }}
@@ -38,12 +38,19 @@ const props = defineProps<{
   coverimgclass: string;
 }>();
 
-const apiURLImage = config.public.apiBase + "image/" + props.image_id + "/";
-const data = await $fetch(apiURLImage);
-const image = data;
+// Pages like "Quiénes somos" have no author; a missing image or author must
+// not turn the whole page into an error.
+const image: any = props.image_id
+  ? await $fetch(config.public.apiBase + "image/" + props.image_id + "/").catch(
+      () => null
+    )
+  : null;
 
-const apiURLauthor = config.public.apiBase + "andinist/" + props.authorID + "/";
-const author = await $fetch(apiURLauthor);
+const author: any = props.authorID
+  ? await $fetch(config.public.apiBase + "andinist/" + props.authorID + "/").catch(
+      () => null
+    )
+  : null;
 </script>
 <style scoped lang="scss">
 h1 {

@@ -16,7 +16,7 @@
         @switchTab="switchTab"
       />
       <div class="body-content">
-        <h2 class="content-title">{{ tabs[selectedTab].title }}</h2>
+        <h2 class="content-title">{{ tabs.find((t) => t.id === selectedTab)?.title }}</h2>
         <AscentGeneralContent
           v-if="selectedTab === 0"
           :mtnID="ascent_mountain_id"
@@ -43,7 +43,8 @@ const config = useRuntimeConfig();
 const route = useRoute();
 const tabs = [
   { id: 0, title: "General", iconname: "ico-general" },
-  { id: 1, title: "Fotos", iconname: "ico-photo" },
+  // Hidden until there is content for it (downloads / photo gallery):
+  // { id: 1, title: "Fotos", iconname: "ico-photo" },
   { id: 2, title: "Referencias", iconname: "ico-sources" },
 ];
 const ascent = await useApiDetail<any>(
@@ -65,16 +66,9 @@ const ascent_is_first_ascent = ascent.is_first_ascent;
 const ascent_new_route = ascent.new_route;
 
 var selectedTab = ref(0);
+// TabWrapper marks the selected tab itself; tabs are matched by id, not by
+// position, so hidden tabs don't shift the others.
 function switchTab(tabNumber: number) {
-  if (selectedTab.value === tabNumber) {
-    return;
-  }
-  // erase selected class from all tabs
-  var tabs = document.getElementsByClassName("tab");
-  for (var i = 0; i < tabs.length; i++) {
-    tabs[i].classList.remove("selected");
-  }
-  tabs[tabNumber].classList.add("selected");
   selectedTab.value = tabNumber;
 }
 </script>

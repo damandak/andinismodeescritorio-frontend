@@ -15,7 +15,7 @@
         @switchTab="switchTab"
       />
       <div class="body-content">
-        <h2 class="content-title">{{ tabs[selectedTab].title }}</h2>
+        <h2 class="content-title">{{ tabs.find((t) => t.id === selectedTab)?.title }}</h2>
         <RoutesGeneralContent
           v-if="selectedTab === 0"
           :mountainID="route_mountain_id"
@@ -64,9 +64,11 @@ const route = useRoute();
 const tabs = [
   { id: 0, title: "General", iconname: "ico-general" },
   { id: 1, title: "Ascensos", iconname: "ico-ascent" },
-  { id: 2, title: "Descargables", iconname: "ico-download" },
+  // Hidden until there is content for it (downloads / photo gallery):
+  // { id: 2, title: "Descargables", iconname: "ico-download" },
   { id: 3, title: "Otras Rutas", iconname: "ico-route" },
-  { id: 4, title: "Fotos", iconname: "ico-photo" },
+  // Hidden until there is content for it (downloads / photo gallery):
+  // { id: 4, title: "Fotos", iconname: "ico-photo" },
   { id: 5, title: "Referencias", iconname: "ico-sources" },
 ];
 const ruta = await useApiDetail<any>(
@@ -100,16 +102,9 @@ const route_gpx = ref(ruta.gpx);
 const route_notes = ref(ruta.notes);
 
 var selectedTab = ref(0);
+// TabWrapper marks the selected tab itself; tabs are matched by id, not by
+// position, so hidden tabs don't shift the others.
 function switchTab(tabNumber: number) {
-  if (selectedTab.value === tabNumber) {
-    return;
-  }
-  // erase selected class from all tabs
-  var tabs = document.getElementsByClassName("tab");
-  for (var i = 0; i < tabs.length; i++) {
-    tabs[i].classList.remove("selected");
-  }
-  tabs[tabNumber].classList.add("selected");
   selectedTab.value = tabNumber;
 }
 </script>

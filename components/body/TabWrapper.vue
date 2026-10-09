@@ -2,7 +2,7 @@
   <div class="tab-wrapper">
     <div
       v-for="tab in tabs"
-      key="tab.id"
+      :key="tab.id"
       class="tab"
       :class="{ selected: tab.id === selectedTab }"
       @click="$emit('switchTab', tab.id)"

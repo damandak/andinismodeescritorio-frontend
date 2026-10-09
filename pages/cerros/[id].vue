@@ -16,7 +16,7 @@
         :selected-tab="selectedTab"
       />
       <div class="body-content">
-        <h2 class="content-title">{{ tabs[selectedTab].title }}</h2>
+        <h2 class="content-title">{{ tabs.find((t) => t.id === selectedTab)?.title }}</h2>
         <MountainGeneralContent
           v-if="selectedTab === 0"
           :mtnID="mtnID"
@@ -65,7 +65,8 @@ const tabs = [
   { id: 1, title: "Ubicación", iconname: "ico-map" },
   { id: 2, title: "Rutas", iconname: "ico-route" },
   { id: 3, title: "Ascensos", iconname: "ico-ascent" },
-  { id: 4, title: "Fotos", iconname: "ico-photo" },
+  // Hidden until there is content for it (downloads / photo gallery):
+  // { id: 4, title: "Fotos", iconname: "ico-photo" },
   { id: 5, title: "Referencias", iconname: "ico-sources" },
 ];
 
