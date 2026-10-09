@@ -74,19 +74,24 @@ const props = defineProps<{
   mtnID: String;
   mtnAHB: String;
   mtnWikiExplora: String;
-  mtnNomenclatura: String;
+  mtnNomenclatura: Number | null;
 }>();
 
 const config = useRuntimeConfig();
 
 const apiURLreferences =
   config.public.apiBase + "mountain/" + props.mtnID + "/references/";
-const data = await $fetch(apiURLreferences);
-const references = data.results;
+const data: any = await $fetch(apiURLreferences).catch(() => []);
+// Accept both a plain list and a paginated { results: [...] } response.
+const references = Array.isArray(data) ? data : data?.results ?? [];
 
-const apiURLnomenclatura =
-  config.public.apiBase + "mountain/" + props.mtnID + "/nomenclatura/";
-const nomenclatura = await $fetch(apiURLnomenclatura);
+// Only mountains linked to Proyecto Nomenclatura have this data; a failed
+// request must not break the whole tab.
+const nomenclatura: any = props.mtnNomenclatura
+  ? await $fetch(
+      config.public.apiBase + "mountain/" + props.mtnID + "/nomenclatura/"
+    ).catch(() => null)
+  : null;
 </script>
 <style scoped lang="scss">
 .main-references {
