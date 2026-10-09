@@ -61,7 +61,8 @@ export default defineNuxtConfig({
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: '@import "@/assets/styles/_variables.scss";',
+          // @use instead of the deprecated @import (removed in Dart Sass 3)
+          additionalData: '@use "@/assets/styles/_variables.scss" as *;',
         },
       },
     },
