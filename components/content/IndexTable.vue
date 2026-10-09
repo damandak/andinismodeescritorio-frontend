@@ -20,7 +20,12 @@
     <tbody>
       <tr v-for="row in data" :key="row.id">
         <td v-for="col in columns" :key="col.field" :class="col.class">
-          <div v-if="col.formatter_html" v-html="col.formatter(row)"></div>
+          <span v-if="col.links">
+            <template v-for="(item, index) in col.links(row)" :key="item.to">
+              <span v-if="index !== 0">, </span>
+              <NuxtLink :to="item.to">{{ item.text }}</NuxtLink>
+            </template>
+          </span>
           <NuxtLink v-else-if="col.link" :to="col.link(row)">
             {{ col.formatter ? col.formatter(row) : row[col.field] }}
           </NuxtLink>

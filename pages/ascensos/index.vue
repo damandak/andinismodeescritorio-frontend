@@ -99,16 +99,12 @@ const columns = [
     label: "Andinistas",
     sortable: false,
     is_boolean: false,
-    formatter: (row) =>
-      row.andinists
-        .map(
-          (andinist, index) =>
-            `<a href='/andinistas/${andinist[0]}'>${index !== 0 ? ", " : ""}${
-              andinist[1]
-            }</a>`
-        )
-        .join(""),
-    formatter_html: true,
+    // Rendered as NuxtLinks by IndexTable: no raw HTML, no full page reload.
+    links: (row) =>
+      row.andinists.map((andinist) => ({
+        to: "/andinistas/" + andinist[0],
+        text: andinist[1],
+      })),
   },
   {
     class: "small-column",
@@ -116,6 +112,8 @@ const columns = [
     label: "Fecha",
     sortable: true,
     is_boolean: false,
+    // Sort by the real date, show it with its precision (e.g. "1896-xx-xx")
+    formatter: (row) => row.resulting_date,
   },
 ];
 

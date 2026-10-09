@@ -27,6 +27,8 @@
           :andinists="ascent_andinists"
           :supporting_andinists="ascent_support_andinists"
           :date="ascent_date"
+          :isFirstAscent="ascent_is_first_ascent"
+          :newRoute="ascent_new_route"
         />
         <AscentPhotosContent v-if="selectedTab === 1" :ascentID="ascent_id" />
         <AscentReferencesContent
@@ -61,7 +63,8 @@ const ascent_mountain_name = ascent.mountain_name;
 const ascent_andinists = ascent.andinists;
 const ascent_support_andinists = ascent.support_andinists;
 const ascent_completed = ascent.completed;
-const ascent_date = ascent.date;
+// The API sends the date already formatted for its precision (e.g. "1896-xx-xx").
+const ascent_date = ascent.date_tostr;
 const ascent_is_first_ascent = ascent.is_first_ascent;
 const ascent_new_route = ascent.new_route;
 

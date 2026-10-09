@@ -51,7 +51,7 @@
       </tr>
       <tr>
         <th>Honores</th>
-        <td>{{ "" }}</td>
+        <td>{{ honours }}</td>
       </tr>
     </tbody>
   </table>
@@ -72,7 +72,16 @@ const props = defineProps<{
     name: String;
   }>;
   date: String;
+  isFirstAscent?: Boolean;
+  newRoute?: Boolean;
 }>();
+
+// Same wording as the "honours" column of the ascent tables.
+const honours = computed(() => {
+  if (props.isFirstAscent) return "Primera ascensión";
+  if (props.newRoute) return "Nueva ruta";
+  return "";
+});
 </script>
 <style lang="scss" scoped>
 .adetable-general {
