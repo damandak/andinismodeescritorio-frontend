@@ -128,7 +128,7 @@ async function reloadMountains(resetPage = false) {
     "&page=" +
     page_number.value;
   if (search.value !== "") {
-    apiURLmountains += "&search=" + search.value;
+    apiURLmountains += "&search=" + encodeURIComponent(search.value);
   }
   if (order_field.value && order_direction.value) {
     apiURLmountains +=

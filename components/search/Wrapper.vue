@@ -112,7 +112,7 @@
           </div>
         </div>
       </div>
-      <div v-else>
+      <div v-else-if="hasSearched && !loading">
         <div class="search-results__noitems">
           <h2>No se encontraron resultados</h2>
         </div>
@@ -152,46 +152,59 @@ function searchTimer(e: any) {
   }, 300);
 }
 
+// Each new search gets a number; answers to older searches are ignored, so
+// a slow response can't overwrite the results of what the user typed last.
+let lastSearch = 0;
+const hasSearched = ref(false);
+
+async function fetchResults(path: string, term: string) {
+  const data: any = await $fetch(config.public.apiBase + path, {
+    query: { search: term },
+  });
+  return data?.results ?? [];
+}
+
 async function searchAgain(e: any) {
-  if (e.target.value.length > 0) {
-    activeSearch.value = "activeSearch";
-    searchbarUp.value = "searchbarUp";
-  } else {
+  const term = e.target.value.trim();
+  const searchId = ++lastSearch;
+
+  if (term.length === 0) {
     activeSearch.value = "";
     searchbarUp.value = "";
-  }
-
-  const apiURLMountains =
-    config.public.apiBase + "mountains/?search=" + e.target.value;
-  const mountaindata = await $fetch(apiURLMountains);
-  searchedMountains.value = mountaindata.results;
-
-  const apiURLRoutes =
-    config.public.apiBase + "route/table/?search=" + e.target.value;
-  const routesdata = await $fetch(apiURLRoutes);
-  searchedRoutes.value = routesdata.results;
-
-  const apiURLAscents =
-    config.public.apiBase + "ascent/table/?search=" + e.target.value;
-  const ascentdata = await $fetch(apiURLAscents);
-  searchedAscents.value = ascentdata.results;
-
-  const apiURLAndinists =
-    config.public.apiBase + "andinist/table/?search=" + e.target.value;
-  const andinistsdata = await $fetch(apiURLAndinists);
-  searchedAndinists.value = andinistsdata.results;
-
-  if (
-    searchedMountains.value.length > 0 ||
-    searchedRoutes.value.length > 0 ||
-    searchedAscents.value.length > 0 ||
-    searchedAndinists.value.length > 0
-  ) {
-    noItems.value = false;
-  } else {
+    searchedMountains.value = [];
+    searchedRoutes.value = [];
+    searchedAscents.value = [];
+    searchedAndinists.value = [];
     noItems.value = true;
+    hasSearched.value = false;
+    loading.value = false;
+    return;
   }
+  activeSearch.value = "activeSearch";
+  searchbarUp.value = "searchbarUp";
 
+  // In parallel; if one category fails the others still show.
+  const [mountains, routes, ascents, andinists] = await Promise.allSettled([
+    fetchResults("mountains/", term),
+    fetchResults("route/table/", term),
+    fetchResults("ascent/table/", term),
+    fetchResults("andinist/table/", term),
+  ]);
+  if (searchId !== lastSearch) return;
+
+  const value = (r: PromiseSettledResult<any[]>) =>
+    r.status === "fulfilled" ? r.value : [];
+  searchedMountains.value = value(mountains);
+  searchedRoutes.value = value(routes);
+  searchedAscents.value = value(ascents);
+  searchedAndinists.value = value(andinists);
+
+  noItems.value =
+    searchedMountains.value.length === 0 &&
+    searchedRoutes.value.length === 0 &&
+    searchedAscents.value.length === 0 &&
+    searchedAndinists.value.length === 0;
+  hasSearched.value = true;
   loading.value = false;
 }
 </script>

@@ -156,7 +156,7 @@ async function reloadAscents(resetPage = false) {
     "&page=" +
     page_number.value +
     "&search=" +
-    search.value;
+    encodeURIComponent(search.value);
 
   if (order_field.value && order_direction.value) {
     apiURLascents +=
