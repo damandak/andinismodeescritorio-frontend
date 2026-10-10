@@ -1,70 +1,15 @@
 <template>
   <div class="content-wrapper index-wrapper">
     <MainstructureTitleSection name="Andinistas" />
-    <div class="page-filters">
-      <div class="page-size-selector">
-        <span>Mostrar</span>
-        <select v-model="page_size" @change="reloadAndinists()">
-          <option
-            v-for="option in page_size_options"
-            :key="option"
-            :value="option"
-          >
-            {{ option }}
-          </option>
-        </select>
-        <span>por página</span>
-      </div>
-      <div class="search-table">
-        <input
-          type="text"
-          v-model="search"
-          v-on:input="reloadAndinists(true)"
-          placeholder="Buscar"
-        />
-      </div>
-      <div class="page-number-banner">
-        <span>Página</span>
-        <select v-model="page_number" @change="reloadAndinists()">
-          <option v-for="option in page_list" :key="option" :value="option">
-            {{ option }}
-          </option>
-        </select>
-      </div>
-    </div>
-    <IndexTable
+    <BodyDataTable
+      name="andinistas"
+      title="Andinistas"
+      itemsLabel="andinistas"
+      endpoint="andinist/table/"
       :columns="columns"
-      :data="andinistas"
-      :order_field="order_field"
-      :order_direction="order_direction"
-      :changeOrder="changeOrder"
     />
-    <div class="page-filters">
-      <div class="page-size-selector">
-        <span>Mostrar</span>
-        <select v-model="page_size" @change="reloadAndinists()">
-          <option
-            v-for="option in page_size_options"
-            :key="option"
-            :value="option"
-          >
-            {{ option }}
-          </option>
-        </select>
-        <span>por página</span>
-      </div>
-      <div class="page-number-banner">
-        <span>Página</span>
-        <select v-model="page_number" @change="reloadAndinists()">
-          <option v-for="option in page_list" :key="option" :value="option">
-            {{ option }}
-          </option>
-        </select>
-      </div>
-    </div>
   </div>
 </template>
-
 <script setup lang="ts">
 usePageSeo({
   title: "Andinistas",
@@ -72,114 +17,46 @@ usePageSeo({
     "Andinistas con ascensos registrados en los Andes Centrales: nacionalidad, clubes, ascensos, primeras ascensiones y rutas nuevas.",
 });
 
-import { ref } from "vue";
-
-const columns = [
+// Search, order and page live in the URL (?buscar=&orden=&pagina=), see
+// components/body/DataTable.vue. `key` is the column's name in the URL.
+const columns: TableColumn[] = [
   {
     class: "main-column",
     field: "fullname",
+    key: "nombre",
     label: "Nombre",
     sortable: true,
-    is_boolean: false,
     link: (andinista) => "/andinistas/" + andinista.id,
   },
   {
     class: "small-column",
     field: "nationalities_tostr",
     label: "Nacionalidad",
-    sortable: false,
-    is_boolean: false,
   },
   {
     class: "small-column",
     field: "clubs_tostr",
     label: "Clubes",
-    sortable: false,
-    is_boolean: false,
   },
   {
     field: "ascent_count",
+    key: "ascensos",
     label: "Ascensos",
     sortable: true,
-    is_boolean: false,
   },
   {
     field: "new_routes_count",
+    key: "rutas-nuevas",
     label: "Nuevas Rutas",
     sortable: true,
-    is_boolean: false,
   },
   {
     field: "first_ascent_count",
+    key: "primeras",
     label: "Primeras Absolutas",
     sortable: true,
-    is_boolean: false,
   },
 ];
-
-const config = useRuntimeConfig();
-
-const page_size = ref(10);
-const page_size_options = [10, 20, 50, 100];
-const andinistas_count = ref(0);
-const page_number = ref(1);
-const page_list = ref([]);
-const andinistas = ref([]);
-const search = ref("");
-
-const order_field = ref("");
-const order_direction = ref("asc");
-
-const apiURLandinists =
-  config.public.apiBase +
-  "andinist/table?page_size=" +
-  page_size.value +
-  "&page=" +
-  page_number.value;
-const data = await $fetch(apiURLandinists);
-andinistas_count.value = data.count;
-andinistas.value = data.results;
-page_list.value = Array.from(
-  Array(Math.ceil(andinistas_count.value / page_size.value)).keys()
-).map((x) => x + 1);
-
-async function reloadAndinists(resetPage = false) {
-  if (resetPage) {
-    page_number.value = 1;
-  }
-  let apiURLandinists =
-    config.public.apiBase +
-    "andinist/table?page_size=" +
-    page_size.value +
-    "&page=" +
-    page_number.value +
-    "&search=" +
-    encodeURIComponent(search.value);
-
-  if (order_field.value && order_direction.value) {
-    apiURLandinists +=
-      "&ordering=" +
-      (order_direction.value === "desc" ? "-" : "") +
-      order_field.value;
-  }
-
-  const andinists = await $fetch(apiURLandinists);
-  andinistas.value = andinists.results;
-  andinistas_count.value = andinists.count;
-  page_list.value = Array.from(
-    Array(Math.ceil(andinistas_count.value / page_size.value)).keys()
-  ).map((x) => x + 1);
-}
-
-function changeOrder(field: string) {
-  if (order_field.value === field) {
-    order_direction.value = order_direction.value === "asc" ? "desc" : "asc";
-  } else {
-    order_field.value = field;
-    order_direction.value = "asc";
-  }
-  reloadAndinists();
-}
 </script>
 <style scoped lang="scss">
 .index-wrapper {
@@ -191,31 +68,6 @@ function changeOrder(field: string) {
   padding-bottom: 50px;
   .title-section {
     height: 50px;
-  }
-  .adetable {
-    margin: 20px auto;
-    width: 90% !important;
-    max-width: 1000px;
-    display: block;
-    overflow-x: auto;
-    th {
-      text-align: left;
-    }
-    td {
-      text-align: left;
-      width: 20%;
-      a {
-        &:hover {
-          color: $color-main-second;
-        }
-      }
-    }
-    td.main-column {
-      font-weight: 900;
-    }
-    td.small-column {
-      font-size: 0.9rem;
-    }
   }
 }
 </style>

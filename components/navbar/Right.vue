@@ -1,13 +1,18 @@
 <template>
   <div class="nav-right">
-    <div class="nav-right__item">
+    <button
+      type="button"
+      class="nav-right__item icon-button"
+      aria-label="Buscar"
+      title="Buscar"
+      aria-controls="site-search"
+      :aria-expanded="searchOpen"
+      @click="$emit('openSearch')"
+    >
       <client-only>
-        <font-awesome-icon
-          icon="fa-solid fa-magnifying-glass"
-          @click="$emit('openSearch')"
-        />
+        <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
       </client-only>
-    </div>
+    </button>
     <MainstructureMainButton
       :buttonclass="'nav-right__item navbutton'"
       :to="'/'"
@@ -20,18 +25,27 @@
       :text="'BLOG'"
       v-else
     />
-    <div class="nav-right__item">
+    <button
+      type="button"
+      class="nav-right__item icon-button"
+      aria-label="Menú"
+      title="Menú"
+      aria-controls="site-menu"
+      :aria-expanded="menuOpen"
+      @click="$emit('openExtendedNav')"
+    >
       <client-only>
-        <font-awesome-icon icon="bars" @click="$emit('openExtendedNav')" />
+        <font-awesome-icon icon="bars" />
       </client-only>
-    </div>
+    </button>
   </div>
 </template>
 
 <script setup lang="ts">
+defineProps<{ menuOpen?: boolean; searchOpen?: boolean }>();
 const emit = defineEmits<{
-  openExtendedNav: () => void;
-  openSearch: () => void;
+  openExtendedNav: [];
+  openSearch: [];
 }>();
 
 const route = useRoute();

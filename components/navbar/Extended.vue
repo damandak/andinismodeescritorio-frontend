@@ -1,12 +1,22 @@
 <template>
-  <div class="extended-nav-wrapper" :class="active">
-    <client-only>
-      <font-awesome-icon
-        icon="fa-solid fa-rectangle-xmark"
-        class="extended-nav__close"
-        @click="$emit('closeExtendedNav')"
-      />
-    </client-only>
+  <div
+    id="site-menu"
+    class="extended-nav-wrapper"
+    :class="active"
+    :inert="active === 'active' ? undefined : ''"
+  >
+    <button
+      ref="closeButton"
+      type="button"
+      class="extended-nav__close icon-button"
+      aria-label="Cerrar menú"
+      title="Cerrar menú"
+      @click="$emit('closeExtendedNav')"
+    >
+      <client-only>
+        <font-awesome-icon icon="fa-solid fa-rectangle-xmark" />
+      </client-only>
+    </button>
     <div class="extended-nav-link">
       <NuxtLink to="/" @click="$emit('closeExtendedNav')"> inicio </NuxtLink>
     </div>
@@ -49,8 +59,18 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  closeExtendedNav: () => void;
+  closeExtendedNav: [];
 }>();
+
+// Closed, the menu sits off screen and is `inert`: Tab skips its links.
+// Opened, the focus goes to its close button.
+const closeButton = ref<HTMLButtonElement | null>(null);
+watch(
+  () => props.active,
+  (active) => {
+    if (active === "active") nextTick(() => closeButton.value?.focus({ preventScroll: true }));
+  }
+);
 </script>
 
 <style lang="scss">
@@ -79,6 +99,8 @@ const emit = defineEmits<{
   border-left: 10px #222222 solid;
 
   .extended-nav__close {
+    display: block;
+    line-height: 1;
     color: $color-light;
     font-size: clamp(2.5rem, 8vh, 4rem);
     margin: 0;

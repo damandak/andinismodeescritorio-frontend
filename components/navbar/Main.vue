@@ -1,11 +1,16 @@
 <template>
-  <nav class="navbar">
+  <nav class="navbar" aria-label="Principal">
     <NuxtLink to="/">
       <div class="navbar_logo">
-        <img src="/img/nav_logo.png" alt="logo" />
+        <img src="/img/nav_logo.png" alt="Andinismo de Escritorio: inicio" />
       </div>
     </NuxtLink>
-    <NavbarRight @openExtendedNav="openExtendedNav" @openSearch="openSearch" />
+    <NavbarRight
+      :menuOpen="activeExtended === 'active'"
+      :searchOpen="activeSearch === 'active'"
+      @openExtendedNav="openExtendedNav"
+      @openSearch="openSearch"
+    />
     <NavbarExtended
       :active="activeExtended"
       @closeExtendedNav="closeExtendedNav"
@@ -18,19 +23,51 @@ import { ref } from "vue";
 
 const activeExtended = ref("inactive");
 const activeSearch = ref("inactive");
+
+// Where the focus was before opening the menu or the search, to give it back
+// on close (keyboard users stay where they were).
+let returnFocus: HTMLElement | null = null;
+function rememberFocus() {
+  returnFocus = document.activeElement as HTMLElement | null;
+}
+function restoreFocus() {
+  // Only if the focus is still inside the closed panel (not after a link
+  // click that already moved to another page).
+  const active = document.activeElement;
+  if (active && active !== document.body && !active.closest("#site-menu, #site-search")) {
+    returnFocus = null;
+    return;
+  }
+  returnFocus?.focus?.({ preventScroll: true });
+  returnFocus = null;
+}
+
 function openExtendedNav() {
+  rememberFocus();
   activeExtended.value = "active";
 }
 function closeExtendedNav() {
   activeExtended.value = "inactive";
+  restoreFocus();
 }
 
 function openSearch() {
+  rememberFocus();
   activeSearch.value = "active";
 }
 function closeSearch() {
   activeSearch.value = "inactive";
+  restoreFocus();
 }
+
+// Esc closes whichever is open.
+function onKeydown(event: KeyboardEvent) {
+  if (event.key !== "Escape") return;
+  if (activeSearch.value === "active") closeSearch();
+  else if (activeExtended.value === "active") closeExtendedNav();
+}
+onMounted(() => document.addEventListener("keydown", onKeydown));
+onBeforeUnmount(() => document.removeEventListener("keydown", onKeydown));
 </script>
 <style scoped lang="scss">
 nav.navbar {

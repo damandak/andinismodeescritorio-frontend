@@ -69,6 +69,19 @@ tipo JavaScript en el mismo proyecto de la clave. No cambia lo que Google cobra.
 - La lista de cerros del mapa se guarda 10 minutos en el navegador: un cerro recién editado
   puede tardar eso en verse actualizado en el mapa.
 
+## Tablas y fichas
+
+- Las tablas de cerros, rutas, ascensos y andinistas son un solo componente
+  (`components/body/DataTable.vue`). Cada página solo define sus columnas.
+- La búsqueda, el orden y la página quedan en la URL, así que se pueden compartir y "atrás"
+  vuelve al mismo lugar: `/ascensos?buscar=plomo&orden=-fecha&pagina=2&por-pagina=20`.
+  El nombre de cada columna en la URL es su `key` (`fecha`, `altura`, `cerro`...).
+- La búsqueda espera a que termines de escribir (300 ms) antes de consultar la API.
+- La pestaña abierta de una ficha también va en la URL: `/cerros/612?tab=rutas`
+  (`ubicacion`, `rutas`, `ascensos`, `referencias`, `otras-rutas`). Sin `tab`, abre "General".
+- Todo se puede usar con teclado: Tab recorre los controles, las flechas cambian de pestaña
+  y Esc cierra el menú o el buscador.
+
 ## Compilar y probar como en producción
 
 ```bash
@@ -172,10 +185,13 @@ Para volver atrás con la opción B: `rm -rf .output && mv .output.old .output &
 
 ```
 pages/          rutas del sitio (/cerros, /rutas, /ascensos, /andinistas, /blog, ...)
-components/     componentes por sección (mountain/, routes/, ascent/, andinist/, map/, ...)
-composables/    useApiDetail (carga de fichas con 404 real), usePageSeo (título, descripción,
-                vista previa al compartir), mountainMap (mapa, íconos, grupos, pop-ups)
-utils/          formato de fechas parciales y altitudes, filtros del mapa, tamaños de imagen
+components/     componentes por sección (mountain/, routes/, ascent/, andinist/, map/, ...);
+                body/ tiene lo común: tabla (DataTable), pestañas (TabWrapper)
+composables/    useApiDetail (carga de fichas con 404 real), usePageTabs (pestaña en la URL),
+                usePageSeo (título, descripción, vista previa al compartir),
+                mountainMap (mapa, íconos, grupos, pop-ups)
+utils/          formato de fechas parciales y altitudes, filtros del mapa, tamaños de imagen,
+                estado de las tablas en la URL (tableQuery)
 server/routes/  sitemap.xml y robots.txt (generados con los datos de la API)
 content/blog/   relatos del blog en Markdown
 public/img/     íconos y marcadores del mapa

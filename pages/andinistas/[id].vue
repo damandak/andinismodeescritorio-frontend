@@ -8,9 +8,10 @@
       <BodyTabWrapper
         :tabs="tabs"
         :selectedTab="selectedTab"
+        label="Secciones del andinista"
         @switchTab="switchTab"
       />
-      <div class="body-content">
+      <div class="body-content" v-bind="panelAttrs">
         <h2 class="content-title">{{ tabs.find((t) => t.id === selectedTab)?.title }}</h2>
         <AndinistGeneralContent
           v-if="selectedTab === 0"
@@ -34,12 +35,12 @@
 import { onMounted, ref } from "vue";
 const config = useRuntimeConfig();
 const route = useRoute();
-const tabs = [
-  { id: 0, title: "General", iconname: "ico-general" },
-  { id: 1, title: "Ascensos", iconname: "ico-ascent" },
+const tabs: PageTab[] = [
+  { id: 0, slug: "general", title: "General", iconname: "ico-general" },
+  { id: 1, slug: "ascensos", title: "Ascensos", iconname: "ico-ascent" },
   // Hidden until there is content for it (downloads / photo gallery):
-  // { id: 2, title: "Fotos", iconname: "ico-photo" },
-  { id: 3, title: "Referencias", iconname: "ico-sources" },
+  // { id: 2, slug: "fotos", title: "Fotos", iconname: "ico-photo" },
+  { id: 3, slug: "referencias", title: "Referencias", iconname: "ico-sources" },
 ];
 const andinist = await useApiDetail<any>(
   `andinist-${route.params.id}`,
@@ -72,12 +73,8 @@ const img_url = andinist.img_url;
   });
 }
 
-var selectedTab = ref(0);
-// TabWrapper marks the selected tab itself; tabs are matched by id, not by
-// position, so hidden tabs don't shift the others.
-function switchTab(tabNumber: number) {
-  selectedTab.value = tabNumber;
-}
+// Open tab in the URL (?tab=rutas), so it can be shared.
+const { selectedTab, switchTab, panelAttrs } = usePageTabs(tabs);
 </script>
 <style scoped lang="scss">
 .andinist-wrapper {

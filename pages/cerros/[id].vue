@@ -31,10 +31,11 @@
     <div class="body-section">
       <BodyTabWrapper
         :tabs="tabs"
+        :selectedTab="selectedTab"
+        label="Secciones del cerro"
         @switchTab="switchTab"
-        :selected-tab="selectedTab"
       />
-      <div class="body-content">
+      <div class="body-content" v-bind="panelAttrs">
         <h2 class="content-title">{{ tabs.find((t) => t.id === selectedTab)?.title }}</h2>
         <MountainGeneralContent
           v-if="selectedTab === 0"
@@ -80,14 +81,14 @@ import { onMounted, ref } from "vue";
 const config = useRuntimeConfig();
 const route = useRoute();
 
-const tabs = [
-  { id: 0, title: "General", iconname: "ico-general" },
-  { id: 1, title: "Ubicación", iconname: "ico-map" },
-  { id: 2, title: "Rutas", iconname: "ico-route" },
-  { id: 3, title: "Ascensos", iconname: "ico-ascent" },
+const tabs: PageTab[] = [
+  { id: 0, slug: "general", title: "General", iconname: "ico-general" },
+  { id: 1, slug: "ubicacion", title: "Ubicación", iconname: "ico-map" },
+  { id: 2, slug: "rutas", title: "Rutas", iconname: "ico-route" },
+  { id: 3, slug: "ascensos", title: "Ascensos", iconname: "ico-ascent" },
   // Hidden until there is content for it (downloads / photo gallery):
-  // { id: 4, title: "Fotos", iconname: "ico-photo" },
-  { id: 5, title: "Referencias", iconname: "ico-sources" },
+  // { id: 4, slug: "fotos", title: "Fotos", iconname: "ico-photo" },
+  { id: 5, slug: "referencias", title: "Referencias", iconname: "ico-sources" },
 ];
 
 const mtn = await useApiDetail<any>(
@@ -187,11 +188,8 @@ useHead({
   ],
 });
 
-var selectedTab = ref(0);
-
-function switchTab(tabNumber: number) {
-  selectedTab.value = tabNumber;
-}
+// Open tab in the URL (?tab=rutas), so it can be shared.
+const { selectedTab, switchTab, panelAttrs } = usePageTabs(tabs);
 </script>
 <style scoped lang="scss">
 .mountain-wrapper {

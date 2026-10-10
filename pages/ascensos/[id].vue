@@ -13,9 +13,10 @@
       <BodyTabWrapper
         :tabs="tabs"
         :selectedTab="selectedTab"
+        label="Secciones del ascenso"
         @switchTab="switchTab"
       />
-      <div class="body-content">
+      <div class="body-content" v-bind="panelAttrs">
         <h2 class="content-title">{{ tabs.find((t) => t.id === selectedTab)?.title }}</h2>
         <AscentGeneralContent
           v-if="selectedTab === 0"
@@ -43,11 +44,11 @@
 import { onMounted, ref } from "vue";
 const config = useRuntimeConfig();
 const route = useRoute();
-const tabs = [
-  { id: 0, title: "General", iconname: "ico-general" },
+const tabs: PageTab[] = [
+  { id: 0, slug: "general", title: "General", iconname: "ico-general" },
   // Hidden until there is content for it (downloads / photo gallery):
-  // { id: 1, title: "Fotos", iconname: "ico-photo" },
-  { id: 2, title: "Referencias", iconname: "ico-sources" },
+  // { id: 1, slug: "fotos", title: "Fotos", iconname: "ico-photo" },
+  { id: 2, slug: "referencias", title: "Referencias", iconname: "ico-sources" },
 ];
 const ascent = await useApiDetail<any>(
   `ascent-${route.params.id}`,
@@ -86,12 +87,8 @@ const ascent_new_route = ascent.new_route;
   });
 }
 
-var selectedTab = ref(0);
-// TabWrapper marks the selected tab itself; tabs are matched by id, not by
-// position, so hidden tabs don't shift the others.
-function switchTab(tabNumber: number) {
-  selectedTab.value = tabNumber;
-}
+// Open tab in the URL (?tab=rutas), so it can be shared.
+const { selectedTab, switchTab, panelAttrs } = usePageTabs(tabs);
 </script>
 <style scoped lang="scss">
 .ascent-wrapper {

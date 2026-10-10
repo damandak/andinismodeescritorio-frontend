@@ -1,5 +1,5 @@
 <template>
-  <span class="order-switch">
+  <span class="order-switch" aria-hidden="true">
     <span :class="['triangle', 'triangle-up', isActive('asc')]"></span>
     <span :class="['triangle', 'triangle-down', isActive('desc')]"></span>
   </span>

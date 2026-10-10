@@ -1,17 +1,30 @@
 <template>
-  <div class="search-wrapper" :class="active">
-    <client-only>
-      <font-awesome-icon
-        icon="fa-solid fa-rectangle-xmark"
-        class="search__close"
-        @click="$emit('closeSearch')"
-      />
-    </client-only>
+  <div
+    id="site-search"
+    class="search-wrapper"
+    :class="active"
+    role="dialog"
+    aria-label="Buscar en el sitio"
+    :inert="active === 'active' ? undefined : ''"
+  >
+    <button
+      type="button"
+      class="search__close icon-button"
+      aria-label="Cerrar búsqueda"
+      title="Cerrar búsqueda"
+      @click="$emit('closeSearch')"
+    >
+      <client-only>
+        <font-awesome-icon icon="fa-solid fa-rectangle-xmark" />
+      </client-only>
+    </button>
     <div class="search-bar" :class="searchbarUp">
       <input
-        type="text"
+        ref="searchInput"
+        type="search"
         class="search-input"
         placeholder="Buscar"
+        aria-label="Buscar cerros, rutas, ascensos y andinistas"
         @input="searchTimer"
       />
     </div>
@@ -123,11 +136,21 @@
 <script setup lang="ts">
 const config = useRuntimeConfig();
 const props = defineProps<{
-  active: String;
+  active: string;
 }>();
 const emit = defineEmits<{
-  closeSearch: () => void;
+  closeSearch: [];
 }>();
+
+// Closed, the search sits off screen and is `inert` (Tab skips it). Opened,
+// the cursor goes straight to the search box.
+const searchInput = ref<HTMLInputElement | null>(null);
+watch(
+  () => props.active,
+  (active) => {
+    if (active === "active") nextTick(() => searchInput.value?.focus({ preventScroll: true }));
+  }
+);
 
 const loading = ref(false);
 
@@ -224,6 +247,7 @@ async function searchAgain(e: any) {
   justify-content: space-around;
   align-items: center;
   .search__close {
+    line-height: 1;
     color: white;
     font-size: 4rem;
     position: absolute;
