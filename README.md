@@ -40,9 +40,34 @@ del backend.
 | --- | --- | --- |
 | `GOOGLE_MAPS_API_KEY` | al compilar (`npm run build`) | Clave de Google Maps para el mapa. |
 | `NUXT_PUBLIC_GOOGLE_MAPS_API_KEY` | al arrancar el servidor | Igual que la anterior, pero reemplaza la que quedó al compilar. Útil si el build se hizo en otro lado (GitHub). |
+| `GOOGLE_MAPS_MAP_ID` / `NUXT_PUBLIC_GOOGLE_MAPS_MAP_ID` | al compilar / al arrancar | "Map ID" de Google Cloud. Con él, el mapa usa el marcador actual de Google (`AdvancedMarkerElement`); sin él usa el clásico, que Google marcó como obsoleto pero sigue funcionando. Se ven iguales. |
 | `NUXT_PUBLIC_API_BASE` | al arrancar el servidor (y en `npm run dev`) | URL de la API. Por defecto `https://andinismodeescritorio.cl/djangoapi/`. |
 | `NUXT_PUBLIC_SITE_URL` | al arrancar el servidor | Dirección pública del sitio, usada en URLs canónicas, vistas previas al compartir y `sitemap.xml`. Por defecto `https://www.andinismodeescritorio.cl`. |
 | `PORT` | al arrancar el servidor | Puerto del servidor compilado (por defecto 3000). |
+
+### Crear el Map ID de Google (una vez)
+
+1. Entra a <https://console.cloud.google.com/> con la cuenta dueña de la clave de Google Maps
+   y elige ese mismo proyecto.
+2. Busca **"Map management"** ("Administración de mapas") en Google Maps Platform y crea un
+   **Map ID** de tipo **JavaScript**, con mapa **Raster** (admite la vista satelital).
+3. Copia el ID y agrégalo en el servidor, en el `env` de `ecosystem.config.js`:
+   `NUXT_PUBLIC_GOOGLE_MAPS_MAP_ID: "<el id>"`, y luego `pm2 restart all --update-env`.
+
+Los nombres de los menús de Google cambian a veces; lo que importa es crear un Map ID de
+tipo JavaScript en el mismo proyecto de la clave. No cambia lo que Google cobra.
+
+## El mapa
+
+- Los cerros usan los íconos de `public/img/`: `marker3.png` (ascendido),
+  `marker-sin-ascenso.png` (sin ascenso registrado) y `marker-alt-3.png` (el cerro de la
+  ficha, en el minimapa de "Ubicación").
+- Al alejar el zoom, los íconos que se encimarían se agrupan en un círculo con el número de
+  cerros (nunca desde el zoom 12 en adelante).
+- Los filtros quedan en la URL (`/?pais=Chile&min=5000&ascendido=no`), así que un mapa
+  filtrado se puede compartir.
+- La lista de cerros del mapa se guarda 10 minutos en el navegador: un cerro recién editado
+  puede tardar eso en verse actualizado en el mapa.
 
 ## Compilar y probar como en producción
 
@@ -149,8 +174,8 @@ Para volver atrás con la opción B: `rm -rf .output && mv .output.old .output &
 pages/          rutas del sitio (/cerros, /rutas, /ascensos, /andinistas, /blog, ...)
 components/     componentes por sección (mountain/, routes/, ascent/, andinist/, map/, ...)
 composables/    useApiDetail (carga de fichas con 404 real), usePageSeo (título, descripción,
-                vista previa al compartir), loader de Google Maps
-utils/          formato de fechas parciales, altitudes y listas de nombres
+                vista previa al compartir), mountainMap (mapa, íconos, grupos, pop-ups)
+utils/          formato de fechas parciales y altitudes, filtros del mapa, tamaños de imagen
 server/routes/  sitemap.xml y robots.txt (generados con los datos de la API)
 content/blog/   relatos del blog en Markdown
 public/img/     íconos y marcadores del mapa

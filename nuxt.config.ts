@@ -51,6 +51,10 @@ export default defineNuxtConfig({
       // sitemap.xml. Override with NUXT_PUBLIC_SITE_URL.
       siteUrl: "https://www.andinismodeescritorio.cl",
       googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
+      // Google Cloud "Map ID": enables the current marker type
+      // (AdvancedMarkerElement). Without it the map uses the classic markers.
+      // Override at runtime with NUXT_PUBLIC_GOOGLE_MAPS_MAP_ID.
+      googleMapsMapId: process.env.GOOGLE_MAPS_MAP_ID || "",
     },
   },
 

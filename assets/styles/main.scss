@@ -165,3 +165,31 @@ table.adetable {
     }
   }
 }
+
+// Map pop-ups (built by composables/mountainMap.ts, outside any component)
+.mtn-popup-link {
+  cursor: pointer;
+  .prefix {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #666;
+    transition: all 0.2s ease-in-out;
+  }
+  .name {
+    font-size: 1.2rem;
+    color: #333;
+    margin: 0;
+    font-weight: bold;
+    transition: all 0.2s ease-in-out;
+  }
+  &:hover {
+    p {
+      color: $color-main-first;
+    }
+  }
+}
+.mtn-popup-altitude {
+  font-size: 0.8rem;
+  color: #666;
+  margin: 0;
+}

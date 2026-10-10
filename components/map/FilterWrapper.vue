@@ -1,123 +1,107 @@
 <template>
   <div class="filter-wrapper" :class="active">
     <MapFilter
-      v-for="filter in filters"
+      v-for="filter in filterDefs"
       :key="filter.id"
       :id="filter.id"
       :name="filter.name"
-      :apiUrl="filter.apiUrl"
-      :filter_type="filter.filter_type"
-      :obj_type="filter.obj_type"
-      :selected_filter="selected_filter[filter.id]"
-      @selectFilter="selectFilter"
-      @changeApiFilter="changeApiFilter"
+      :options="filter.options"
+      :selected="selectedFor(filter.id)"
+      :multiple="filter.multiple"
+      :open="openFilter === filter.id"
+      @toggle-open="toggleOpen"
+      @update="update"
     />
+    <div class="filter-summary" aria-live="polite">
+      <span v-if="counts.total">
+        {{ counts.visible.toLocaleString("es-CL") }} de
+        {{ counts.total.toLocaleString("es-CL") }} cerros
+      </span>
+      <button
+        v-if="activeFilterCount(modelValue) > 0"
+        type="button"
+        class="clear-filters"
+        @click="clearAll"
+      >
+        Limpiar filtros
+      </button>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
 const props = defineProps<{
-  active: String;
+  active: string;
+  modelValue: MapFilters;
+  counts: { visible: number; total: number };
 }>();
+const emit = defineEmits<{ "update:modelValue": [filters: MapFilters] }>();
 
-const emit = defineEmits<{
-  changeFilters: (id: number, param_string: string) => void;
-}>();
+const config = useRuntimeConfig();
 
-const filters = ref([
-  {
-    id: 0,
-    name: "prefijo",
-    apiUrl: "prefixes/",
-    filter_type: "select",
-    obj_type: "object",
+// Options from the API, loaded in the browser (the panel starts closed).
+const { data: apiOptions } = useAsyncData(
+  "map-filter-options",
+  async () => {
+    const get = (path: string) =>
+      $fetch<any>(config.public.apiBase + path)
+        .then((d) => (Array.isArray(d) ? d : d?.results ?? []))
+        .catch(() => []);
+    const [prefixes, countries, regions] = await Promise.all([
+      get("prefixes/"),
+      get("countries/?only_andes"),
+      get("regions/"),
+    ]);
+    return { prefixes, countries, regions };
   },
+  { server: false, lazy: true }
+);
+
+const altitudes = (values: number[]) =>
+  values.map((v) => ({ value: String(v), label: v.toLocaleString("es-CL") }));
+const named = (rows: any[] | undefined, key = "name") =>
+  (rows ?? []).map((r) => ({ value: r[key], label: r[key] }));
+
+const filterDefs = computed(() => [
+  { id: "prefixes", name: "prefijo", multiple: true, options: named(apiOptions.value?.prefixes, "prefix") },
+  { id: "countries", name: "país", multiple: true, options: named(apiOptions.value?.countries) },
+  { id: "regions", name: "región", multiple: true, options: named(apiOptions.value?.regions) },
+  { id: "minAltitude", name: "altura mínima", multiple: false, options: altitudes([1000, 2000, 3000, 4000, 5000, 6000]) },
+  { id: "maxAltitude", name: "altura máxima", multiple: false, options: altitudes([1000, 2000, 3000, 4000, 5000, 6000, 7000]) },
   {
-    id: 1,
-    name: "país",
-    apiUrl: "countries/?only_andes",
-    filter_type: "select",
-    obj_type: "object",
-  },
-  {
-    id: 2,
-    name: "región",
-    apiUrl: "regions/",
-    filter_type: "select",
-    obj_type: "object",
-  },
-  {
-    id: 3,
-    name: "altura mínima",
-    apiUrl: "",
-    filter_type: "range",
-    obj_type: "number",
-  },
-  {
-    id: 4,
-    name: "altura máxima",
-    apiUrl: "",
-    filter_type: "range",
-    obj_type: "number",
-  },
-  {
-    id: 5,
+    id: "ascended",
     name: "ascendida",
-    apiUrl: "",
-    filter_type: "select",
-    obj_type: "boolean",
+    multiple: false,
+    options: [
+      { value: "si", label: "Sí" },
+      { value: "no", label: "No" },
+    ],
   },
 ]);
 
-const selected_filter = ref([false, false, false, false, false]);
-
-function selectFilter(id: number) {
-  selected_filter.value[id] = !selected_filter.value[id];
-  for (let i = 0; i < selected_filter.value.length; i++) {
-    if (i != id) {
-      selected_filter.value[i] = false;
-    }
-  }
+function selectedFor(id: string): string[] {
+  const f = props.modelValue;
+  if (id === "prefixes" || id === "countries" || id === "regions") return f[id];
+  if (id === "minAltitude" || id === "maxAltitude") return f[id] === null ? [] : [String(f[id])];
+  if (id === "ascended") return f.ascended === null ? [] : [f.ascended ? "si" : "no"];
+  return [];
 }
 
-const allFilters = ref({
-  prefixes: ref<number[]>([]),
-  countries: ref<number[]>([]),
-  regions: ref<number[]>([]),
-  mountain_groups: ref<number[]>([]),
-  min_altitude: ref(0),
-  max_altitude: ref(9000),
-  ascended: ref([false, true]),
-});
+function update(id: string, values: string[]) {
+  const next: MapFilters = { ...props.modelValue };
+  if (id === "prefixes" || id === "countries" || id === "regions") next[id] = values;
+  if (id === "minAltitude" || id === "maxAltitude") next[id] = values.length ? Number(values[0]) : null;
+  if (id === "ascended") next.ascended = values.length ? values[0] === "si" : null;
+  emit("update:modelValue", next);
+}
 
-function changeApiFilter(id: number, param: number[]) {
-  if (id == 0) {
-    allFilters.value.prefixes = param;
-  } else if (id == 1) {
-    allFilters.value.countries = param;
-  } else if (id == 2) {
-    allFilters.value.regions = param;
-  } else if (id == 3) {
-    if (param.length == 0) {
-      allFilters.value.min_altitude = 0;
-    } else {
-      allFilters.value.min_altitude = param[0].number;
-    }
-  } else if (id == 4) {
-    if (param.length == 0) {
-      allFilters.value.max_altitude = 9000;
-    } else {
-      allFilters.value.max_altitude = param[0].number;
-    }
-  } else if (id == 5) {
-    if (param.length == 0) {
-      allFilters.value.ascended = [false, true];
-    } else if (param[0].name == "No") {
-      allFilters.value.ascended = [false];
-    } else if (param[0].name == "Sí") {
-      allFilters.value.ascended = [true];
-    }
-  }
-  emit("changeFilters", id, allFilters);
+const openFilter = ref<string | null>(null);
+function toggleOpen(id: string) {
+  openFilter.value = openFilter.value === id ? null : id;
+}
+
+function clearAll() {
+  openFilter.value = null;
+  emit("update:modelValue", emptyFilters());
 }
 </script>
 <style scoped lang="scss">
@@ -145,7 +129,34 @@ function changeApiFilter(id: number, param: number[]) {
     transform: translateY(0);
   }
 }
+.filter-summary {
+  position: absolute;
+  right: 20px;
+  top: 6px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  color: $color-light;
+  font-size: 0.85rem;
+  .clear-filters {
+    font: inherit;
+    font-weight: 700;
+    color: $color-light;
+    background: transparent;
+    border: 1px solid $color-light;
+    border-radius: 12px;
+    padding: 2px 10px;
+    cursor: pointer;
+    &:hover {
+      background: $color-main-second;
+    }
+  }
+}
 @media screen and (max-width: 850px) {
+  .filter-summary {
+    position: static;
+    margin-top: 8px;
+  }
   .filter-wrapper {
     flex-direction: column;
     justify-content: flex-start;

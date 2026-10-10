@@ -1,136 +1,72 @@
 <template>
-  <div class="filter-section" v-if="filterItems.length > 0">
-    <div class="filter" :class="is_active" @click="$emit('selectFilter', id)">
+  <div class="filter-section" v-if="options.length > 0">
+    <button
+      type="button"
+      class="filter"
+      :class="{ active: selected.length > 0 }"
+      :aria-expanded="open"
+      @click="$emit('toggleOpen', id)"
+    >
       <p>
         {{ name }}
       </p>
       <div class="arrow-down"></div>
-    </div>
-    <div v-if="selected_filter" class="select-group">
-      <div v-for="item in filterItems">
-        <div
-          class="select-item"
-          :class="item.class"
-          @click="toggleSelectItem(item.id)"
-        >
-          <p>{{ item.name }}</p>
-        </div>
-      </div>
+    </button>
+    <div v-if="open" class="select-group">
+      <button
+        v-for="option in options"
+        :key="option.value"
+        type="button"
+        class="select-item"
+        :class="{ active: selected.includes(option.value) }"
+        :aria-pressed="selected.includes(option.value)"
+        @click="toggle(option.value)"
+      >
+        <p>{{ option.label }}</p>
+      </button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-const config = useRuntimeConfig();
+// One filter button of the map. It holds no state of its own: the selection
+// comes from the map filters (and the URL) through `selected`.
 const props = defineProps<{
-  id: number;
-  name: String;
-  filter_type: String;
-  obj_type: String;
-  selected_filter: Boolean;
-  apiUrl: String;
+  id: string;
+  name: string;
+  options: { value: string; label: string }[];
+  selected: string[];
+  multiple: boolean;
+  open: boolean;
 }>();
 const emit = defineEmits<{
-  selectFilter: (id: number) => void;
-  changeApiFilter: (id: number, param_string: string) => void;
+  toggleOpen: [id: string];
+  update: [id: string, values: string[]];
 }>();
 
-const is_active = ref("");
-
-// define a list of objects with id and name
-const filterItems: Ref<[{ id: number; name: string; class: string }]> = ref([]);
-
-async function updateFilterItems() {
-  if (props.apiUrl != "") {
-    const apiURL = config.public.apiBase + props.apiUrl;
-    const { data, execute } = useFetch(apiURL);
-
-    // Immediately invoke the fetch operation
-    await execute();
-
-    const output = data.value.results;
-
-    for (let i = 0; i < output.length; i++) {
-      if (props.name == "prefijo") {
-        filterItems.value.push({
-          id: output[i].id,
-          name: output[i].prefix,
-          class: "",
-        });
-      } else {
-        filterItems.value.push({
-          id: output[i].id,
-          name: output[i].name,
-          class: "",
-        });
-      }
-    }
+function toggle(value: string) {
+  let next: string[];
+  if (props.selected.includes(value)) {
+    next = props.selected.filter((v) => v !== value);
   } else {
-    if (props.name == "altura mínima") {
-      filterItems.value.push({ id: 0, name: "1000", number: 1000, class: "" });
-      filterItems.value.push({ id: 1, name: "2000", number: 2000, class: "" });
-      filterItems.value.push({ id: 2, name: "3000", number: 3000, class: "" });
-      filterItems.value.push({ id: 3, name: "4000", number: 4000, class: "" });
-      filterItems.value.push({ id: 4, name: "5000", number: 5000, class: "" });
-      filterItems.value.push({ id: 5, name: "6000", number: 6000, class: "" });
-    } else if (props.name == "altura máxima") {
-      filterItems.value.push({ id: 0, name: "1000", number: 1000, class: "" });
-      filterItems.value.push({ id: 1, name: "2000", number: 2000, class: "" });
-      filterItems.value.push({ id: 2, name: "3000", number: 3000, class: "" });
-      filterItems.value.push({ id: 3, name: "4000", number: 4000, class: "" });
-      filterItems.value.push({ id: 4, name: "5000", number: 5000, class: "" });
-      filterItems.value.push({ id: 5, name: "6000", number: 6000, class: "" });
-      filterItems.value.push({ id: 6, name: "7000", number: 7000, class: "" });
-    } else if (props.name == "ascendida") {
-      filterItems.value.push({ id: 0, name: "Sí", class: "" });
-      filterItems.value.push({ id: 1, name: "No", class: "" });
-    }
+    next = props.multiple ? [...props.selected, value] : [value];
   }
-}
-
-onMounted(() => {
-  updateFilterItems();
-});
-
-const selectedItems: Ref<[{ id: number; name: string; number: number }]> = ref(
-  []
-);
-
-function toggleSelectItem(id: number) {
-  const fullItem = filterItems.value.find((item) => item.id === id);
-  if (selectedItems.value.includes(fullItem)) {
-    selectedItems.value.splice(selectedItems.value.indexOf(fullItem), 1);
-    filterItems.value.find((item) => item.id === id).class = "";
-  } else {
-    if (
-      props.name == "altura mínima" ||
-      props.name == "altura máxima" ||
-      props.name == "ascendida"
-    ) {
-      // only allow one selected item
-      selectedItems.value = [];
-      selectedItems.value.push(fullItem);
-      filterItems.value.forEach((item) => (item.class = ""));
-      filterItems.value.find((item) => item.id === id).class = "active";
-    } else {
-      // allow multiple selected items
-      selectedItems.value.push(fullItem);
-      filterItems.value.find((item) => item.id === id).class = "active";
-    }
-  }
-  if (selectedItems.value.length > 0) {
-    is_active.value = "active";
-  } else {
-    is_active.value = "";
-  }
-  emit("changeApiFilter", props.id, selectedItems.value);
+  emit("update", props.id, next);
 }
 </script>
 <style scoped lang="scss">
+/* Reset the browser's button look without outranking the rules below. */
+:where(button.filter, button.select-item) {
+  font: inherit;
+  padding: 0;
+  margin: 0;
+}
 .filter {
   height: 50px;
   background: #1bc2ccb3;
   width: 200px;
+  // six buttons always fit in the panel (they overflowed it at ~1280 px)
+  max-width: calc((100vw - 200px) / 6);
   border-radius: 15px;
   text-align: center;
   border: solid 3px $color-light;
@@ -189,6 +125,9 @@ function toggleSelectItem(id: number) {
   .select-item {
     width: 100%;
     height: 50px;
+    background: transparent;
+    border: 2px solid transparent;
+    box-sizing: border-box;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -228,12 +167,25 @@ function toggleSelectItem(id: number) {
 }
 @media screen and (max-width: 850px) {
   .filter {
+    max-width: none;
     height: 40px;
   }
+  /* On phones the options open right under their button, in the flow. */
+  .filter-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
   .select-group {
-    top: 340px;
+    position: static;
+    transform: none;
+    width: 90%;
+    margin-top: 6px;
     flex-wrap: wrap;
+    gap: 4px;
     .select-item {
+      flex: 1 1 40%;
       height: 40px;
     }
   }

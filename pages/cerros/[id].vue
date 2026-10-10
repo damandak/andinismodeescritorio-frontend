@@ -55,6 +55,7 @@
           :mtnID="mtnID"
           :latitude="mtnLatitude"
           :longitude="mtnLongitude"
+          :mtnName="mtnFullName"
         />
         <MountainRoutesContent
           v-if="selectedTab === 2"

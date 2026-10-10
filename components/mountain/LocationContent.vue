@@ -14,101 +14,53 @@
   </div>
 </template>
 <script setup lang="ts">
-import { Loader } from "@googlemaps/js-api-loader";
-import { ref, onMounted } from "vue";
-
 const props = defineProps({
-  mtnID: {
-    type: String,
-    required: true,
-  },
-  latitude: {
-    type: String,
-    required: true,
-  },
-  longitude: {
-    type: String,
-    required: true,
-  },
+  mtnID: { type: String, required: true },
+  latitude: { type: String, required: true },
+  longitude: { type: String, required: true },
+  mtnName: { type: String, default: "" },
 });
 const config = useRuntimeConfig();
+const router = useRouter();
 
-const apiURLnearby =
-  config.public.apiBase + "mountains/?nearby=" + props.mtnID + "&no_pagination";
-const nearbyMountains = await $fetch(apiURLnearby);
-
-const loader = getGoogleMapsLoader(config.public.googleMapsApiKey);
+const nearbyMountains: MapMountain[] = await $fetch<MapMountain[]>(
+  config.public.apiBase + "mountains/?nearby=" + props.mtnID + "&no_pagination"
+).catch(() => []);
 
 const loading = ref(true);
-const mapDiv = ref(null);
+const mapDiv = ref<HTMLElement | null>(null);
 onMounted(async () => {
-  await loader.load();
-  const map = new google.maps.Map(mapDiv.value, {
-    center: {
-      lat: parseFloat(props.latitude),
-      lng: parseFloat(props.longitude),
-    },
-    zoom: 13,
-    mapTypeId: "satellite",
-    gestureHandling: "cooperative",
-    rotateControl: false,
-    streetViewControl: false,
-  });
-
-  const apiURL = config.public.apiBase + "mountains/?no_pagination";
-  const mountains = await $fetch(apiURL);
-  const image = {
-    url: "/img/marker3.png",
-  };
-  const image_alt = {
-    url: "/img/marker-alt-3.png",
-  };
-  for (const mtn of mountains) {
-    const infowindow = new google.maps.InfoWindow({
-      content:
-        '<a href="/cerros/' +
-        mtn.id +
-        '" class="mtn-popup-link">' +
-        '<p class="prefix">' +
-        mtn.prefix +
-        "</p>" +
-        '<p class="name">' +
-        mtn.name +
-        "</p></a>" +
-        (mtn.altitude != null
-          ? '<p class="mtn-popup-altitude">' + formatAltitude(mtn.altitude) + "</p>"
-          : ""),
-      ariaLabel: mtn.prefix + " " + mtn.name,
+  try {
+    const mm = await createMountainMap(mapDiv.value!, {
+      apiKey: config.public.googleMapsApiKey,
+      mapId: config.public.googleMapsMapId,
+      center: { lat: parseFloat(props.latitude), lng: parseFloat(props.longitude) },
+      zoom: 13,
+      gestureHandling: "cooperative",
+      onNavigate: (path) => router.push(path),
     });
-    if (mtn.id === parseFloat(props.mtnID)) {
-      const marker = new google.maps.Marker({
-        position: {
-          lat: parseFloat(mtn.latitude),
-          lng: parseFloat(mtn.longitude),
-        },
-        map: map,
-        title: mtn.title,
-        icon: image_alt,
-      });
-      marker.addListener("click", () => {
-        infowindow.open(map, marker);
-      });
-    } else {
-      const marker = new google.maps.Marker({
-        position: {
-          lat: parseFloat(mtn.latitude),
-          lng: parseFloat(mtn.longitude),
-        },
-        map: map,
-        title: mtn.title,
-        icon: image,
-      });
-      marker.addListener("click", () => {
-        infowindow.open(map, marker);
-      });
+    // Only this mountain (turquoise, larger) and its neighbours, instead of
+    // downloading every mountain of the site.
+    for (const m of nearbyMountains.filter(hasCoordinates)) {
+      setMarkerMap(mm.makeMarker(m, m.ascended ? "ascended" : "unclimbed"), mm.map);
     }
+    const [prefix, ...rest] = props.mtnName.split(" ");
+    const current: MapMountain = {
+      id: Number(props.mtnID),
+      prefix: prefix ?? "",
+      name: rest.join(" "),
+      latitude: props.latitude,
+      longitude: props.longitude,
+      altitude: null,
+      ascended: true,
+    };
+    const currentMarker = mm.makeMarker(current, "current");
+    setMarkerMap(currentMarker, mm.map);
+  } catch (error) {
+    console.error("No se pudo cargar el mapa", error);
+  } finally {
+    loading.value = false;
   }
-  loading.value = false;
 });
 </script>
 <style scoped lang="scss">
@@ -116,32 +68,6 @@ onMounted(async () => {
   height: 75vh;
   width: calc(100% - 48px);
   margin: 9px auto auto auto;
-}
-.mtn-popup-link {
-  cursor: pointer;
-  .prefix {
-    margin: 0;
-    font-size: 0.8rem;
-    color: #666;
-    transition: all 0.2s ease-in-out;
-  }
-  .name {
-    font-size: 1.2rem;
-    color: #333;
-    margin: 0;
-    font-weight: bold;
-    transition: all 0.2s ease-in-out;
-  }
-  &:hover {
-    p {
-      color: $color-main-first;
-    }
-  }
-}
-.mtn-popup-altitude {
-  font-size: 0.8rem;
-  color: #666;
-  margin: 0;
 }
 .nearby-mountains {
   width: 80%;

@@ -1,10 +1,13 @@
 <template>
   <div class="content-wrapper">
-    <MapGoogleMap :currentParams="filterText" ref="child" />
-    <MapFilterWrapper :active="activeFilter" @changeFilters="changeFilters" />
-    <div class="mapbutton" @click="toggleWrapper">
+    <MapGoogleMap :filters="filters" @counts="onCounts" />
+    <MapFilterWrapper v-model="filters" :active="activeFilter" :counts="counts" />
+    <button type="button" class="mapbutton" :aria-expanded="activeFilter === 'active'" @click="toggleWrapper">
       <p>FILTROS</p>
-    </div>
+      <span v-if="filterCount" class="badge" :aria-label="`${filterCount} filtros activos`">{{
+        filterCount
+      }}</span>
+    </button>
   </div>
 </template>
 
@@ -15,23 +18,34 @@ usePageSeo({
     "Mapa de los cerros de los Andes Centrales con sus primeros ascensos, rutas y andinistas. Filtra por altura, país, región y si están ascendidos.",
 });
 
-const child = ref(null);
-const currentFilter: Ref<[{ id: number; text: string }]> = ref([]);
-const filterText = ref("");
+const route = useRoute();
+const router = useRouter();
+
+// Filters live in the URL (?pais=Chile&min=5000&ascendido=no), so a filtered
+// map can be shared or bookmarked.
+const filters = ref<MapFilters>(filtersFromQuery(route.query));
+watch(
+  filters,
+  (f) => router.replace({ query: filtersToQuery(f) }),
+  { deep: true }
+);
+const filterCount = computed(() => activeFilterCount(filters.value));
+
+const counts = ref({ visible: 0, total: 0 });
+function onCounts(visible: number, total: number) {
+  counts.value = { visible, total };
+}
 
 const activeFilter = ref("");
 function toggleWrapper() {
   activeFilter.value = activeFilter.value === "" ? "active" : "";
 }
-const changeFilters = (id: number, params: object) => {
-  if (child) {
-    child.value.filterMarkers(params);
-  }
-};
 </script>
 
 <style scoped lang="scss">
 .mapbutton {
+  font: inherit;
+  box-sizing: content-box; // same size as when it was a <div>
   padding: 0 15px;
   height: 34px !important;
   width: 78px;
@@ -65,6 +79,22 @@ const changeFilters = (id: number, params: object) => {
     p {
       color: $color-main-first;
     }
+  }
+  .badge {
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    min-width: 22px;
+    height: 22px;
+    border-radius: 11px;
+    background: $color-dark-extreme;
+    color: $color-light;
+    border: 2px solid $color-light;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 18px;
+    text-align: center;
+    box-sizing: border-box;
   }
 }
 </style>

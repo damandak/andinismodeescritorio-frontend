@@ -4,15 +4,8 @@ let loader: Loader | null = null;
 
 export function getGoogleMapsLoader(apiKey: string): Loader {
   if (!loader) {
-    const version: string = "weekly";
-    const libraries: string[] = ["places"];
-
-    loader = new Loader({
-      apiKey,
-      version,
-      libraries,
-    });
+    // Libraries are loaded on demand with loader.importLibrary("maps" | "marker").
+    loader = new Loader({ apiKey, version: "weekly" });
   }
-
   return loader;
 }
