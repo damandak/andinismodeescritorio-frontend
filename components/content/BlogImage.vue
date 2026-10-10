@@ -1,14 +1,34 @@
 <template>
-  <div class="blog-image" :class="not_fullwidth">
-    <img v-if="fullwidth" :src="image.image" :alt="alt" />
-    <img v-else :src="image.tb_item_cover" :alt="alt" />
+  <div v-if="image" class="blog-image" :class="not_fullwidth">
+    <a :href="image.image" target="_blank" rel="noopener" title="Ver foto original">
+      <img
+        v-if="fullwidth"
+        :src="largeSrc(image)"
+        :alt="alt || image_detail || image.name"
+        :width="image.width || undefined"
+        :height="image.height || undefined"
+        loading="lazy"
+        decoding="async"
+      />
+      <img
+        v-else
+        :src="coverSrc(image)"
+        :srcset="coverSrcset(image)"
+        :alt="alt || image_detail || image.name"
+        :width="image.width || undefined"
+        :height="image.height || undefined"
+        loading="lazy"
+        decoding="async"
+      />
+    </a>
     <div class="caption">
       {{ image_detail }}
-      <div class="author-p">
+      <div v-if="image.author_name" class="author-p">
         <strong>Fotografía por </strong>
-        <NuxtLink :to="'/andinistas/' + image.author + '/'">
+        <NuxtLink v-if="image.author" :to="'/andinistas/' + image.author">
           {{ image.author_name }}
         </NuxtLink>
+        <template v-else>{{ image.author_name }}</template>
       </div>
     </div>
   </div>
@@ -37,16 +57,20 @@ const not_fullwidth = computed(() => {
 });
 const apiURLImage =
   runtimeConfig.public.apiBase + "image/" + props.image_id + "/";
-const data = await $fetch(apiURLImage);
-const image = data;
+// A missing photo hides this block instead of breaking the whole post.
+const image: any = await $fetch(apiURLImage).catch(() => null);
 </script>
 <style scoped lang="scss">
 .blog-image {
   margin: auto;
   width: 100%;
   padding-bottom: 60px;
+  a {
+    display: block;
+  }
   img {
     width: 100%;
+    height: auto;
     margin: auto;
   }
   .caption {

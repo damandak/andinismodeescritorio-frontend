@@ -5,9 +5,29 @@
       :name="mtnName"
       :subtitle="stringAltitude"
     />
-    <div v-if="img_url" class="main-image-section">
-      <img :src="img_url" alt="" />
-    </div>
+    <figure v-if="img_url" class="main-image-section">
+      <a :href="img_url" target="_blank" rel="noopener" title="Ver foto original">
+        <img
+          :src="coverSrc(image)"
+          :srcset="coverSrcset(image)"
+          :alt="imageAlt"
+          :width="image?.width || undefined"
+          :height="image?.height || undefined"
+          fetchpriority="high"
+        />
+      </a>
+      <figcaption v-if="image?.name || image?.author_name">
+        <span v-if="image?.name">{{ image.name }}</span>
+        <span v-if="image?.name && image?.author_name"> · </span>
+        <span v-if="image?.author_name">
+          Foto:
+          <NuxtLink v-if="image.author" :to="`/andinistas/${image.author}`">{{
+            image.author_name
+          }}</NuxtLink>
+          <template v-else>{{ image.author_name }}</template>
+        </span>
+      </figcaption>
+    </figure>
     <div class="body-section">
       <BodyTabWrapper
         :tabs="tabs"
@@ -104,7 +124,7 @@ const unregisteredNonSportAscent = ref(mtn.unregistered_non_sport_ascent);
 
 const main_image = ref(mtn.main_image);
 const img_url = ref(null);
-const image = ref(null);
+const image = ref<any>(null);
 const author = ref(null);
 
 if (main_image.value != null) {
@@ -119,6 +139,10 @@ if (main_image.value != null) {
     author.value = dataImage.value.author_name;
   }
 }
+
+const imageAlt = computed(() =>
+  image.value?.name ? `${mtnFullName.value}: ${image.value.name}` : mtnFullName.value
+);
 
 // --- SEO: title, description, social preview, structured data ---
 const altitudeText = formatAltitude(mtn.altitude);
@@ -178,17 +202,37 @@ function switchTab(tabNumber: number) {
   height: 100%;
   .main-image-section {
     width: 100%;
-    height: 400px;
+    margin: 0;
     border-top: 2px solid $color-light-dark;
-    //border-bottom: 1px solid $color-dark-soft;
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
     background-color: $color-light;
     padding: 10px 0;
+    a {
+      display: block;
+      width: 100%;
+    }
     img {
+      display: block;
       height: 400px;
       object-fit: contain;
       width: 100%;
+    }
+    figcaption {
+      font-size: 0.8rem;
+      color: $color-dark;
+      opacity: 0.8;
+      margin-top: 6px;
+      padding: 0 16px;
+      text-align: center;
+      a {
+        display: inline;
+        color: inherit;
+        &:hover {
+          color: $color-main-second;
+        }
+      }
     }
     .no-image {
       height: 200px;

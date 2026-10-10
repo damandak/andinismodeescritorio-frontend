@@ -11,9 +11,9 @@
             <img
               :src="
                 image_urls.find((image) => image.id === article.mainimageid)
-                  .main_image
+                  ?.main_image
               "
-              alt="blog image"
+              :alt="article.title"
             />
             <NuxtLink :to="article._path">
               <h2>{{ article.title }}</h2>
@@ -31,9 +31,10 @@
             <img
               :src="
                 image_urls.find((image) => image.id === article.mainimageid)
-                  .image
+                  ?.image
               "
-              alt="blog image"
+              :alt="article.title"
+              loading="lazy"
             />
             <NuxtLink :to="article._path">
               <h2>{{ article.title }}</h2>
@@ -83,11 +84,11 @@ const image_urls = await Promise.all(
   contents.map(async (article) => {
     const apiURLImage =
       config.public.apiBase + "image/" + article.mainimageid + "/";
-    const data = await $fetch(apiURLImage);
+    const data = await $fetch(apiURLImage).catch(() => null);
     return {
       id: article.mainimageid,
-      image: data.tb_item_cover,
-      main_image: data.image,
+      image: coverSrc(data),
+      main_image: largeSrc(data),
     };
   })
 );

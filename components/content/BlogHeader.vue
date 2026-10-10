@@ -3,7 +3,15 @@
     <h4>{{ subtitle }}</h4>
     <h1>{{ title }}</h1>
     <div class="image-container">
-      <img v-if="image" :src="image.image" :alt="title" :class="coverimgclass" />
+      <img
+        v-if="image"
+        :src="largeSrc(image)"
+        :alt="title"
+        :class="coverimgclass"
+        :width="image.width || undefined"
+        :height="image.height || undefined"
+        fetchpriority="high"
+      />
     </div>
     <div class="abstract">
       {{ abstract }}
@@ -105,6 +113,7 @@ h4 {
   width: 100%;
   img {
     width: 100%;
+    height: auto;
     object-fit: cover;
     object-position: center;
     margin: auto;
