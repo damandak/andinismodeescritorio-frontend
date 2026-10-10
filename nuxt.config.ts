@@ -16,32 +16,30 @@ export default defineNuxtConfig({
   nitro: {
     preset: "node-server",
     sourceMap: false,
+    // JS, CSS and fonts are compressed (gzip and brotli) once, at build time.
+    compressPublicAssets: true,
+    // Cache for the pages in routeRules (and sitemap.xml), in memory but with
+    // a limit (least used entries are dropped first), so it can't fill the server.
+    storage: {
+      cache: { driver: "lru-cache", max: 150, maxSize: 10 * 1024 * 1024 },
+    },
     prerender: {
       crawlLinks: false,
       routes: [],
     },
   },
 
-  app: {
-    head: {
-      link: [
-        { rel: "preconnect", href: "https://fonts.googleapis.com" },
-        {
-          rel: "preconnect",
-          href: "https://fonts.gstatic.com",
-          crossorigin: "",
-        },
-        {
-          rel: "stylesheet",
-          href:
-            "https://fonts.googleapis.com/css2?" +
-            "family=Inter:wght@300..800&" +
-            "family=Lora:ital,wght@0,400..700;1,400..700&" +
-            "display=swap",
-        },
-      ],
-    },
-  },
+  // The blog (index and posts) is kept ready for 5 minutes instead of being
+  // rebuilt on every visit: a change can take up to 5 minutes to show. Not used
+  // for the thousands of detail pages: each one gets few visits, and a cached
+  // page costs two renders (the page and its "_payload.json", which needs the
+  // same rule, or the page shows the 404 screen). Errors (404) aren't cached.
+  routeRules: Object.fromEntries(
+    ["/blog", "/blog/*"].flatMap((path) => [
+      [path, { cache: { maxAge: 300, swr: false } }],
+      [`${path}/_payload.json`, { cache: { maxAge: 300, swr: false } }],
+    ])
+  ),
 
   runtimeConfig: {
     apiSecret: "123",
@@ -62,7 +60,12 @@ export default defineNuxtConfig({
     transpile: ["@googlemaps/js-api-loader"],
   },
 
-  css: ["~/assets/scss/_typography.scss", "@/assets/styles/main.scss"],
+  css: [
+    // Inter and Lora served by the site itself (were loaded from Google Fonts).
+    "~/assets/styles/fonts.css",
+    "~/assets/scss/_typography.scss",
+    "@/assets/styles/main.scss",
+  ],
 
   vite: {
     css: {

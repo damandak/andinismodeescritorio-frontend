@@ -34,7 +34,6 @@
   </div>
 </template>
 <script setup lang="ts">
-const runtimeConfig = useRuntimeConfig();
 
 const props = withDefaults(
   defineProps<{
@@ -55,10 +54,9 @@ const not_fullwidth = computed(() => {
     return "not-fullwidth";
   }
 });
-const apiURLImage =
-  runtimeConfig.public.apiBase + "image/" + props.image_id + "/";
-// A missing photo hides this block instead of breaking the whole post.
-const image: any = await $fetch(apiURLImage).catch(() => null);
+// Usually already loaded by the page with the post's other photos; a missing
+// photo hides this block instead of breaking the whole post.
+const image = await useBlogImage(props.image_id);
 </script>
 <style scoped lang="scss">
 .blog-image {

@@ -48,17 +48,15 @@ const props = defineProps<{
 
 // Pages like "Quiénes somos" have no author; a missing image or author must
 // not turn the whole page into an error.
-const image: any = props.image_id
-  ? await $fetch(config.public.apiBase + "image/" + props.image_id + "/").catch(
-      () => null
-    )
-  : null;
-
-const author: any = props.authorID
-  ? await $fetch(config.public.apiBase + "andinist/" + props.authorID + "/").catch(
-      () => null
-    )
-  : null;
+// useAsyncData: fetched once on the server, not again in the browser.
+const [image, { data: author }] = await Promise.all([
+  useBlogImage(props.image_id),
+  useAsyncData(`blog-author-${props.authorID}`, () =>
+    props.authorID
+      ? $fetch<any>(config.public.apiBase + "andinist/" + props.authorID + "/").catch(() => null)
+      : Promise.resolve(null)
+  ),
+]);
 </script>
 <style scoped lang="scss">
 h1 {

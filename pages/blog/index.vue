@@ -1,51 +1,38 @@
 <template>
   <div class="blog-index">
     <div class="blog-cards">
-      <ContentList :query="queryParamsFirst" v-slot="{ list }">
-        <div
-          v-for="article in list"
-          :key="article._path"
-          class="blog-card blog-card-wide"
-        >
-          <div class="blog-card-header">
-            <img
-              :src="
-                image_urls.find((image) => image.id === article.mainimageid)
-                  ?.main_image
-              "
-              :alt="article.title"
-            />
-            <NuxtLink :to="article._path">
-              <h2>{{ article.title }}</h2>
-            </NuxtLink>
-          </div>
-          <NuxtLink :to="'/andinistas/' + article.authorid">
-            <p>{{ article.author }}</p>
+      <!-- The newest post as a wide card, the rest below -->
+      <div v-for="article in posts.slice(0, 1)" :key="article._path" class="blog-card blog-card-wide">
+        <div class="blog-card-header">
+          <img
+            :src="largeSrc(images[String(article.mainimageid)])"
+            :alt="article.title"
+          />
+          <NuxtLink :to="article._path">
+            <h2>{{ article.title }}</h2>
           </NuxtLink>
-          <p class="datespanish">{{ article.datespanish }}</p>
         </div>
-      </ContentList>
-      <ContentList :query="queryParamsRest" v-slot="{ list }">
-        <div v-for="article in list" :key="article._path" class="blog-card">
-          <div class="blog-card-header">
-            <img
-              :src="
-                image_urls.find((image) => image.id === article.mainimageid)
-                  ?.image
-              "
-              :alt="article.title"
-              loading="lazy"
-            />
-            <NuxtLink :to="article._path">
-              <h2>{{ article.title }}</h2>
-            </NuxtLink>
-          </div>
-          <NuxtLink :to="'/andinistas/' + article.authorid">
-            <p>{{ article.author }}</p>
+        <NuxtLink :to="'/andinistas/' + article.authorid">
+          <p>{{ article.author }}</p>
+        </NuxtLink>
+        <p class="datespanish">{{ article.datespanish }}</p>
+      </div>
+      <div v-for="article in posts.slice(1)" :key="article._path" class="blog-card">
+        <div class="blog-card-header">
+          <img
+            :src="coverSrc(images[String(article.mainimageid)])"
+            :alt="article.title"
+            loading="lazy"
+          />
+          <NuxtLink :to="article._path">
+            <h2>{{ article.title }}</h2>
           </NuxtLink>
-          <p class="datespanish">{{ article.datespanish }}</p>
         </div>
-      </ContentList>
+        <NuxtLink :to="'/andinistas/' + article.authorid">
+          <p>{{ article.author }}</p>
+        </NuxtLink>
+        <p class="datespanish">{{ article.datespanish }}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -58,40 +45,20 @@ usePageSeo({
 });
 
 const config = useRuntimeConfig();
+const images = useBlogImageStore();
 
-// save mainimageid from every article of content NUXT
-const contents = await queryContent("blog").only("mainimageid").find();
-// const image_ids = contents.map((content) => content.mainimageid)
+// The posts (only the fields the cards use, not the whole text) and their
+// cover photos in one request, both sent to the browser with the page.
+const { data: posts } = await useAsyncData("blog-index", async () => {
+  const list: any[] = await queryContent("blog")
+    .where({ draft: false })
+    .only(["_path", "title", "author", "authorid", "datespanish", "mainimageid"])
+    .sort({ date: -1 })
+    .find();
+  await loadBlogImages(config.public.apiBase, images, list.map((p) => p.mainimageid));
+  return list;
+}, { default: () => [] });
 
-// Query for the List object
-import type { QueryBuilderParams } from "@nuxt/content/dist/runtime/types";
-const queryParamsFirst: QueryBuilderParams = {
-  path: "/blog",
-  where: { draft: false },
-  sort: { date: -1 },
-  limit: 1, // Limit the results to only one post
-};
-
-// Define the query parameters to get all blog posts but skip the first
-const queryParamsRest: QueryBuilderParams = {
-  path: "/blog",
-  where: { draft: false },
-  sort: { date: -1 },
-  skip: 1, // Skip the first result
-};
-
-const image_urls = await Promise.all(
-  contents.map(async (article) => {
-    const apiURLImage =
-      config.public.apiBase + "image/" + article.mainimageid + "/";
-    const data = await $fetch(apiURLImage).catch(() => null);
-    return {
-      id: article.mainimageid,
-      image: coverSrc(data),
-      main_image: largeSrc(data),
-    };
-  })
-);
 </script>
 
 <style scoped lang="scss">

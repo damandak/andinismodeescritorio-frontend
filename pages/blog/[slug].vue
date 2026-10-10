@@ -13,7 +13,11 @@ const route = useRoute();
 const config = useRuntimeConfig();
 
 const findPost = (path: string) =>
-  queryContent(path).only(["_path", "title", "description", "mainimageid"]).findOne();
+  queryContent(path).only(["_path", "title", "description", "mainimageid", "body"]).findOne();
+
+// All the photos of the post in one request, shared with <BlogHeader> and
+// <BlogImage> (composables/blogImages.ts).
+const images = useBlogImageStore();
 
 const { data: post } = await useAsyncData(`blog-seo-${route.path}`, async () => {
   const lowerPath = route.path.toLowerCase();
@@ -24,11 +28,14 @@ const { data: post } = await useAsyncData(`blog-seo-${route.path}`, async () => 
     lowerPath !== route.path ? findPost(lowerPath).catch(() => null) : null,
   ]);
   if (found) {
-    // Cover image for the social preview (fetched once, during SSR).
-    const cover: any = found.mainimageid
-      ? await $fetch(`${config.public.apiBase}image/${found.mainimageid}/`).catch(() => null)
-      : null;
-    return { ...found, cover: cover?.tb_item_cover || cover?.image || null };
+    const { body, ...meta } = found; // the text itself is rendered by <ContentDoc>
+    await loadBlogImages(config.public.apiBase, images, [
+      found.mainimageid,
+      ...blogImageIds(body),
+    ]);
+    // Cover image for the social preview.
+    const cover: any = images.value[String(found.mainimageid)];
+    return { ...meta, cover: cover?.tb_item_cover || cover?.image || null };
   }
   // Old links written like the file name (/blog/Cerro-Evelio): the real
   // address is lowercase, so redirect instead of showing a 404.

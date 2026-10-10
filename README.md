@@ -82,6 +82,21 @@ tipo JavaScript en el mismo proyecto de la clave. No cambia lo que Google cobra.
 - Todo se puede usar con teclado: Tab recorre los controles, las flechas cambian de pestaña
   y Esc cierra el menú o el buscador.
 
+## Rendimiento
+
+- **Caché de 5 minutos para el blog** (la portada y los relatos): se arman una vez y se
+  reutilizan, así que un cambio puede tardar hasta 5 minutos en verse (o `pm2 restart all` para
+  verlo al tiro). Las fichas, tablas, mapa y buscador no usan caché: hay miles de fichas con
+  pocas visitas cada una, y con caché cada ficha nueva costaría el doble. Está en `routeRules`
+  de `nuxt.config.ts`, en memoria con un límite (150 entradas / 10 MB).
+- **Fuentes** (Inter y Lora) servidas por el propio sitio desde los paquetes
+  `@fontsource-variable/*` (`assets/styles/fonts.css`), no desde Google Fonts.
+- **Fotos del blog**: la página pide todas las fotos de un relato en una sola consulta
+  (`/djangoapi/images/?ids=…`) y las comparte con `BlogHeader` y `BlogImage`
+  (`composables/blogImages.ts`).
+- **Compresión**: JS, CSS y fuentes se comprimen al compilar (gzip y brotli). Para que nginx
+  comprima también las respuestas de la API, ver "Compresión en nginx" más abajo.
+
 ## Compilar y probar como en producción
 
 ```bash
@@ -159,6 +174,25 @@ npm ci
 npm run build                 # usa ~1,1 GB de memoria: el servidor necesita swap
 pm2 restart all               # o el nombre que muestre `pm2 ls`
 ```
+
+### Compresión en nginx (una sola vez)
+
+nginx viene comprimiendo solo el HTML. Para que comprima también la API (la lista de cerros
+del mapa pesa 5 a 10 veces menos):
+
+```bash
+sudo tee /etc/nginx/conf.d/gzip.conf > /dev/null <<'CONF'
+gzip_types application/json application/javascript text/css text/javascript text/plain image/svg+xml application/xml;
+gzip_vary on;
+gzip_proxied any;
+gzip_min_length 1024;
+gzip_comp_level 5;
+CONF
+sudo nginx -t && sudo systemctl reload nginx
+```
+
+Si `nginx -t` dice `"gzip_types" directive is duplicate`, esas líneas ya estaban activas en
+`/etc/nginx/nginx.conf`: borra el archivo nuevo (`sudo rm /etc/nginx/conf.d/gzip.conf`).
 
 ### Opción B: usar el build que hizo GitHub
 
