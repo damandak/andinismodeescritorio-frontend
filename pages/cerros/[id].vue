@@ -151,9 +151,7 @@ const altitudeText = formatAltitude(mtn.altitude);
 const firstTeam = joinNames(firstAbsoluteTeam.value.map((a: any) => a[1]));
 let firstAscentText = "Sin primer ascenso registrado.";
 if (firstAbsolute.value) {
-  firstAscentText = `Primer ascenso: ${formatPartialDate(mtn.first_absolute_date)}${
-    firstTeam ? ` por ${firstTeam}` : ""
-  }.`;
+  firstAscentText = firstAscentSentence(mtn.first_absolute_date, firstTeam);
 } else if (mtn.unregistered_non_sport_ascent) {
   firstAscentText = "Ascendido antes de los registros deportivos.";
 }

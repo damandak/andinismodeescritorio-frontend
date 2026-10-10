@@ -49,6 +49,15 @@ export function datePhrase(value?: string | null): string {
   return `${date.day ? "el" : "en"} ${formatPartialDate(value)}`;
 }
 
+/**
+ * "Primer ascenso: 1896 por Ana y Luis." — without the parts that are unknown
+ * ("Primer ascenso por Ana." when the ascent has no date).
+ */
+export function firstAscentSentence(date?: string | null, team?: string): string {
+  const when = formatPartialDate(date);
+  return `Primer ascenso${when ? `: ${when}` : ""}${team ? ` por ${team}` : ""}.`;
+}
+
 /** "Ana", "Ana y Luis", "Ana, Luis y Pedro", "Ana, Luis, Pedro y otros" */
 export function joinNames(names: string[], max = 3): string {
   const list = names.filter(Boolean);

@@ -106,7 +106,7 @@ const route_notes = ref(ruta.notes);
 {
   const team = joinNames((ruta.first_ascent_team || []).map((a: any) => a[1]));
   const first = ruta.first_ascent
-    ? ` Primer ascenso: ${formatPartialDate(ruta.first_ascent_date)}${team ? ` por ${team}` : ""}.`
+    ? ` ${firstAscentSentence(ruta.first_ascent_date, team)}`
     : "";
   usePageSeo({
     title: `${ruta.name} · ${ruta.mountain_name}`,
