@@ -1,0 +1,59 @@
+# Runs on every push and pull request: install, build, and check that the
+# built server starts and renders a page. A red X on a commit means: don't
+# deploy it yet.
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+        env:
+          # The real key is only needed when the site runs (see README).
+          GOOGLE_MAPS_API_KEY: ci-placeholder
+
+      - name: The built server starts and renders a page
+        run: |
+          PORT=3000 node .output/server/index.mjs > server.log 2>&1 &
+          for i in $(seq 1 30); do
+            curl -s -o /dev/null http://localhost:3000/ && break
+            sleep 1
+          done
+          # A route that needs no API data: the Spanish 404 page.
+          status=$(curl -s -o page.html -w '%{http_code}' -H 'Accept: text/html' http://localhost:3000/pagina-que-no-existe)
+          echo "HTTP $status"
+          test "$status" = "404"
+          grep -q "No encontramos esta página" page.html
+        # If this step fails, server.log has the reason.
+
+      - name: Show server log on failure
+        if: failure()
+        run: cat server.log || true
+
+      # Ready-to-run build (.output) for production, kept 14 days. Optional:
+      # lets the server download it instead of compiling with 512 MB of RAM.
+      - name: Keep the build as a downloadable artifact
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: actions/upload-artifact@v7
+        with:
+          name: output-${{ github.sha }}
+          path: .output
+          include-hidden-files: true
+          retention-days: 14
