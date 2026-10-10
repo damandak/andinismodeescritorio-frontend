@@ -86,6 +86,7 @@ const columns = [
   {
     field: "altitude",
     label: "Altura",
+    formatter: (cerro) => formatAltitude(cerro.altitude) || "—",
     sortable: true,
     is_boolean: false,
   },

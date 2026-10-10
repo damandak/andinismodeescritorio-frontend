@@ -22,7 +22,8 @@
             <NuxtLink :to="`/ascensos/${firstAscent}`">
               {{ firstAscentName }}
             </NuxtLink>
-            el {{ firstAscentDate }} por 
+            {{ datePhrase(firstAscentDate) }}
+            <span v-if="firstAscentTeam?.length">por</span>
             <NuxtLink v-for="(andinist, index) in firstAscentTeam" :to="`/andinistas/${andinist[0]}`">
               <span v-if="index !== 0">{{ ", " }}</span>
               {{ andinist[1] }}

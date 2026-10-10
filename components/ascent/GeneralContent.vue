@@ -47,7 +47,7 @@
       </tr>
       <tr>
         <th>Fecha</th>
-        <td>{{ date }}</td>
+        <td>{{ formatPartialDate(date) || "Sin fecha" }}</td>
       </tr>
       <tr>
         <th>Honores</th>

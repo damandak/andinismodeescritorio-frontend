@@ -119,7 +119,7 @@ const columns = [
     sortable: true,
     is_boolean: false,
     // Sort by the real date, show it with its precision (e.g. "1896-xx-xx")
-    formatter: (row) => row.resulting_date,
+    formatter: (row) => formatPartialDateShort(row.resulting_date),
   },
 ];
 

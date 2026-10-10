@@ -4,7 +4,6 @@
       :prefix="mtnPrefix"
       :name="mtnName"
       :subtitle="stringAltitude"
-      :mts="true"
     />
     <div v-if="img_url" class="main-image-section">
       <img :src="img_url" alt="" />
@@ -81,7 +80,7 @@ const mtnPrefix = ref(mtn.prefix);
 const mtnFullName = ref(mtnPrefix.value + " " + mtnName.value);
 const mtnAltitude = ref(mtn.altitude);
 // Some mountains have no altitude yet; an empty subtitle hides the line.
-const stringAltitude = ref(mtn.altitude != null ? String(mtn.altitude) : "");
+const stringAltitude = ref(formatAltitude(mtn.altitude));
 const mtnAltitudeIgm = ref(mtn.altitude_igm);
 const mtnAltitudeArg = ref(mtn.altitude_arg);
 const mtnAltitudeGps = ref(mtn.altitude_gps);

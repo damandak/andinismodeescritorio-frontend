@@ -76,7 +76,7 @@ onMounted(async () => {
         mtn.name +
         "</p></a>" +
         (mtn.altitude != null
-          ? '<p class="mtn-popup-altitude">' + mtn.altitude + " mts</p>"
+          ? '<p class="mtn-popup-altitude">' + formatAltitude(mtn.altitude) + "</p>"
           : ""),
       ariaLabel: mtn.prefix + " " + mtn.name,
     });

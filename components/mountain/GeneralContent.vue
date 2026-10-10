@@ -7,7 +7,7 @@
       </tr>
       <tr>
         <th>Altitud</th>
-        <td>{{ mtnAltitude ?? "Sin dato" }}</td>
+        <td>{{ formatAltitude(mtnAltitude) || "Sin dato" }}</td>
       </tr>
       <tr>
         <th>Latitud</th>
@@ -26,7 +26,8 @@
           <NuxtLink :to="`/ascensos/${firstAbsolute}`">
             {{ firstAbsoluteName }}
           </NuxtLink>
-          el {{ firstAbsoluteDate }} por
+          {{ datePhrase(firstAbsoluteDate) }}
+          <span v-if="firstAbsoluteTeam.length">por</span>
           <NuxtLink
             v-for="(andinist, index) in firstAbsoluteTeam"
             :to="`/andinistas/${andinist[0]}`"

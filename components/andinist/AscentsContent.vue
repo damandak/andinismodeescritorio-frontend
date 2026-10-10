@@ -12,7 +12,7 @@
     </thead>
     <tbody>
       <tr v-for="ascent in ascents" :key="ascent.id">
-        <td class="date">{{ ascent.resulting_date }}</td>
+        <td class="date">{{ formatPartialDateShort(ascent.resulting_date) }}</td>
         <td>
           <NuxtLink :to="`/cerros/${ascent.mountain}`">
             {{ ascent.mountain_name }}
