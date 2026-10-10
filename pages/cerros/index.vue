@@ -65,6 +65,12 @@
   </div>
 </template>
 <script setup lang="ts">
+usePageSeo({
+  title: "Cerros",
+  description:
+    "Listado de cerros de los Andes Centrales con su altura y si tienen ascensos registrados.",
+});
+
 import { ref } from "vue";
 
 const columns = [

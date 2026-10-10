@@ -66,6 +66,12 @@
 </template>
 
 <script setup lang="ts">
+usePageSeo({
+  title: "Andinistas",
+  description:
+    "Andinistas con ascensos registrados en los Andes Centrales: nacionalidad, clubes, ascensos, primeras ascensiones y rutas nuevas.",
+});
+
 import { ref } from "vue";
 
 const columns = [

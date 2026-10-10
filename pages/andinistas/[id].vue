@@ -57,6 +57,21 @@ const first_ascent_count = andinist.first_ascent_count;
 const new_routes_count = andinist.new_routes_count;
 const img_url = andinist.img_url;
 
+// --- SEO ---
+{
+  const fullName = [name, surname].filter(Boolean).join(" ") || "Andinista";
+  const parts = [`${ascent_count} ${ascent_count === 1 ? "ascenso registrado" : "ascensos registrados"}`];
+  if (first_ascent_count) parts.push(`${first_ascent_count} ${first_ascent_count === 1 ? "primera ascensión" : "primeras ascensiones"}`);
+  if (new_routes_count) parts.push(`${new_routes_count} ${new_routes_count === 1 ? "ruta nueva" : "rutas nuevas"}`);
+  usePageSeo({
+    title: fullName,
+    description: `${fullName}${nationalities ? ` (${nationalities})` : ""}: ${joinNames(parts, 3)} en los Andes.${
+      clubs ? ` Clubes: ${clubs}.` : ""
+    }`,
+    type: "profile",
+  });
+}
+
 var selectedTab = ref(0);
 // TabWrapper marks the selected tab itself; tabs are matched by id, not by
 // position, so hidden tabs don't shift the others.

@@ -68,6 +68,24 @@ const ascent_date = ascent.date_tostr;
 const ascent_is_first_ascent = ascent.is_first_ascent;
 const ascent_new_route = ascent.new_route;
 
+// --- SEO ---
+{
+  const team = joinNames((ascent.andinists || []).map((a: any) => a[1]));
+  const when = formatPartialDate(ascent.date_tostr);
+  const honours = ascent.is_first_ascent
+    ? "Primera ascensión"
+    : ascent.new_route
+      ? "Nueva ruta"
+      : "Ascenso";
+  usePageSeo({
+    title: `${ascent.name} · ${ascent.mountain_name}`,
+    description: `${honours} ${toMountain(ascent.mountain_name)} por ${routeWithArticle(ascent.route_name)}${
+      when ? `, ${when}` : ""
+    }${team ? `. Cordada: ${team}` : ""}.`,
+    type: "article",
+  });
+}
+
 var selectedTab = ref(0);
 // TabWrapper marks the selected tab itself; tabs are matched by id, not by
 // position, so hidden tabs don't shift the others.

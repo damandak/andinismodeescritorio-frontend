@@ -65,6 +65,12 @@
   </div>
 </template>
 <script setup lang="ts">
+usePageSeo({
+  title: "Rutas",
+  description:
+    "Rutas de ascenso a los cerros de los Andes Centrales, con su dificultad y año del primer ascenso.",
+});
+
 import { ref } from "vue";
 
 const columns = [

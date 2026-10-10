@@ -101,6 +101,18 @@ const route_kml = ref(ruta.kml);
 const route_gpx = ref(ruta.gpx);
 const route_notes = ref(ruta.notes);
 
+// --- SEO ---
+{
+  const team = joinNames((ruta.first_ascent_team || []).map((a: any) => a[1]));
+  const first = ruta.first_ascent
+    ? ` Primer ascenso: ${formatPartialDate(ruta.first_ascent_date)}${team ? ` por ${team}` : ""}.`
+    : "";
+  usePageSeo({
+    title: `${ruta.name} · ${ruta.mountain_name}`,
+    description: `${/^ruta\b/i.test(ruta.name) ? ruta.name : `Ruta ${ruta.name}`} ${toMountain(ruta.mountain_name)}.${first} Ascensos registrados y fuentes.`,
+  });
+}
+
 var selectedTab = ref(0);
 // TabWrapper marks the selected tab itself; tabs are matched by id, not by
 // position, so hidden tabs don't shift the others.

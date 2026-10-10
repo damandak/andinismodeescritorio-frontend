@@ -9,6 +9,12 @@
 </template>
 
 <script setup lang="ts">
+usePageSeo({
+  title: "Andinismo de Escritorio",
+  description:
+    "Mapa de los cerros de los Andes Centrales con sus primeros ascensos, rutas y andinistas. Filtra por altura, país, región y si están ascendidos.",
+});
+
 const child = ref(null);
 const currentFilter: Ref<[{ id: number; text: string }]> = ref([]);
 const filterText = ref("");

@@ -9,11 +9,45 @@
   </main>
 </template>
 <script setup lang="ts">
-// const route = useRoute();
+const route = useRoute();
+const config = useRuntimeConfig();
 
-// const { data } = await useAsyncData(`content-${route.path}`, () =>
-//   queryContent().where({ _path: route.path }).findOne()
-// );
+const findPost = (path: string) =>
+  queryContent(path).only(["_path", "title", "description", "mainimageid"]).findOne();
+
+const { data: post } = await useAsyncData(`blog-seo-${route.path}`, async () => {
+  const lowerPath = route.path.toLowerCase();
+  // Both queries start before any await: queryContent needs the Nuxt context,
+  // which is lost after the first await.
+  const [found, lower]: any[] = await Promise.all([
+    findPost(route.path).catch(() => null),
+    lowerPath !== route.path ? findPost(lowerPath).catch(() => null) : null,
+  ]);
+  if (found) {
+    // Cover image for the social preview (fetched once, during SSR).
+    const cover: any = found.mainimageid
+      ? await $fetch(`${config.public.apiBase}image/${found.mainimageid}/`).catch(() => null)
+      : null;
+    return { ...found, cover: cover?.tb_item_cover || cover?.image || null };
+  }
+  // Old links written like the file name (/blog/Cerro-Evelio): the real
+  // address is lowercase, so redirect instead of showing a 404.
+  return lower ? { redirect: lower._path } : null;
+});
+
+if (post.value?.redirect) {
+  await navigateTo(post.value.redirect, { redirectCode: 301 });
+} else if (!post.value) {
+  // A real 404 (it used to answer 200 with "Document not found").
+  throw createError({ statusCode: 404, statusMessage: "Página no encontrada", fatal: true });
+} else {
+  usePageSeo({
+    title: post.value.title,
+    description: post.value.description || "",
+    image: post.value.cover,
+    type: "article",
+  });
+}
 </script>
 <style scoped lang="scss">
 main {

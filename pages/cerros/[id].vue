@@ -121,6 +121,48 @@ if (main_image.value != null) {
   }
 }
 
+// --- SEO: title, description, social preview, structured data ---
+const altitudeText = formatAltitude(mtn.altitude);
+const firstTeam = joinNames(firstAbsoluteTeam.value.map((a: any) => a[1]));
+let firstAscentText = "Sin primer ascenso registrado.";
+if (firstAbsolute.value) {
+  firstAscentText = `Primer ascenso: ${formatPartialDate(mtn.first_absolute_date)}${
+    firstTeam ? ` por ${firstTeam}` : ""
+  }.`;
+} else if (mtn.unregistered_non_sport_ascent) {
+  firstAscentText = "Ascendido antes de los registros deportivos.";
+}
+usePageSeo({
+  title: altitudeText ? `${mtnFullName.value} (${altitudeText})` : mtnFullName.value,
+  description: `${mtnFullName.value}${altitudeText ? `, ${altitudeText}` : ""}. ${firstAscentText} Rutas, ascensos y fuentes históricas.`,
+  image: (image.value as any)?.tb_item_cover || img_url.value,
+});
+useHead({
+  script: [
+    {
+      type: "application/ld+json",
+      // "<" escaped so a name can never close the <script> tag.
+      innerHTML: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Mountain",
+        name: mtnFullName.value,
+        url: String(config.public.siteUrl).replace(/\/$/, "") + route.path,
+        ...(img_url.value ? { image: img_url.value } : {}),
+        ...(mtn.latitude && mtn.longitude
+          ? {
+              geo: {
+                "@type": "GeoCoordinates",
+                latitude: Number(mtn.latitude),
+                longitude: Number(mtn.longitude),
+                ...(mtn.altitude ? { elevation: `${mtn.altitude} m` } : {}),
+              },
+            }
+          : {}),
+      }).replace(/</g, "\\u003c"),
+    },
+  ],
+});
+
 var selectedTab = ref(0);
 
 function switchTab(tabNumber: number) {

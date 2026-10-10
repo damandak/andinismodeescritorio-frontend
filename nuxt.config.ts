@@ -47,6 +47,9 @@ export default defineNuxtConfig({
     apiSecret: "123",
     public: {
       apiBase: apiAddress,
+      // Public address of the site, for canonical URLs, social previews and
+      // sitemap.xml. Override with NUXT_PUBLIC_SITE_URL.
+      siteUrl: "https://www.andinismodeescritorio.cl",
       googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
     },
   },

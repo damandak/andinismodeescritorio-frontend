@@ -41,6 +41,7 @@ del backend.
 | `GOOGLE_MAPS_API_KEY` | al compilar (`npm run build`) | Clave de Google Maps para el mapa. |
 | `NUXT_PUBLIC_GOOGLE_MAPS_API_KEY` | al arrancar el servidor | Igual que la anterior, pero reemplaza la que quedó al compilar. Útil si el build se hizo en otro lado (GitHub). |
 | `NUXT_PUBLIC_API_BASE` | al arrancar el servidor (y en `npm run dev`) | URL de la API. Por defecto `https://andinismodeescritorio.cl/djangoapi/`. |
+| `NUXT_PUBLIC_SITE_URL` | al arrancar el servidor | Dirección pública del sitio, usada en URLs canónicas, vistas previas al compartir y `sitemap.xml`. Por defecto `https://www.andinismodeescritorio.cl`. |
 | `PORT` | al arrancar el servidor | Puerto del servidor compilado (por defecto 3000). |
 
 ## Compilar y probar como en producción
@@ -147,7 +148,10 @@ Para volver atrás con la opción B: `rm -rf .output && mv .output.old .output &
 ```
 pages/          rutas del sitio (/cerros, /rutas, /ascensos, /andinistas, /blog, ...)
 components/     componentes por sección (mountain/, routes/, ascent/, andinist/, map/, ...)
-composables/    useApiDetail (carga de fichas con 404 real), loader de Google Maps
+composables/    useApiDetail (carga de fichas con 404 real), usePageSeo (título, descripción,
+                vista previa al compartir), loader de Google Maps
+utils/          formato de fechas parciales, altitudes y listas de nombres
+server/routes/  sitemap.xml y robots.txt (generados con los datos de la API)
 content/blog/   relatos del blog en Markdown
 public/img/     íconos y marcadores del mapa
 error.vue       página de error / 404

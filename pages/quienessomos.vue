@@ -21,6 +21,12 @@
   </main>
 </template>
 <script setup lang="ts">
+usePageSeo({
+  title: "Quiénes somos",
+  description:
+    "Un colectivo que recupera y documenta la historia del andinismo en los Andes, a partir del trabajo de Evelio Echevarría, Jozsef Ambrus, Proyecto Nomenclatura y muchos otros.",
+});
+
 </script>
 <style scoped lang="scss">
 main {

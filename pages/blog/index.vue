@@ -50,6 +50,12 @@
 </template>
 
 <script setup lang="ts">
+usePageSeo({
+  title: "Blog",
+  description:
+    "Relatos de los Andes Centrales: primeros ascensos, cumbres olvidadas e investigación de la historia del andinismo.",
+});
+
 const config = useRuntimeConfig();
 
 // save mainimageid from every article of content NUXT

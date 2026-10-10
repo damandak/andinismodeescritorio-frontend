@@ -66,6 +66,12 @@
   </div>
 </template>
 <script setup lang="ts">
+usePageSeo({
+  title: "Ascensos",
+  description:
+    "Registro histórico de ascensos en los Andes Centrales: cerro, ruta, cordada y fecha.",
+});
+
 import { ref } from "vue";
 
 const columns = [
