@@ -96,6 +96,17 @@ hay sesión).
   `http://127.0.0.1:8000`).
 - **Pendiente:** en `pages/privacidad.vue`, reemplazar `[correo de contacto]` por un correo real.
 
+### Propuestas de cambios
+
+- Al pie de cada ficha (`components/record/Contributors.vue`): "Con aportes de: …" (quienes
+  tienen propuestas aprobadas) y el enlace "Proponer una corrección".
+- `/proponer/<cerro|ruta|ascenso|andinista>/<id>` y `/proponer/cerro/nuevo`: el formulario se
+  arma con lo que entrega la API (`/djangoapi/proposals/form/…`: campos, tipo y valor actual) y
+  solo envía los datos que cambian, con la fuente obligatoria. Con `?propuesta=<id>` edita una
+  propuesta propia que sigue abierta.
+- "Mis aportes" en `/mi-cuenta`: estado, mensaje del editor, editar/reenviar y retirar.
+- Los editores las revisan en el admin de Django (ver el README del backend).
+
 ## Rendimiento
 
 - **Caché de 5 minutos para el blog** (la portada y los relatos): se arman una vez y se

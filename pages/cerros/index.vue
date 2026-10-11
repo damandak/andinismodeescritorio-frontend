@@ -9,6 +9,9 @@
       :extraQuery="{ table: '' }"
       :columns="columns"
     />
+    <p class="propose-new">
+      ¿Falta un cerro? <NuxtLink to="/proponer/cerro/nuevo" rel="nofollow">Proponer un cerro nuevo</NuxtLink>
+    </p>
   </div>
 </template>
 <script setup lang="ts">
@@ -56,6 +59,16 @@ const columns: TableColumn[] = [
   padding-bottom: 50px;
   .title-section {
     height: 50px;
+  }
+  .propose-new {
+    margin: 24px 16px 0;
+    font-size: 0.9rem;
+    color: #555;
+    a {
+      font-family: inherit;
+      color: $color-main-second;
+      text-decoration: underline;
+    }
   }
 }
 </style>

@@ -81,6 +81,40 @@
         <p v-else-if="query.trim().length > 1 && searched" class="hint">Sin resultados.</p>
       </template>
 
+      <h2 id="aportes">Mis aportes</h2>
+      <p v-if="!proposals.length" class="hint">
+        Puedes proponer correcciones desde el pie de cada ficha («Proponer una corrección»)<template
+          v-if="me.email_verified"
+        >
+          o <NuxtLink to="/proponer/cerro/nuevo" class="inline">proponer un cerro nuevo</NuxtLink></template
+        >. Un editor las revisa antes de publicarlas.
+      </p>
+      <template v-else>
+        <ul class="proposals">
+          <li v-for="p in proposals" :key="p.id">
+            <div class="proposal-head">
+              <NuxtLink v-if="p.target_id && p.status !== 3" :to="recordPath(p)" class="inline">{{ p.title }}</NuxtLink>
+              <strong v-else>{{ p.title }}</strong>
+              <span class="badge" :class="statusClass[p.status]">{{ p.creates && p.status === 2 ? "Aprobada (ficha creada)" : p.status_label }}</span>
+            </div>
+            <p class="hint">
+              {{ p.creates ? "Cerro nuevo" : "Corrección" }} · {{ formatDay(p.created_at) }}:
+              {{ p.changes.map((c) => `${c.label}: ${c.value}`).join("; ") }}
+            </p>
+            <p v-if="p.editor_message" class="editor-message"><strong>Editor:</strong> {{ p.editor_message }}</p>
+            <div v-if="p.status === 0 || p.status === 1" class="row">
+              <NuxtLink :to="editPath(p)" class="secondary small as-button">
+                {{ p.status === 1 ? "Completar y reenviar" : "Editar" }}
+              </NuxtLink>
+              <button class="link-button" type="button" @click="withdraw(p)">Retirar</button>
+            </div>
+          </li>
+        </ul>
+        <p v-if="me.email_verified" class="hint">
+          ¿Falta un cerro? <NuxtLink to="/proponer/cerro/nuevo" class="inline">Proponer un cerro nuevo</NuxtLink>
+        </p>
+      </template>
+
       <h2>Cambiar contraseña</h2>
       <form @submit.prevent="savePassword" novalidate>
         <label>
@@ -119,7 +153,39 @@ onMounted(async () => {
   const user = await auth.ensureChecked();
   if (!user) return navigateTo({ path: "/entrar", query: { next: "/mi-cuenta" } }, { replace: true });
   name.value = user.public_name;
+  loadProposals();
 });
+
+// Proposals
+type MyProposal = {
+  id: number;
+  model: string;
+  target_id: number | null;
+  title: string;
+  creates: boolean;
+  status: number;
+  status_label: string;
+  editor_message: string;
+  created_at: string;
+  changes: { label: string; value: string }[];
+};
+const PATHS: Record<string, string> = { cerro: "/cerros", ruta: "/rutas", ascenso: "/ascensos", andinista: "/andinistas" };
+const statusClass: Record<number, string> = { 1: "warn", 2: "ok", 3: "no" };
+const proposals = ref<MyProposal[]>([]);
+async function loadProposals() {
+  const r = await auth.request<MyProposal[]>("GET", "/djangoapi/me/proposals/");
+  proposals.value = r.ok ? r.data : [];
+  if (route.hash === "#aportes") nextTick(() => document.getElementById("aportes")?.scrollIntoView());
+}
+const recordPath = (p: MyProposal) => `${PATHS[p.model]}/${p.target_id}`;
+const editPath = (p: MyProposal) => `/proponer/${p.model}/${p.creates ? "nuevo" : p.target_id}?propuesta=${p.id}`;
+const formatDay = (iso: string) =>
+  new Date(iso).toLocaleDateString("es-CL", { day: "numeric", month: "short", year: "numeric" });
+async function withdraw(p: MyProposal) {
+  if (!confirm("¿Retirar esta propuesta?")) return;
+  const r = await auth.request("DELETE", `/djangoapi/me/proposals/${p.id}/`);
+  if (r.ok) proposals.value = proposals.value.filter((x) => x.id !== p.id);
+}
 
 // Email confirmation
 const resent = ref(false);
@@ -266,5 +332,46 @@ async function logout() {
 .secondary.small {
   padding: 4px 12px;
   font-size: 0.9rem;
+}
+.as-button {
+  font-family: inherit;
+  text-decoration: none;
+  display: inline-block;
+}
+.badge.warn {
+  background: #fdecd2;
+  color: #8a5300;
+}
+.badge.no {
+  background: #f6e1e1;
+  color: #8f2a2a;
+}
+.proposals {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px;
+  li {
+    padding: 12px 0;
+    border-bottom: 1px solid $color-light-dark;
+  }
+  .proposal-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .hint {
+    margin: 4px 0 0;
+  }
+  .editor-message {
+    margin: 8px 0 0;
+    padding: 8px 12px;
+    background: $color-light;
+    border-radius: 6px;
+    font-size: 0.9rem;
+  }
+  .row {
+    margin-top: 8px;
+  }
 }
 </style>

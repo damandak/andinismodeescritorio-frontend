@@ -1,5 +1,5 @@
 <template>
-  <main class="account-panel">
+  <main class="account-panel" :class="{ wide }">
     <h1>{{ title }}</h1>
     <p v-if="intro" class="intro">{{ intro }}</p>
     <slot />
@@ -9,7 +9,7 @@
 <script setup lang="ts">
 // Frame shared by the account pages (entrar, crear cuenta, mi cuenta...),
 // with the form styles they all use.
-defineProps<{ title: string; intro?: string }>();
+defineProps<{ title: string; intro?: string; wide?: boolean }>();
 </script>
 
 <style scoped lang="scss">
@@ -18,6 +18,9 @@ defineProps<{ title: string; intro?: string }>();
   max-width: 440px;
   margin: 70px auto 60px;
   text-align: left;
+  &.wide {
+    max-width: 680px;
+  }
   h1 {
     font-family: var(--font-serif);
     font-size: 2.2rem;
@@ -58,6 +61,8 @@ defineProps<{ title: string; intro?: string }>();
   :deep(input[type="email"]),
   :deep(input[type="password"]),
   :deep(input[type="search"]),
+  :deep(input[type="number"]),
+  :deep(select),
   :deep(textarea) {
     font: inherit;
     font-weight: 400;

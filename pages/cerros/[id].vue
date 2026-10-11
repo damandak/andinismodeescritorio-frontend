@@ -73,6 +73,7 @@
           :mtnNomenclatura="mtnNomenclaturaMountainID"
         />
       </div>
+      <RecordContributors model="cerro" :id="String(route.params.id)" :names="mtn.contributors" />
     </div>
   </div>
 </template>

@@ -147,6 +147,11 @@ export function useAuth() {
       return r;
     },
 
+    /** Any other call to the site's API as the signed-in user (proposals...). */
+    request<T = any>(method: string, url: string, body?: object) {
+      return method === "GET" ? call<T>(method, url) : withCsrf(() => call<T>(method, url, body));
+    },
+
     async cancelClaim() {
       const r = await withCsrf(() => call<Me>("DELETE", "/djangoapi/me/claim/"));
       if (r.ok) me.value = r.data;

@@ -37,6 +37,7 @@
           :ascentID="ascent_id"
         />
       </div>
+      <RecordContributors model="ascenso" :id="String(route.params.id)" :names="ascent.contributors" />
     </div>
   </div>
 </template>

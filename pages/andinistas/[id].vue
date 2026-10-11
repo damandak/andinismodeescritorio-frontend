@@ -28,6 +28,7 @@
         <AndinistPhotosContent v-if="selectedTab === 2" />
         <AndinistReferencesContent v-if="selectedTab === 3" :andinist="id" />
       </div>
+      <RecordContributors model="andinista" :id="String(route.params.id)" :names="andinist.contributors" />
     </div>
   </div>
 </template>

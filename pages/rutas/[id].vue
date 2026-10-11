@@ -54,6 +54,7 @@
         <RoutesPhotosContent v-if="selectedTab === 4" />
         <RoutesReferencesContent v-if="selectedTab === 5" :routeID="route_id" />
       </div>
+      <RecordContributors model="ruta" :id="String(route.params.id)" :names="ruta.contributors" />
     </div>
   </div>
 </template>

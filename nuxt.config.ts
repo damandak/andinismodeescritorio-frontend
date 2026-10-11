@@ -51,7 +51,7 @@ export default defineNuxtConfig({
     ),
     // Account pages depend on who is signed in: rendered in the browser.
     ...Object.fromEntries(
-      ["/entrar", "/crear-cuenta", "/mi-cuenta", "/recuperar-clave", "/recuperar-clave/**", "/confirmar-email/**"].map(
+      ["/entrar", "/crear-cuenta", "/mi-cuenta", "/recuperar-clave", "/recuperar-clave/**", "/confirmar-email/**", "/proponer/**"].map(
         (path) => [path, { ssr: false }]
       )
     ),
