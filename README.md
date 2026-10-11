@@ -82,6 +82,20 @@ tipo JavaScript en el mismo proyecto de la clave. No cambia lo que Google cobra.
 - Todo se puede usar con teclado: Tab recorre los controles, las flechas cambian de pestaña
   y Esc cierra el menú o el buscador.
 
+## Cuentas de usuario
+
+Páginas: `/entrar`, `/crear-cuenta`, `/recuperar-clave`, `/confirmar-email/…`, `/mi-cuenta` y
+`/privacidad`. El ícono de persona del menú lleva a "Entrar" o a "Mi cuenta" (con un punto cuando
+hay sesión).
+
+- El navegador llama a `/djangoapi/...` en la misma dirección del sitio (en producción nginx lo
+  envía a Django), así la sesión funciona sin configuración entre dominios. Toda la lógica está en
+  `composables/useAuth.ts`.
+- Las páginas de cuenta se arman en el navegador (`ssr: false` en `routeRules`).
+- En `npm run dev`, `/djangoapi` se redirige al backend local (`DEV_API_ORIGIN`, por defecto
+  `http://127.0.0.1:8000`).
+- **Pendiente:** en `pages/privacidad.vue`, reemplazar `[correo de contacto]` por un correo real.
+
 ## Rendimiento
 
 - **Caché de 5 minutos para el blog** (la portada y los relatos): se arman una vez y se

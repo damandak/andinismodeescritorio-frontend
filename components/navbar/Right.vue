@@ -13,6 +13,17 @@
         <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
       </client-only>
     </button>
+    <NuxtLink
+      class="nav-right__item account-link"
+      :class="{ signed: auth.me.value }"
+      :to="auth.me.value ? '/mi-cuenta' : '/entrar'"
+      :aria-label="auth.me.value ? `Mi cuenta (${auth.me.value.public_name})` : 'Entrar o crear cuenta'"
+      :title="auth.me.value ? auth.me.value.public_name : 'Entrar'"
+    >
+      <client-only>
+        <font-awesome-icon icon="fa-solid fa-user" />
+      </client-only>
+    </NuxtLink>
     <MainstructureMainButton
       :buttonclass="'nav-right__item navbutton'"
       :to="'/'"
@@ -49,6 +60,10 @@ const emit = defineEmits<{
 }>();
 
 const route = useRoute();
+
+// Who is signed in, once per visit (the icon links to "Mi cuenta" or "Entrar").
+const auth = useAuth();
+onMounted(() => auth.ensureChecked());
 </script>
 
 <style lang="scss">
@@ -70,6 +85,22 @@ const route = useRoute();
     font-size: 1.05rem;
     &:hover {
       color: $color-main-first;
+    }
+  }
+  .account-link {
+    font-family: inherit;
+    // A small dot when signed in.
+    position: relative;
+    &.signed::after {
+      content: "";
+      position: absolute;
+      top: 9px;
+      right: -5px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: $color-main-first;
+      border: 1.5px solid $color-light;
     }
   }
 }
